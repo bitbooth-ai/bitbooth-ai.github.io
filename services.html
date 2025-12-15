@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - BitBooth ApS | AI Advisory for Nordic Investment Firms</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-blue: #15253E;
+            --light-silver: #F9F7F8;
+            --light-blue: #99D0F2;
+            --purple: #7B68DF;
+            --gold: #D6A319;
+            --green: #788c5d;
+        }
+
+        body {
+            font-family: 'Figtree', Arial, sans-serif;
+            color: var(--dark-blue);
+            background-color: #ffffff;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(21, 37, 62, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--dark-blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--purple);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #2a3f5f 100%);
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(45deg, transparent 30%, rgba(123, 104, 223, 0.1) 50%, transparent 70%),
+                linear-gradient(-45deg, transparent 30%, rgba(153, 208, 242, 0.1) 50%, transparent 70%);
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: translateX(-10%) translateY(-10%); }
+            50% { transform: translateX(10%) translateY(10%); }
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 3.5rem;
+            color: var(--light-silver);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--light-blue);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--purple);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--purple);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--light-silver);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(123, 104, 223, 0.3);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .section-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-intro h2 {
+            font-size: 2.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .section-intro p {
+            font-size: 1.125rem;
+            color: #5a6b7d;
+            line-height: 1.8;
+        }
+
+        /* Service Cards */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(21, 37, 62, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--purple) 0%, var(--gold) 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .service-card:nth-child(1) .service-icon {
+            background: linear-gradient(135deg, var(--purple), rgba(123, 104, 223, 0.7));
+            color: white;
+        }
+
+        .service-card:nth-child(2) .service-icon {
+            background: linear-gradient(135deg, var(--gold), rgba(214, 163, 25, 0.7));
+            color: white;
+        }
+
+        .service-card:nth-child(3) .service-icon {
+            background: linear-gradient(135deg, var(--green), rgba(120, 140, 93, 0.7));
+            color: white;
+        }
+
+        .service-card h3 {
+            font-size: 1.75rem;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .service-tagline {
+            font-size: 1rem;
+            color: var(--purple);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        .service-description {
+            color: #5a6b7d;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .service-features li {
+            padding: 0.75rem 0;
+            color: var(--dark-blue);
+            position: relative;
+            padding-left: 1.75rem;
+            line-height: 1.6;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--purple);
+            text-decoration: none;
+            font-weight: 600;
+            transition: gap 0.3s ease;
+            gap: 0.5rem;
+        }
+
+        .service-link:hover {
+            gap: 1rem;
+        }
+
+        .service-link::after {
+            content: '→';
+            font-size: 1.25rem;
+        }
+
+        /* Target Clients Section */
+        .target-section {
+            background: var(--light-silver);
+            padding: 5rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .target-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .target-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .target-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--purple);
+        }
+
+        .target-card h4 {
+            font-size: 1.25rem;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .target-card ul {
+            list-style: none;
+            color: #5a6b7d;
+        }
+
+        .target-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .target-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--purple);
+            font-weight: 700;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #2a3f5f 100%);
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(123, 104, 223, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(153, 208, 242, 0.15) 0%, transparent 50%);
+        }
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.5rem;
+            color: var(--light-silver);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.125rem;
+            color: var(--light-blue);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--purple);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--purple);
+        }
+
+        .cta-primary:hover {
+            background: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(123, 104, 223, 0.3);
+        }
+
+        .cta-secondary {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: transparent;
+            color: var(--light-silver);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--light-silver);
+        }
+
+        .cta-secondary:hover {
+            background: var(--light-silver);
+            color: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-blue);
+            color: var(--light-silver);
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--light-blue);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--light-silver);
+            text-decoration: none;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .footer-section a:hover {
+            color: var(--light-blue);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(153, 208, 242, 0.2);
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.125rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section-intro h2 {
+                font-size: 2rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .service-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .service-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .service-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">BitBooth</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>AI Advisory for Nordic Investment Firms</h1>
+            <p>Senior AI expertise with institutional investment experience, delivered at a scale appropriate for boutique firms—without consultancy overhead or vendor lock-in.</p>
+            <a href="#contact" class="cta-button">Start a Conversation</a>
+        </div>
+    </section>
+
+    <div class="container" id="services">
+        <div class="section-intro">
+            <h2>Three Ways to Work Together</h2>
+            <p>A strategic portfolio of services designed to serve Nordic investment firms that lack internal AI capabilities—from ongoing advisory to full platform implementation.</p>
+        </div>
+
+        <div class="services-grid">
+            <!-- Service 1: Technical Advisory Retainer -->
+            <div class="service-card">
+                <div class="service-icon">01</div>
+                <h3>Technical Advisory Retainer</h3>
+                <p class="service-tagline">"A senior AI advisor on call for your technical decisions—without project overhead."</p>
+                <p class="service-description">Expert access when you need it. Navigate vendor pitches, evaluate investment opportunities, and get technical clarity on AI decisions without the commitment of a full engagement.</p>
+                <ul class="service-features">
+                    <li>Monthly strategy calls with a senior advisor</li>
+                    <li>On-demand access for tactical questions</li>
+                    <li>Quarterly deep-dive on a specific challenge</li>
+                    <li>Strategic summary memo each quarter</li>
+                </ul>
+                <a href="#contact" class="service-link">Learn more</a>
+            </div>
+
+            <!-- Service 2: Investment Efficiency Assessment -->
+            <div class="service-card">
+                <div class="service-icon">02</div>
+                <h3>Investment Efficiency Assessment</h3>
+                <p class="service-tagline">"A 4-week technical audit that quantifies your largest operational bottleneck."</p>
+                <p class="service-description">Know exactly where to invest in AI—or whether to invest at all. A comprehensive diagnostic that maps your workflows, identifies inefficiencies, and delivers an IC-ready recommendation.</p>
+                <ul class="service-features">
+                    <li>Current state workflow analysis and mapping</li>
+                    <li>Bottleneck identification with quantified costs</li>
+                    <li>Build vs. buy recommendation with ROI modeling</li>
+                    <li>Implementation roadmap with clear milestones</li>
+                    <li>IC presentation included</li>
+                </ul>
+                <a href="#contact" class="service-link">Learn more</a>
+            </div>
+
+            <!-- Service 3: Platform Implementation -->
+            <div class="service-card">
+                <div class="service-icon">03</div>
+                <h3>Platform Implementation</h3>
+                <p class="service-tagline">"Deploy one production-grade AI capability in 6-12 months."</p>
+                <p class="service-description">Transform operations with a proven playbook. Senior technical leadership from an institutional investor background, delivering production-ready systems that navigate compliance and actually work.</p>
+                <ul class="service-features">
+                    <li>Deal Flow Intelligence, Diligence Acceleration, or Portfolio Monitoring</li>
+                    <li>Production infrastructure on secure cloud platform</li>
+                    <li>Full compliance and security framework</li>
+                    <li>Knowledge transfer and team training</li>
+                    <li>6 months post-launch support included</li>
+                </ul>
+                <a href="#contact" class="service-link">Learn more</a>
+            </div>
+        </div>
+    </div>
+
+    <section class="target-section">
+        <div class="target-content">
+            <div class="section-intro">
+                <h2>Who We Serve</h2>
+                <p>Nordic family offices and boutique PE firms with €500M-€5B AUM that lack internal AI capabilities but recognize the strategic opportunity.</p>
+            </div>
+            <div class="target-grid">
+                <div class="target-card">
+                    <h4>Typical Client Profile</h4>
+                    <ul>
+                        <li>€500M-€5B AUM</li>
+                        <li>10-50 employees</li>
+                        <li>No dedicated CTO/CIO</li>
+                        <li>Nordic-based operations</li>
+                        <li>Conservative tech adoption culture</li>
+                    </ul>
+                </div>
+                <div class="target-card">
+                    <h4>Decision Makers We Work With</h4>
+                    <ul>
+                        <li>Managing Partners</li>
+                        <li>Chief Operating Officers</li>
+                        <li>Heads of Operations</li>
+                        <li>Investment Committee members</li>
+                        <li>Portfolio managers seeking efficiency</li>
+                    </ul>
+                </div>
+                <div class="target-card">
+                    <h4>Common Pain Points</h4>
+                    <ul>
+                        <li>Uncertain where AI creates real value</li>
+                        <li>Can't evaluate vendor claims effectively</li>
+                        <li>Lack expertise for technical decisions</li>
+                        <li>Fear of expensive technology mistakes</li>
+                        <li>Need trusted advisor, not sales pitch</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+        <div class="cta-content">
+            <h2>Ready to Explore AI for Your Firm?</h2>
+            <p>Whether you're evaluating a vendor, considering an investment in AI capabilities, or just curious about what's possible—let's start with a conversation.</p>
+            <div class="cta-buttons">
+                <a href="mailto:omar@bitbooth.ai" class="cta-primary">Schedule a Call</a>
+                <a href="index.html" class="cta-secondary">Learn About BitBooth</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>BitBooth ApS</h4>
+                <p>Senior AI advisory for Nordic investment firms. Institutional expertise without consultancy overhead.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <p><a href="#services">Technical Advisory Retainer</a></p>
+                <p><a href="#services">Investment Efficiency Assessment</a></p>
+                <p><a href="#services">Platform Implementation</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p><a href="mailto:omar@bitbooth.ai">omar@bitbooth.ai</a></p>
+                <p>Copenhagen, Denmark</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 BitBooth ApS. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
