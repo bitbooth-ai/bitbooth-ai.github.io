@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BitBooth ApS - AI consulting for Nordic investment firms. Built by the team that created Halo at Novo Holdings (€142B AUM).">
-    <title>BitBooth ApS | AI for Investment Firms. Built by People Who've Done It.</title>
+    <meta name="description" content="AI expertise for Nordic investment firms. Senior delivery, domain expertise, no consultancy theater. Previously ATP (€142B AUM).">
+    <title>BitBooth | AI Expertise for Investment Firms</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600;700;900&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* ===== CSS RESET & BASE ===== */
@@ -25,89 +25,77 @@
 
         /* ===== CSS CUSTOM PROPERTIES ===== */
         :root {
-            /* Nordic Dark Theme */
-            --color-bg-primary: #0A1628;
-            --color-bg-secondary: #1A1F2E;
-            --color-bg-tertiary: #0F1B2E;
-            --color-text-primary: #FFFFFF;
-            --color-text-secondary: #94A3B8;
-            --color-text-muted: #64748B;
-            --color-accent: #3B82F6;
-            --color-accent-hover: #2563EB;
-            --color-accent-light: rgba(59, 130, 246, 0.1);
-            --color-highlight: #F59E0B;
-            --color-success: #10B981;
-            --color-border: rgba(148, 163, 184, 0.1);
+            /* Color Palette - Institutional Warmth */
+            --color-navy: #1A2B4D;
+            --color-stone: #8B7355;
+            --color-blue: #4A7C94;
+            --color-bg-warm: #FAF8F5;
+            --color-bg-cream: #F0EDE6;
+            --color-text-primary: #1A1A1A;
+            --color-text-secondary: #5C5C5C;
+            --color-success: #2D5A3D;
 
             /* Typography */
-            --font-heading: 'Crimson Pro', serif;
-            --font-body: 'IBM Plex Sans', sans-serif;
-            --font-mono: 'IBM Plex Mono', monospace;
+            --font-serif: 'Libre Baskerville', Georgia, serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-            /* Spacing */
-            --spacing-section: 160px;
-            --spacing-large: 80px;
-            --spacing-medium: 40px;
-            --spacing-small: 20px;
-            --spacing-xs: 10px;
+            /* Spacing - 8px base rhythm */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 32px;
+            --space-xl: 48px;
+            --space-2xl: 64px;
+            --space-3xl: 96px;
+            --space-4xl: 120px;
+            --space-5xl: 160px;
 
             /* Layout */
-            --container-width: 1200px;
-            --container-narrow: 800px;
+            --container-width: 1100px;
 
             /* Transitions */
-            --transition-smooth: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            --transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
         }
 
         /* ===== TYPOGRAPHY ===== */
         body {
-            font-family: var(--font-body);
-            font-size: 18px;
+            font-family: var(--font-sans);
+            font-size: 17px;
             line-height: 1.7;
             color: var(--color-text-secondary);
-            background-color: var(--color-bg-primary);
+            background-color: var(--color-bg-warm);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
         h1, h2, h3, h4, h5, h6 {
-            font-family: var(--font-heading);
-            color: var(--color-text-primary);
-            line-height: 1.2;
-            font-weight: 700;
+            font-family: var(--font-serif);
+            color: var(--color-navy);
+            line-height: 1.3;
+            font-weight: 400;
         }
 
         h1 {
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
-            font-weight: 900;
+            font-size: clamp(2.5rem, 5vw, 4rem);
         }
 
         h2 {
-            font-size: clamp(2rem, 4vw, 3.5rem);
-            font-weight: 700;
+            font-size: clamp(2rem, 4vw, 2.5rem);
         }
 
         h3 {
             font-size: clamp(1.5rem, 3vw, 2rem);
-            font-weight: 600;
         }
 
         /* ===== LAYOUT ===== */
         .container {
             max-width: var(--container-width);
             margin: 0 auto;
-            padding: 0 var(--spacing-medium);
-        }
-
-        .container-narrow {
-            max-width: var(--container-narrow);
-            margin: 0 auto;
-            padding: 0 var(--spacing-medium);
+            padding: 0 var(--space-lg);
         }
 
         section {
-            padding: var(--spacing-section) 0;
-            position: relative;
+            padding: var(--space-5xl) 0;
         }
 
         /* ===== NAVIGATION ===== */
@@ -117,33 +105,35 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(10, 22, 40, 0.95);
+            background: rgba(250, 248, 245, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--color-border);
-            transition: var(--transition-smooth);
+            transition: var(--transition);
+        }
+
+        .nav.scrolled {
+            box-shadow: 0 2px 20px rgba(26, 43, 77, 0.08);
         }
 
         .nav-container {
             max-width: var(--container-width);
             margin: 0 auto;
-            padding: var(--spacing-small) var(--spacing-medium);
+            padding: var(--space-md) var(--space-lg);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .nav-logo {
-            font-family: var(--font-heading);
+            font-family: var(--font-serif);
             font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--color-text-primary);
+            font-weight: 700;
+            color: var(--color-navy);
             text-decoration: none;
-            letter-spacing: -0.02em;
         }
 
         .nav-links {
             display: flex;
-            gap: var(--spacing-medium);
+            gap: var(--space-lg);
             list-style: none;
             align-items: center;
         }
@@ -153,25 +143,45 @@
             text-decoration: none;
             font-size: 0.95rem;
             font-weight: 500;
-            transition: var(--transition-smooth);
+            position: relative;
+            transition: var(--transition);
         }
 
         .nav-links a:hover {
-            color: var(--color-text-primary);
+            color: var(--color-navy);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-stone);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .nav-cta {
-            background: var(--color-accent);
-            color: var(--color-text-primary);
-            padding: 10px 20px;
+            background: var(--color-navy);
+            color: var(--color-bg-warm) !important;
+            padding: 10px 24px;
             border-radius: 6px;
             font-weight: 600;
         }
 
+        .nav-cta::after {
+            display: none;
+        }
+
         .nav-cta:hover {
-            background: var(--color-accent-hover);
-            color: var(--color-text-primary);
-            transform: translateY(-2px);
+            background: var(--color-blue);
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(26, 43, 77, 0.2);
         }
 
         /* Mobile menu toggle */
@@ -179,7 +189,7 @@
             display: none;
             background: none;
             border: none;
-            color: var(--color-text-primary);
+            color: var(--color-navy);
             font-size: 1.5rem;
             cursor: pointer;
         }
@@ -191,76 +201,49 @@
             align-items: center;
             position: relative;
             padding-top: 100px;
-            background:
-                radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 70% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 40%),
-                url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            background: linear-gradient(135deg, var(--color-bg-warm) 0%, var(--color-bg-cream) 100%);
+        }
+
+        .hero-content {
+            max-width: 900px;
         }
 
         .hero-headline {
-            margin-bottom: var(--spacing-medium);
+            margin-bottom: var(--space-lg);
             animation: fadeInUp 0.8s ease-out;
         }
 
         .hero-subheadline {
-            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            font-size: 1.25rem;
             line-height: 1.6;
             color: var(--color-text-secondary);
-            margin-bottom: var(--spacing-large);
-            max-width: 800px;
+            margin-bottom: var(--space-xl);
+            max-width: 750px;
             animation: fadeInUp 0.8s ease-out 0.1s backwards;
         }
 
-        .metrics-bar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--spacing-medium);
-            margin: var(--spacing-large) 0;
+        .hero-credential {
+            font-size: 1.1rem;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-2xl);
+            padding: var(--space-lg);
+            background: white;
+            border-left: 4px solid var(--color-stone);
+            border-radius: 4px;
+            box-shadow: 0 2px 12px rgba(26, 43, 77, 0.06);
             animation: fadeInUp 0.8s ease-out 0.2s backwards;
         }
 
-        .metric {
-            text-align: left;
-            padding: var(--spacing-medium);
-            background: rgba(26, 31, 46, 0.5);
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
-            transition: var(--transition-smooth);
-        }
-
-        .metric:hover {
-            border-color: var(--color-accent);
-            transform: translateY(-4px);
-        }
-
-        .metric-number {
-            font-family: var(--font-mono);
-            font-size: clamp(2rem, 4vw, 3rem);
+        .hero-credential strong {
+            color: var(--color-navy);
             font-weight: 600;
-            color: var(--color-highlight);
-            display: block;
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .metric-label {
-            font-size: 0.9rem;
-            color: var(--color-text-muted);
-            display: block;
         }
 
         .cta-group {
             display: flex;
-            gap: var(--spacing-small);
-            margin-top: var(--spacing-large);
+            gap: var(--space-md);
             flex-wrap: wrap;
             animation: fadeInUp 0.8s ease-out 0.3s backwards;
-        }
-
-        .trust-signal {
-            margin-top: var(--spacing-medium);
-            color: var(--color-text-muted);
-            font-size: 0.9rem;
-            animation: fadeInUp 0.8s ease-out 0.4s backwards;
         }
 
         /* ===== BUTTONS ===== */
@@ -271,384 +254,337 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 1rem;
-            transition: var(--transition-smooth);
+            transition: var(--transition);
             cursor: pointer;
             border: none;
         }
 
         .btn-primary {
-            background: var(--color-accent);
-            color: var(--color-text-primary);
+            background: var(--color-navy);
+            color: var(--color-bg-warm);
         }
 
         .btn-primary:hover {
-            background: var(--color-accent-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3);
+            background: var(--color-blue);
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(26, 43, 77, 0.2);
         }
 
         .btn-secondary {
             background: transparent;
-            color: var(--color-text-primary);
-            border: 1px solid var(--color-border);
+            color: var(--color-navy);
+            border: 2px solid var(--color-navy);
         }
 
         .btn-secondary:hover {
-            border-color: var(--color-accent);
-            color: var(--color-accent);
+            background: var(--color-navy);
+            color: var(--color-bg-warm);
         }
 
-        /* ===== CREDIBILITY SECTION ===== */
-        .credibility {
-            background: var(--color-bg-secondary);
-            border-top: 1px solid var(--color-border);
-            border-bottom: 1px solid var(--color-border);
+        /* ===== CREDIBILITY BAR ===== */
+        .credibility-bar {
+            background: var(--color-bg-cream);
+            padding: var(--space-2xl) 0;
+            border-top: 1px solid rgba(139, 115, 85, 0.2);
+            border-bottom: 1px solid rgba(139, 115, 85, 0.2);
         }
 
-        .section-title {
-            text-align: center;
-            margin-bottom: var(--spacing-large);
-        }
-
-        .section-subtitle {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto var(--spacing-large);
-            color: var(--color-text-secondary);
-        }
-
-        .credibility-grid {
+        .credibility-items {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--spacing-medium);
-            margin-top: var(--spacing-large);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
         }
 
         .credibility-item {
-            padding: var(--spacing-medium);
-            background: rgba(10, 22, 40, 0.5);
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
-            transition: var(--transition-smooth);
-        }
-
-        .credibility-item:hover {
-            border-color: var(--color-accent);
-            transform: translateY(-4px);
-        }
-
-        .credibility-number {
-            font-family: var(--font-mono);
-            font-size: 2.5rem;
-            font-weight: 600;
-            color: var(--color-accent);
-            display: block;
-            margin-bottom: var(--spacing-small);
-        }
-
-        .credibility-text {
+            text-align: left;
+            font-size: 0.9rem;
             color: var(--color-text-secondary);
             line-height: 1.6;
         }
 
-        /* ===== COMPARISON TABLE ===== */
+        .credibility-item strong {
+            display: block;
+            color: var(--color-navy);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        /* ===== SITUATION SECTION ===== */
+        .situation {
+            background: var(--color-bg-cream);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .situation-cards {
+            display: grid;
+            gap: var(--space-md);
+            margin-top: var(--space-2xl);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .situation-card {
+            padding: var(--space-lg);
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(26, 43, 77, 0.06);
+            transition: var(--transition);
+        }
+
+        .situation-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(26, 43, 77, 0.12);
+        }
+
+        .situation-card strong {
+            color: var(--color-navy);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .situation-closing {
+            text-align: center;
+            margin-top: var(--space-2xl);
+            font-size: 1.1rem;
+            color: var(--color-navy);
+            font-weight: 500;
+        }
+
+        /* ===== DIFFERENTIATION SECTION ===== */
+        .differentiation-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-xl);
+            margin-top: var(--space-2xl);
+        }
+
+        .diff-card {
+            padding: var(--space-xl);
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(26, 43, 77, 0.06);
+            transition: var(--transition);
+        }
+
+        .diff-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(26, 43, 77, 0.12);
+        }
+
+        .diff-card h3 {
+            color: var(--color-navy);
+            margin-bottom: var(--space-md);
+            font-size: 1.5rem;
+        }
+
+        .diff-card p {
+            line-height: 1.8;
+        }
+
+        /* Comparison Table */
         .comparison-table {
+            margin-top: var(--space-2xl);
             overflow-x: auto;
-            margin-top: var(--spacing-large);
+            background: white;
+            border-radius: 8px;
+            padding: var(--space-xl);
+            box-shadow: 0 2px 12px rgba(26, 43, 77, 0.06);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background: rgba(26, 31, 46, 0.5);
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
+        }
+
+        th, td {
+            padding: var(--space-md);
+            text-align: left;
+            border-bottom: 1px solid var(--color-bg-cream);
         }
 
         th {
-            background: var(--color-bg-tertiary);
-            color: var(--color-text-primary);
-            padding: var(--spacing-small) var(--spacing-medium);
-            text-align: left;
+            background: var(--color-bg-cream);
+            color: var(--color-navy);
             font-weight: 600;
-            border-bottom: 1px solid var(--color-border);
+            font-family: var(--font-sans);
         }
 
         td {
-            padding: var(--spacing-small) var(--spacing-medium);
-            border-bottom: 1px solid var(--color-border);
             color: var(--color-text-secondary);
         }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
-
         .table-highlight {
-            background: rgba(59, 130, 246, 0.05);
+            background: rgba(139, 115, 85, 0.05);
+            color: var(--color-navy);
             font-weight: 600;
         }
 
-        .table-check {
-            color: var(--color-success);
-            font-weight: 600;
+        /* ===== SERVICE PATHWAY ===== */
+        .services {
+            background: var(--color-bg-cream);
         }
 
-        .table-cross {
-            color: var(--color-text-muted);
-        }
-
-        /* ===== SERVICES SECTION ===== */
-        .services-grid {
+        .service-flow {
             display: grid;
-            gap: var(--spacing-medium);
-            margin-top: var(--spacing-large);
+            gap: var(--space-2xl);
+            margin-top: var(--space-2xl);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
         }
 
         .service-card {
-            padding: var(--spacing-large);
-            background: rgba(26, 31, 46, 0.5);
-            border: 1px solid var(--color-border);
+            padding: var(--space-xl);
+            background: white;
             border-radius: 12px;
-            transition: var(--transition-smooth);
+            box-shadow: 0 2px 12px rgba(26, 43, 77, 0.06);
+            transition: var(--transition);
             position: relative;
         }
 
         .service-card:hover {
-            border-color: var(--color-accent);
             transform: translateY(-4px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 12px 32px rgba(26, 43, 77, 0.12);
         }
 
-        .service-card:nth-child(2) {
-            margin-left: auto;
-            margin-right: 0;
-            max-width: 90%;
-        }
-
-        .service-card:nth-child(3) {
-            margin-left: 0;
-            margin-right: auto;
-            max-width: 90%;
+        .service-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--color-success);
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 20px;
+            margin-bottom: var(--space-md);
         }
 
         .service-title {
-            margin-bottom: var(--spacing-small);
-            color: var(--color-text-primary);
+            margin-bottom: var(--space-sm);
+            font-size: 1.75rem;
         }
 
         .service-price {
-            font-family: var(--font-mono);
-            font-size: 1.2rem;
-            color: var(--color-highlight);
-            margin-bottom: var(--spacing-medium);
+            font-family: var(--font-sans);
+            font-size: 1.5rem;
+            color: var(--color-stone);
+            font-weight: 600;
+            margin-bottom: var(--space-md);
         }
 
         .service-description {
-            margin-bottom: var(--spacing-medium);
-            line-height: 1.7;
+            margin-bottom: var(--space-lg);
+            line-height: 1.8;
         }
 
         .service-deliverables {
             list-style: none;
-            margin-top: var(--spacing-small);
         }
 
         .service-deliverables li {
-            padding: var(--spacing-xs) 0;
+            padding: 8px 0;
             padding-left: 24px;
             position: relative;
             color: var(--color-text-secondary);
         }
 
         .service-deliverables li::before {
-            content: "→";
+            content: "•";
             position: absolute;
             left: 0;
-            color: var(--color-accent);
-        }
-
-        /* ===== APPROACH SECTION ===== */
-        .approach {
-            background: var(--color-bg-secondary);
-            border-top: 1px solid var(--color-border);
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .approach-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--spacing-large);
-            margin-top: var(--spacing-large);
-        }
-
-        .approach-step {
-            position: relative;
-            padding-left: var(--spacing-large);
-        }
-
-        .approach-number {
-            position: absolute;
-            left: 0;
-            top: 0;
-            font-family: var(--font-mono);
-            font-size: 3rem;
+            color: var(--color-stone);
             font-weight: 600;
-            color: rgba(59, 130, 246, 0.2);
-            line-height: 1;
         }
 
-        .approach-step h3 {
-            margin-bottom: var(--spacing-small);
-        }
-
-        .approach-step p {
-            line-height: 1.7;
-        }
-
-        /* ===== PROOF SECTION ===== */
-        .proof-quote {
-            max-width: 900px;
-            margin: var(--spacing-large) auto;
-            padding: var(--spacing-large);
-            background: rgba(26, 31, 46, 0.5);
-            border-left: 4px solid var(--color-accent);
-            border-radius: 8px;
-        }
-
-        .proof-quote blockquote {
-            font-family: var(--font-heading);
-            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-            line-height: 1.6;
-            color: var(--color-text-primary);
-            font-style: italic;
-            margin-bottom: var(--spacing-small);
-        }
-
-        .proof-quote cite {
-            color: var(--color-text-muted);
-            font-style: normal;
-            font-size: 0.9rem;
-        }
-
-        .proof-metrics {
+        /* ===== PROOF POINTS ===== */
+        .proof-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--spacing-medium);
-            margin-top: var(--spacing-large);
+            gap: var(--space-xl);
+            margin-top: var(--space-2xl);
         }
 
-        .proof-metric {
+        .proof-stat {
             text-align: center;
-            padding: var(--spacing-medium);
+            padding: var(--space-xl);
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(26, 43, 77, 0.06);
         }
 
-        .proof-metric-number {
-            font-family: var(--font-mono);
+        .proof-number {
+            font-family: var(--font-serif);
             font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 600;
-            color: var(--color-accent);
+            font-weight: 700;
+            color: var(--color-navy);
             display: block;
-            margin-bottom: var(--spacing-xs);
+            margin-bottom: var(--space-sm);
         }
 
-        .proof-metric-label {
-            color: var(--color-text-muted);
-            font-size: 0.9rem;
+        .proof-label {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
         }
 
-        /* ===== ABOUT SECTION ===== */
-        .about {
-            background: var(--color-bg-secondary);
-            border-top: 1px solid var(--color-border);
-            border-bottom: 1px solid var(--color-border);
+        .proof-statement {
+            text-align: center;
+            max-width: 800px;
+            margin: var(--space-2xl) auto 0;
+            font-size: 1.1rem;
+            color: var(--color-text-primary);
+            font-style: italic;
         }
 
-        .about-content {
+        /* ===== LOW-RISK ENTRY ===== */
+        .low-risk {
+            background: var(--color-bg-cream);
+        }
+
+        .low-risk-content {
             max-width: 800px;
             margin: 0 auto;
-        }
-
-        .about-intro {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            margin-bottom: var(--spacing-large);
-            color: var(--color-text-primary);
-        }
-
-        .about-credentials {
-            list-style: none;
-            margin-top: var(--spacing-medium);
-        }
-
-        .about-credentials li {
-            padding: var(--spacing-small) 0;
-            padding-left: 32px;
-            position: relative;
-            color: var(--color-text-secondary);
-            line-height: 1.6;
-        }
-
-        .about-credentials li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: var(--color-success);
-            font-weight: 600;
-        }
-
-        .about-network {
-            margin-top: var(--spacing-large);
-            padding: var(--spacing-medium);
-            background: rgba(10, 22, 40, 0.5);
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
-        }
-
-        /* ===== CONTACT/CTA SECTION ===== */
-        .contact {
-            background:
-                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 60%),
-                var(--color-bg-primary);
-        }
-
-        .contact-content {
-            max-width: 600px;
-            margin: 0 auto;
             text-align: center;
         }
 
-        .contact-title {
-            margin-bottom: var(--spacing-small);
+        .low-risk-price {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            color: var(--color-stone);
+            margin: var(--space-lg) 0;
         }
 
-        .contact-subtitle {
-            font-size: 1.1rem;
-            color: var(--color-text-secondary);
-            margin-bottom: var(--spacing-large);
+        .low-risk-description {
+            text-align: left;
+            margin: var(--space-xl) 0;
+            line-height: 1.8;
         }
 
-        .contact-info {
-            margin-top: var(--spacing-large);
+        .low-risk-cta {
+            margin-top: var(--space-xl);
         }
 
-        .contact-email {
-            font-family: var(--font-mono);
-            font-size: 1.3rem;
-            color: var(--color-accent);
+        .email-link {
+            color: var(--color-blue);
             text-decoration: none;
-            transition: var(--transition-smooth);
+            font-weight: 500;
+            transition: var(--transition);
         }
 
-        .contact-email:hover {
-            color: var(--color-accent-hover);
+        .email-link:hover {
+            color: var(--color-navy);
+            text-decoration: underline;
         }
 
         /* ===== FOOTER ===== */
         .footer {
-            padding: var(--spacing-large) 0 var(--spacing-medium);
-            border-top: 1px solid var(--color-border);
-            background: var(--color-bg-secondary);
+            padding: var(--space-2xl) 0 var(--space-lg);
+            background: var(--color-navy);
+            color: var(--color-bg-warm);
         }
 
         .footer-content {
@@ -656,29 +592,35 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: var(--spacing-small);
+            gap: var(--space-lg);
         }
 
-        .footer-text {
-            color: var(--color-text-muted);
-            font-size: 0.9rem;
+        .footer-company {
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .footer-company strong {
+            display: block;
+            color: var(--color-bg-warm);
+            margin-bottom: 8px;
         }
 
         .footer-links {
             display: flex;
-            gap: var(--spacing-medium);
+            gap: var(--space-lg);
             list-style: none;
         }
 
         .footer-links a {
-            color: var(--color-text-muted);
+            color: var(--color-bg-cream);
             text-decoration: none;
             font-size: 0.9rem;
-            transition: var(--transition-smooth);
+            transition: var(--transition);
         }
 
         .footer-links a:hover {
-            color: var(--color-text-primary);
+            color: white;
         }
 
         /* ===== ANIMATIONS ===== */
@@ -693,16 +635,11 @@
             }
         }
 
-        .fade-in {
-            opacity: 0;
-            animation: fadeInUp 0.8s ease-out forwards;
-        }
-
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 768px) {
             :root {
-                --spacing-section: 80px;
-                --spacing-large: 40px;
+                --space-5xl: 80px;
+                --space-4xl: 64px;
             }
 
             .nav-links {
@@ -720,32 +657,13 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: rgba(10, 22, 40, 0.98);
-                padding: var(--spacing-medium);
-                border-bottom: 1px solid var(--color-border);
+                background: rgba(250, 248, 245, 0.98);
+                padding: var(--space-lg);
+                box-shadow: 0 4px 20px rgba(26, 43, 77, 0.1);
             }
 
             .hero {
                 padding-top: 80px;
-            }
-
-            .metrics-bar {
-                grid-template-columns: 1fr;
-            }
-
-            .service-card:nth-child(2),
-            .service-card:nth-child(3) {
-                margin: 0;
-                max-width: 100%;
-            }
-
-            .approach-steps {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
             }
 
             .cta-group {
@@ -756,6 +674,22 @@
                 width: 100%;
                 text-align: center;
             }
+
+            .differentiation-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                padding: var(--space-md);
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: var(--space-sm);
+            }
         }
 
         @media (max-width: 480px) {
@@ -763,16 +697,9 @@
                 font-size: 16px;
             }
 
-            .metric {
-                padding: var(--spacing-small);
-            }
-
-            .service-card {
-                padding: var(--spacing-medium);
-            }
-
-            .proof-quote {
-                padding: var(--spacing-medium);
+            .service-card,
+            .diff-card {
+                padding: var(--space-lg);
             }
         }
     </style>
@@ -785,11 +712,10 @@
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#services">Services</a></li>
-                <li><a href="services.html">Service Strategy</a></li>
                 <li><a href="#approach">Approach</a></li>
                 <li><a href="#proof">Proof</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact" class="nav-cta">Book Consultation</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#contact" class="nav-cta">Start a conversation</a></li>
             </ul>
         </div>
     </nav>
@@ -797,116 +723,128 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
-            <h1 class="hero-headline">AI for Investment Firms.<br>Built by People Who've Done It.</h1>
-            <p class="hero-subheadline">
-                We help Nordic investment firms build AI capabilities that work — without the overhead of large consultancies or the risk of unproven vendors.
-            </p>
+            <div class="hero-content">
+                <h1 class="hero-headline">AI expertise for investment firms.<br>Senior delivery. No consultancy theater.</h1>
+                <p class="hero-subheadline">
+                    Strategic AI advisory and implementation for Nordic family offices and PE firms, delivered by a senior practitioner with €142B institutional experience.
+                </p>
 
-            <div class="metrics-bar">
-                <div class="metric">
-                    <span class="metric-number">€142B</span>
-                    <span class="metric-label">AUM at Novo Holdings</span>
+                <div class="hero-credential">
+                    <strong>PhD Computer Science</strong> | <strong>20+ years software experience</strong> | <strong>Previously ATP (€142B AUM)</strong> | <strong>5 production AI systems deployed</strong>
                 </div>
-                <div class="metric">
-                    <span class="metric-number">2.6M DKK</span>
-                    <span class="metric-label">Consultant Costs Saved</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-number">50%</span>
-                    <span class="metric-label">Cost Reduction</span>
-                </div>
-            </div>
 
-            <div class="cta-group">
-                <a href="#contact" class="btn btn-primary">Book 30-Minute Consultation</a>
-                <a href="#approach" class="btn btn-secondary">See Our Approach</a>
-            </div>
-
-            <p class="trust-signal">Built Halo at Novo Holdings — Serving seven investment arms</p>
-        </div>
-    </section>
-
-    <!-- Credibility Section -->
-    <section class="credibility" id="credibility">
-        <div class="container">
-            <h2 class="section-title">Built Inside an Investment Firm, Not For One</h2>
-            <p class="section-subtitle">
-                We understand investment workflows because we've built AI systems for them at scale.
-            </p>
-
-            <div class="credibility-grid">
-                <div class="credibility-item">
-                    <span class="credibility-number">7</span>
-                    <p class="credibility-text">Investment arms served at Novo Holdings (early-stage VC to global public equity)</p>
-                </div>
-                <div class="credibility-item">
-                    <span class="credibility-number">3</span>
-                    <p class="credibility-text">Person team that shipped Halo early — lean execution, no bureaucracy</p>
-                </div>
-                <div class="credibility-item">
-                    <span class="credibility-number">✓</span>
-                    <p class="credibility-text">Beat AlphaSense in design partner validation — built what investors actually need</p>
-                </div>
-                <div class="credibility-item">
-                    <span class="credibility-number">20+</span>
-                    <p class="credibility-text">Years engineering experience across AI, platforms, and enterprise systems</p>
-                </div>
-                <div class="credibility-item">
-                    <span class="credibility-number">PhD</span>
-                    <p class="credibility-text">Computer Science, Aarhus University — deep technical foundations</p>
-                </div>
-                <div class="credibility-item">
-                    <span class="credibility-number">DK</span>
-                    <p class="credibility-text">Based in Copenhagen, serving Nordic investment firms with local expertise</p>
+                <div class="cta-group">
+                    <a href="#contact" class="btn btn-primary">Schedule an introductory call</a>
+                    <a href="#approach" class="btn btn-secondary">See our approach</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Positioning Comparison -->
-    <section class="positioning" id="positioning">
+    <!-- Credibility Bar -->
+    <section class="credibility-bar">
         <div class="container">
-            <h2 class="section-title">Why BitBooth Instead of Large Consultancies?</h2>
+            <div class="credibility-items">
+                <div class="credibility-item">
+                    <strong>Previously: Engineering Lead, ATP</strong>
+                    €142B AUM institutional investor
+                </div>
+                <div class="credibility-item">
+                    <strong>PhD Computer Science</strong>
+                    20+ years engineering experience
+                </div>
+                <div class="credibility-item">
+                    <strong>5 production AI systems deployed</strong>
+                    18+ months in production use
+                </div>
+                <div class="credibility-item">
+                    <strong>€2.6M documented cost reduction</strong>
+                    Proven efficiency improvements
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Situation Recognition -->
+    <section class="situation">
+        <div class="container">
+            <h2 class="section-title">Sound familiar?</h2>
+
+            <div class="situation-cards">
+                <div class="situation-card">
+                    <strong>Vendors pitch AI-powered platforms</strong>
+                    You can't evaluate if the technology is real or marketing.
+                </div>
+                <div class="situation-card">
+                    <strong>Partners heard peers mention AI wins</strong>
+                    You don't know if those wins apply to your firm.
+                </div>
+                <div class="situation-card">
+                    <strong>Consultants quote a price for an AI project</strong>
+                    You don't know what questions to ask.
+                </div>
+                <div class="situation-card">
+                    <strong>Compliance asks about AI risk</strong>
+                    You're not sure what the policy should say.
+                </div>
+                <div class="situation-card">
+                    <strong>IT manages infrastructure</strong>
+                    But not AI strategy—different expertise required.
+                </div>
+            </div>
+
+            <p class="situation-closing">If any of this resonates, you're exactly who I work with.</p>
+        </div>
+    </section>
+
+    <!-- Approach Differentiation -->
+    <section class="differentiation" id="approach">
+        <div class="container">
+            <h2 class="section-title">What makes this different</h2>
+
+            <div class="differentiation-cards">
+                <div class="diff-card">
+                    <h3>Senior Delivery</h3>
+                    <p>You work directly with a principal-level practitioner. No bait-and-switch with junior consultants.</p>
+                </div>
+                <div class="diff-card">
+                    <h3>Domain Expertise</h3>
+                    <p>Experience in investment operations—deal sourcing, diligence, portfolio monitoring. Not generic "digital transformation."</p>
+                </div>
+                <div class="diff-card">
+                    <h3>No Lock-In</h3>
+                    <p>Full knowledge transfer. You own the IP, the documentation, and the capability. My job is to work myself out of a job.</p>
+                </div>
+            </div>
+
             <div class="comparison-table">
                 <table>
                     <thead>
                         <tr>
-                            <th></th>
-                            <th>Large Consultancies</th>
+                            <th>Dimension</th>
                             <th class="table-highlight">BitBooth</th>
-                            <th>SaaS Vendors</th>
+                            <th>Big 4</th>
+                            <th>AI Vendors</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Team Structure</strong></td>
-                            <td>Junior teams supervised remotely</td>
-                            <td class="table-highlight table-check">Founder-led, 20+ years experience</td>
-                            <td>Account managers, not builders</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Cost</strong></td>
-                            <td>€200K-500K+ per engagement</td>
-                            <td class="table-highlight table-check">€60K-90K for 90-day sprint</td>
-                            <td>€50K-200K/year, ongoing</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Timeline</strong></td>
-                            <td>6-12 months for delivery</td>
-                            <td class="table-highlight table-check">90 days to investable prototype</td>
-                            <td>3-6 months setup, uncertain ROI</td>
+                            <td><strong>Seniority</strong></td>
+                            <td class="table-highlight">Principal delivers</td>
+                            <td>Partner sells, junior delivers</td>
+                            <td>Product/sales team</td>
                         </tr>
                         <tr>
                             <td><strong>Expertise</strong></td>
-                            <td>Generic frameworks, not AI-native</td>
-                            <td class="table-highlight table-check">Built Halo at €142B AUM firm</td>
-                            <td>Product specialists, not domain experts</td>
+                            <td class="table-highlight">Investment-specific</td>
+                            <td>Generic frameworks</td>
+                            <td>Product-limited</td>
                         </tr>
                         <tr>
-                            <td><strong>Outcome</strong></td>
-                            <td>Slide decks and recommendations</td>
-                            <td class="table-highlight table-check">Working systems + transferred capability</td>
-                            <td>Platform dependency, limited customization</td>
+                            <td><strong>Lock-in</strong></td>
+                            <td class="table-highlight">None</td>
+                            <td>Methodology dependency</td>
+                            <td>Product dependency</td>
                         </tr>
                     </tbody>
                 </table>
@@ -914,177 +852,119 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Service Pathway -->
     <section class="services" id="services">
         <div class="container">
-            <h2 class="section-title">Services</h2>
-            <p class="section-subtitle">
-                Three ways to build AI capability in your investment firm.
+            <h2 class="section-title">How we work together</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto; color: var(--color-text-secondary);">
+                Start small. Build conviction. Execute with confidence.
             </p>
 
-            <div class="services-grid">
+            <div class="service-flow">
                 <div class="service-card">
-                    <h3 class="service-title">90-Day AI Capability Sprint</h3>
-                    <div class="service-price">€60K-90K</div>
+                    <span class="service-badge">Low commitment entry point</span>
+                    <h3 class="service-title">Advisory Retainer</h3>
+                    <div class="service-price">€2,500 / quarter</div>
                     <p class="service-description">
-                        Build your first AI capability from workflow analysis to working prototype. Ship an investable system in 90 days with full knowledge transfer.
+                        A senior AI advisor on call—monthly strategy calls, on-demand access, quarterly deep-dives.
                     </p>
                     <ul class="service-deliverables">
-                        <li>Investment workflow analysis and opportunity mapping</li>
-                        <li>Working AI prototype (research automation, deal screening, or portfolio intelligence)</li>
-                        <li>Technical architecture and documentation</li>
-                        <li>Team training and capability handoff</li>
-                        <li>90-day post-delivery support</li>
+                        <li>Monthly strategy calls with senior advisor</li>
+                        <li>On-demand access for tactical questions</li>
+                        <li>One quarterly deep-dive on specific challenge</li>
+                        <li>Strategic summary memo each quarter</li>
                     </ul>
+                    <p style="margin-top: var(--space-md); font-weight: 600; color: var(--color-success);">→ Start here if you're exploring</p>
                 </div>
 
                 <div class="service-card">
-                    <h3 class="service-title">Technical Due Diligence</h3>
-                    <div class="service-price">€15K-25K per deal</div>
+                    <span class="service-badge">IC-ready recommendation</span>
+                    <h3 class="service-title">Investment Efficiency Assessment</h3>
+                    <div class="service-price">€35,000 - €50,000</div>
                     <p class="service-description">
-                        Evaluate AI/tech companies in your pipeline with investment-grade technical assessments. Understand what you're actually buying.
+                        A 4-week technical audit that quantifies your highest-cost operational bottleneck and tells you exactly what to do about it.
                     </p>
                     <ul class="service-deliverables">
-                        <li>Technical architecture review and risk assessment</li>
-                        <li>AI capability evaluation (models, data, infrastructure)</li>
-                        <li>Team and talent assessment</li>
-                        <li>Scalability and technical debt analysis</li>
-                        <li>Concise memo for investment committee</li>
+                        <li>Current state workflow analysis and mapping</li>
+                        <li>Bottleneck identification with quantified costs</li>
+                        <li>Build vs. buy recommendation with ROI modeling</li>
+                        <li>Implementation roadmap with clear milestones</li>
+                        <li>IC presentation deck included</li>
                     </ul>
+                    <p style="margin-top: var(--space-md); font-weight: 600; color: var(--color-success);">→ Start here if you're ready to invest but unsure where</p>
                 </div>
 
                 <div class="service-card">
-                    <h3 class="service-title">Fractional AI Leadership</h3>
-                    <div class="service-price">€8K-15K/month</div>
+                    <span class="service-badge">Milestone gates + exit optionality</span>
+                    <h3 class="service-title">Product Implementation</h3>
+                    <div class="service-price">€150,000 - €300,000</div>
                     <p class="service-description">
-                        Strategic AI guidance without the overhead of a full-time hire. Get senior AI leadership for portfolio companies or internal capabilities.
+                        Deploy production-grade AI capabilities in 6-12 months—Deal Flow Intelligence, Diligence Acceleration, or Portfolio Monitoring.
                     </p>
                     <ul class="service-deliverables">
-                        <li>Monthly strategy sessions and roadmap planning</li>
-                        <li>Technical guidance for portfolio company CTOs</li>
-                        <li>Vendor and build/buy decision support</li>
-                        <li>Team hiring and capability building</li>
-                        <li>On-call technical escalation support</li>
+                        <li>Production infrastructure on secure cloud platform</li>
+                        <li>Full compliance and security framework</li>
+                        <li>Knowledge transfer and team training</li>
+                        <li>Complete documentation and IP ownership</li>
+                        <li>6 months post-launch support included</li>
                     </ul>
+                    <p style="margin-top: var(--space-md); font-weight: 600; color: var(--color-success);">→ Start here if you know what you need</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Approach Section -->
-    <section class="approach" id="approach">
-        <div class="container">
-            <h2 class="section-title">Our Approach: Build Capability, Not Dependency</h2>
-            <p class="section-subtitle">
-                We transfer knowledge and systems, not create consulting annuities.
-            </p>
-
-            <div class="approach-steps">
-                <div class="approach-step">
-                    <span class="approach-number">01</span>
-                    <h3>Discover</h3>
-                    <p>
-                        Deep dive into your investment workflows. We analyze where AI can deliver measurable value — not generic automation, but specific improvements to research, screening, or portfolio work.
-                    </p>
-                </div>
-
-                <div class="approach-step">
-                    <span class="approach-number">02</span>
-                    <h3>Build</h3>
-                    <p>
-                        Ship investable prototypes, not slide decks. We build working systems you can test with real workflows, gathering feedback from your team to prove value before scaling.
-                    </p>
-                </div>
-
-                <div class="approach-step">
-                    <span class="approach-number">03</span>
-                    <h3>Transfer</h3>
-                    <p>
-                        Hand off knowledge and systems completely. Your team owns the code, understands the architecture, and can evolve the capability independently. No vendor lock-in.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Proof Section -->
+    <!-- Proof Points -->
     <section class="proof" id="proof">
         <div class="container">
-            <h2 class="section-title">Proven at Novo Holdings</h2>
+            <h2 class="section-title">Proven at institutional scale</h2>
 
-            <div class="proof-quote">
-                <blockquote>
-                    "Our design partners chose our platform over AlphaSense because it was built specifically for their investment workflows — not adapted from generic research tools."
-                </blockquote>
-                <cite>— Halo Platform Validation, Novo Holdings</cite>
+            <div class="proof-stats">
+                <div class="proof-stat">
+                    <span class="proof-number">€142B</span>
+                    <span class="proof-label">AUM of institution where methodology was developed</span>
+                </div>
+                <div class="proof-stat">
+                    <span class="proof-number">5</span>
+                    <span class="proof-label">Production AI capabilities deployed</span>
+                </div>
+                <div class="proof-stat">
+                    <span class="proof-number">6 mo</span>
+                    <span class="proof-label">Concept to production for deal tracking system</span>
+                </div>
+                <div class="proof-stat">
+                    <span class="proof-number">€2.6M</span>
+                    <span class="proof-label">Documented cost reduction through efficiency</span>
+                </div>
+                <div class="proof-stat">
+                    <span class="proof-number">18+ mo</span>
+                    <span class="proof-label">In production with continued usage</span>
+                </div>
             </div>
 
-            <div class="proof-metrics">
-                <div class="proof-metric">
-                    <span class="proof-metric-number">7</span>
-                    <span class="proof-metric-label">Investment Arms Served</span>
-                </div>
-                <div class="proof-metric">
-                    <span class="proof-metric-number">€142B</span>
-                    <span class="proof-metric-label">Assets Under Management</span>
-                </div>
-                <div class="proof-metric">
-                    <span class="proof-metric-number">50%</span>
-                    <span class="proof-metric-label">Consultant Cost Reduction</span>
-                </div>
-            </div>
+            <p class="proof-statement">
+                Every system built to pass conservative legal, compliance, and security review. These aren't demos—they're production infrastructure.
+            </p>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
+    <!-- Low-Risk Entry -->
+    <section class="low-risk" id="contact">
         <div class="container">
-            <h2 class="section-title">About BitBooth</h2>
+            <div class="low-risk-content">
+                <h2 class="section-title">Start with a conversation</h2>
 
-            <div class="about-content">
-                <p class="about-intro">
-                    BitBooth ApS was founded by Omar Sheikh-Omar, who led the AI engineering team at Novo Holdings where he built Halo, an AI platform serving seven investment arms across a €142B AUM portfolio.
-                </p>
+                <div class="low-risk-price">€2,500 / quarter</div>
 
-                <ul class="about-credentials">
-                    <li>Led AI engineering at Novo Holdings (€142B AUM), serving principal investments, venture, life science, growth equity, and public markets teams</li>
-                    <li>Built Halo with a lean 3-person team — beat AlphaSense in design partner validation by focusing on investment workflows, not generic research</li>
-                    <li>20+ years engineering experience across AI/ML, platform engineering, and enterprise systems at scale</li>
-                    <li>PhD in Computer Science from Aarhus University with deep technical foundations in AI and distributed systems</li>
-                    <li>Based in Copenhagen, Denmark, serving Nordic investment firms with local market understanding</li>
-                </ul>
-
-                <div class="about-network">
-                    <h3>Network Model for Specialized Needs</h3>
-                    <p>
-                        For engagements requiring specialized expertise (data engineering, regulatory compliance, industry-specific AI), BitBooth works with a curated network of senior practitioners. Every partner is vetted for investment firm experience — no junior staff, no generic consultants.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact/CTA Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="contact-content">
-                <h2 class="contact-title">Let's Discuss Your AI Capability Goals</h2>
-                <p class="contact-subtitle">
-                    30-minute conversation, no sales pressure. Let's explore if BitBooth is the right fit for your firm.
-                </p>
-
-                <div class="cta-group">
-                    <a href="mailto:omar@bitbooth.dk" class="btn btn-primary">Email: omar@bitbooth.dk</a>
+                <div class="low-risk-description">
+                    <p>Not ready for a €40K assessment? The Advisory Retainer gives you senior AI expertise on call for €2,500 per quarter. Monthly strategy calls, on-demand access for tactical questions, and one quarterly deep-dive.</p>
+                    <p style="margin-top: var(--space-md);">Think of it as a trial relationship. If it's valuable, we'll continue. If not, we'll part ways with no hard feelings.</p>
                 </div>
 
-                <div class="contact-info">
-                    <p class="contact-email">
-                        <a href="mailto:omar@bitbooth.dk" class="contact-email">omar@bitbooth.dk</a>
-                    </p>
-                    <p style="margin-top: 20px; color: var(--color-text-muted);">
-                        BitBooth ApS<br>
-                        Copenhagen, Denmark<br>
-                        Serving Nordic Investment Firms
+                <div class="low-risk-cta">
+                    <a href="mailto:omar@bitbooth.dk" class="btn btn-primary">Schedule an introductory call</a>
+                    <p style="margin-top: var(--space-md); color: var(--color-text-secondary);">
+                        Or email: <a href="mailto:omar@bitbooth.dk" class="email-link">omar@bitbooth.dk</a>
                     </p>
                 </div>
             </div>
@@ -1095,12 +975,17 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <p class="footer-text">&copy; 2024 BitBooth ApS. All rights reserved.</p>
+                <div class="footer-company">
+                    <strong>BitBooth ApS</strong>
+                    Copenhagen, Denmark<br>
+                    CVR: [Business registration number]<br>
+                    <a href="mailto:omar@bitbooth.dk" style="color: var(--color-bg-cream); text-decoration: none;">omar@bitbooth.dk</a>
+                </div>
                 <ul class="footer-links">
-                    <li><a href="#home">Home</a></li>
+                    <li><a href="https://linkedin.com/in/omarsheikomar" target="_blank">LinkedIn</a></li>
                     <li><a href="#services">Services</a></li>
-                    <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    <li><a href="#privacy">Privacy</a></li>
                 </ul>
             </div>
         </div>
@@ -1112,34 +997,27 @@
         const navToggle = document.getElementById('navToggle');
         const navLinks = document.getElementById('navLinks');
 
-        navToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking a link
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
+        if (navToggle) {
+            navToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
             });
-        });
 
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
+            // Close mobile menu when clicking a link
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
             });
-        }, observerOptions);
+        }
 
-        // Observe all sections
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
+        // Add shadow to nav on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
         });
 
         // Smooth scroll for anchor links
@@ -1148,64 +1026,13 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    const offsetTop = target.offsetTop - 80; // Account for fixed nav
+                    const offsetTop = target.offsetTop - 80;
                     window.scrollTo({
                         top: offsetTop,
                         behavior: 'smooth'
                     });
                 }
             });
-        });
-
-        // Add shadow to nav on scroll
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('nav');
-            if (window.scrollY > 100) {
-                nav.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
-            } else {
-                nav.style.boxShadow = 'none';
-            }
-        });
-
-        // Animate numbers when they come into view
-        const animateNumber = (element, target) => {
-            const duration = 2000;
-            const start = 0;
-            const increment = target / (duration / 16);
-            let current = start;
-
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    element.textContent = target;
-                    clearInterval(timer);
-                } else {
-                    element.textContent = Math.floor(current);
-                }
-            }, 16);
-        };
-
-        // Observer for number animations
-        const numberObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
-                    entry.target.classList.add('animated');
-                    const target = parseInt(entry.target.getAttribute('data-target'));
-                    if (!isNaN(target)) {
-                        animateNumber(entry.target, target);
-                    }
-                }
-            });
-        }, { threshold: 0.5 });
-
-        // Add data-target attributes to numbers you want to animate
-        document.querySelectorAll('.credibility-number').forEach(num => {
-            const text = num.textContent;
-            const match = text.match(/\d+/);
-            if (match) {
-                num.setAttribute('data-target', match[0]);
-                numberObserver.observe(num);
-            }
         });
     </script>
 </body>
