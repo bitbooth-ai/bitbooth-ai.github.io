@@ -56,9 +56,9 @@ Edit `index.html` (root) and add a new card in the `designs-grid` section:
 - `<span class="design-badge current">Current</span>` - Green badge for active/recommended design
 - `<span class="design-badge">New</span>` - Purple badge for new designs
 
-## AI Agent Skills
+## AI Agent Skills (Required)
 
-Two skills are available in `.claude/skills/` to assist with design creation:
+Two skills in `.claude/skills/` **must be invoked** when creating new designs:
 
 ### frontend-design
 
@@ -75,20 +75,20 @@ Features:
 
 ### brand-guidelines
 
-**Use when designs should follow BitBooth's visual identity.**
+**Required for all designs.**
 
-Applies official brand colors and typography for consistency across designs.
+Applies official BitBooth brand colors and typography. All designs must follow BitBooth's visual identity.
 
 Provides:
 - Brand color palette (Dark Blue, Light Silver, accent colors)
 - Typography specs (Playfair Display for titles, Figtree for body)
 - Smart font application and fallbacks
 
-### Recommended Workflow for AI Agents
+### Required Workflow for AI Agents
 
 1. Invoke `frontend-design` skill
-2. Create `designs/XX-name/index.html` with the new design
-3. Optionally invoke `brand-guidelines` if brand consistency is needed
+2. Invoke `brand-guidelines` skill
+3. Create `designs/XX-name/index.html` with the new design
 4. Add a card to root `index.html` linking to the new design
 
 ## Technology Stack

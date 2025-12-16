@@ -54,23 +54,23 @@ Each design variant lives in its own folder under /designs/.
 - Gold:         #D6A319  (secondary accent)
 - Green:        #788c5d  (tertiary accent, "current" badge)
 
-## AI AGENT SKILLS
+## AI AGENT SKILLS (REQUIRED)
 
-When creating new designs, invoke these skills for best results:
+When creating new designs, you MUST invoke these skills:
 
-1. **frontend-design** - INVOKE THIS FIRST when creating a new design
+1. **frontend-design** - INVOKE FIRST when creating a new design
    Creates distinctive, production-grade interfaces with high design quality.
    Avoids generic "AI slop" aesthetics. Generates creative, polished code.
    Usage: Invoke skill before writing any design HTML/CSS.
 
-2. **brand-guidelines** - Use for BitBooth brand consistency
-   Applies official brand colors and typography.
-   Use when the design should follow BitBooth's visual identity.
+2. **brand-guidelines** - REQUIRED for all designs
+   Applies official BitBooth brand colors and typography.
+   All designs must follow BitBooth's visual identity.
 
-Example workflow for AI agents:
+Required workflow for AI agents:
 1. Invoke `frontend-design` skill
-2. Create designs/XX-name/index.html with the new design
-3. Optionally invoke `brand-guidelines` if brand consistency is needed
+2. Invoke `brand-guidelines` skill
+3. Create designs/XX-name/index.html with the new design
 4. Add a card to this file linking to the new design
 
 ================================================================================
