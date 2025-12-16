@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitBooth | AI Agents that Work</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* Brand Colors */
+            --color-dark-blue: #15253E;
+            --color-light-silver: #F9F7F8;
+            --color-light-blue: #99D0F2;
+            --color-purple: #7B68DF;
+            --color-gold: #D6A319;
+            --color-green: #788c5d;
+
+            /* Warm gradient colors for blobs */
+            --color-warm-orange: #F5A962;
+            --color-warm-peach: #FBCEB1;
+            --color-warm-coral: #E8927C;
+            --color-warm-blush: #F4C4B5;
+
+            /* Background */
+            --color-cream: #FDF9F6;
+
+            /* Typography */
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'Figtree', Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-cream);
+            color: var(--color-dark-blue);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(253, 249, 246, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-dark-blue);
+            letter-spacing: -0.02em;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-cta {
+            background: transparent;
+            color: var(--color-dark-blue);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: 1px solid rgba(21, 37, 62, 0.15);
+            transition: all 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            background: rgba(21, 37, 62, 0.05);
+            border-color: rgba(21, 37, 62, 0.25);
+        }
+
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(21, 37, 62, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-icon:hover {
+            background: rgba(21, 37, 62, 0.05);
+        }
+
+        .nav-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--color-dark-blue);
+        }
+
+        .menu-icon {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .menu-icon span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--color-dark-blue);
+            border-radius: 1px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 32px 80px;
+        }
+
+        /* Gradient Blobs - The key visual element */
+        .gradient-blobs {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.7;
+            animation: blobFloat 20s ease-in-out infinite;
+        }
+
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--color-warm-orange);
+            top: 25%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--color-warm-peach);
+            top: 35%;
+            left: 35%;
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            width: 350px;
+            height: 350px;
+            background: var(--color-warm-coral);
+            top: 20%;
+            right: 25%;
+            animation-delay: -10s;
+        }
+
+        .blob-4 {
+            width: 300px;
+            height: 300px;
+            background: var(--color-warm-blush);
+            top: 45%;
+            right: 30%;
+            animation-delay: -15s;
+        }
+
+        @keyframes blobFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(20px, -30px) scale(1.05);
+            }
+            50% {
+                transform: translate(-10px, 20px) scale(0.95);
+            }
+            75% {
+                transform: translate(30px, 10px) scale(1.02);
+            }
+        }
+
+        /* Hero Content */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 60px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            line-height: 1.15;
+            margin-bottom: 24px;
+            color: var(--color-dark-blue);
+            letter-spacing: -0.02em;
+            font-weight: 500;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(21, 37, 62, 0.65);
+            max-width: 550px;
+            margin: 0 auto 36px;
+            font-weight: 400;
+            line-height: 1.65;
+        }
+
+        .hero-cta {
+            background: var(--color-dark-blue);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .hero-cta:hover {
+            background: #1a2f4d;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(21, 37, 62, 0.2);
+        }
+
+        /* Floating Profile Cards */
+        .floating-cards {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .profile-card {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 24px rgba(21, 37, 62, 0.08);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            animation: cardFloat 8s ease-in-out infinite;
+            max-width: 260px;
+        }
+
+        .profile-card.large {
+            padding: 20px;
+        }
+
+        .card-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-warm-peach), var(--color-warm-coral));
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .card-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-avatar.initials {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .card-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .card-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-dark-blue);
+            margin-bottom: 2px;
+        }
+
+        .card-role {
+            font-size: 0.8rem;
+            color: rgba(21, 37, 62, 0.55);
+            margin-bottom: 8px;
+        }
+
+        .card-label {
+            font-size: 0.75rem;
+            color: rgba(21, 37, 62, 0.45);
+        }
+
+        .card-highlight {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-dark-blue);
+        }
+
+        /* Recommendation badge card */
+        .recommendation-card {
+            position: absolute;
+            background: var(--color-dark-blue);
+            color: white;
+            border-radius: 10px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: cardFloat 7s ease-in-out infinite;
+            box-shadow: 0 4px 20px rgba(21, 37, 62, 0.15);
+        }
+
+        .recommendation-card .rec-icon {
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .recommendation-card .rec-icon svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .recommendation-card .rec-content {
+            font-size: 0.8rem;
+        }
+
+        .recommendation-card .rec-label {
+            opacity: 0.7;
+            font-size: 0.7rem;
+        }
+
+        .recommendation-card .rec-name {
+            font-weight: 600;
+        }
+
+        /* Card positions */
+        .card-1 {
+            top: 20%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .card-2 {
+            top: 55%;
+            right: 5%;
+            animation-delay: -2s;
+        }
+
+        .card-3 {
+            top: 42%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-delay: -4s;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .card-3 {
+            animation: cardFloat3 7s ease-in-out infinite;
+        }
+
+        @keyframes cardFloat3 {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-12px);
+            }
+        }
+
+        /* Small floating avatars */
+        .floating-avatar {
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-light-blue), var(--color-purple));
+            box-shadow: 0 4px 16px rgba(21, 37, 62, 0.1);
+            animation: avatarFloat 10s ease-in-out infinite;
+            opacity: 0.8;
+        }
+
+        .avatar-1 {
+            top: 30%;
+            right: 12%;
+            animation-delay: -3s;
+        }
+
+        .avatar-2 {
+            bottom: 30%;
+            left: 8%;
+            animation-delay: -6s;
+        }
+
+        .avatar-3 {
+            top: 65%;
+            left: 20%;
+            width: 36px;
+            height: 36px;
+            animation-delay: -1s;
+        }
+
+        @keyframes avatarFloat {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-20px) scale(1.05);
+                opacity: 0.9;
+            }
+        }
+
+        /* Section below hero */
+        .social-proof {
+            padding: 100px 32px;
+            background: white;
+            position: relative;
+        }
+
+        .social-proof-container {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .section-heading {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            line-height: 1.25;
+            color: var(--color-dark-blue);
+            margin-bottom: 20px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+        }
+
+        .section-text {
+            font-size: 1.1rem;
+            color: rgba(21, 37, 62, 0.6);
+            max-width: 600px;
+            margin: 0 auto 48px;
+            line-height: 1.7;
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 100px 32px;
+            background: var(--color-cream);
+        }
+
+        .features-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .features-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--color-purple);
+            margin-bottom: 16px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(21, 37, 62, 0.08);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .feature-icon-1 {
+            background: linear-gradient(135deg, var(--color-warm-peach), var(--color-warm-coral));
+        }
+
+        .feature-icon-2 {
+            background: linear-gradient(135deg, var(--color-light-blue), var(--color-purple));
+        }
+
+        .feature-icon-3 {
+            background: linear-gradient(135deg, var(--color-purple), #9b87f5);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-dark-blue);
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: rgba(21, 37, 62, 0.6);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 32px;
+            background: white;
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            line-height: 1.25;
+            color: var(--color-dark-blue);
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            color: rgba(21, 37, 62, 0.6);
+            margin-bottom: 32px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-dark-blue);
+            color: var(--color-light-silver);
+            padding: 48px 32px 32px;
+        }
+
+        .footer-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+
+        .footer-tagline {
+            font-size: 0.9rem;
+            color: rgba(249, 247, 248, 0.6);
+            line-height: 1.6;
+        }
+
+        .footer-section h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--color-light-silver);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: rgba(249, 247, 248, 0.65);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--color-light-blue);
+        }
+
+        .footer-bottom {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-top: 24px;
+            border-top: 1px solid rgba(249, 247, 248, 0.1);
+            text-align: center;
+            color: rgba(249, 247, 248, 0.45);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-cta {
+                display: none;
+            }
+
+            .profile-card {
+                display: none;
+            }
+
+            .recommendation-card {
+                display: none;
+            }
+
+            .floating-avatar {
+                display: none;
+            }
+
+            .hero {
+                padding: 90px 24px 60px;
+            }
+
+            .hero-content {
+                padding-top: 40px;
+            }
+
+            .blob {
+                filter: blur(60px);
+                opacity: 0.5;
+            }
+
+            .blob-1 {
+                width: 300px;
+                height: 300px;
+                top: 30%;
+                left: 10%;
+            }
+
+            .blob-2 {
+                width: 250px;
+                height: 250px;
+            }
+
+            .blob-3, .blob-4 {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .social-proof {
+                padding: 64px 24px;
+            }
+
+            .features {
+                padding: 64px 24px;
+            }
+
+            .cta-section {
+                padding: 64px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">BitBooth</div>
+            <div class="nav-right">
+                <a href="#contact" class="nav-cta">Work with us</a>
+                <div class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="8" r="4"/>
+                        <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+                    </svg>
+                </div>
+                <div class="menu-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Gradient Blobs -->
+        <div class="gradient-blobs">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+            <div class="blob blob-4"></div>
+        </div>
+
+        <!-- Floating Profile Cards -->
+        <div class="floating-cards">
+            <!-- Left card - person hiring -->
+            <div class="profile-card large card-1">
+                <div class="card-avatar initials" style="background: linear-gradient(135deg, #7B68DF, #99D0F2);">SL</div>
+                <div class="card-content">
+                    <div class="card-name">Sarah</div>
+                    <div class="card-role">CTO at Growth Startup</div>
+                    <div class="card-label">Looking for</div>
+                    <div class="card-highlight">AI Integration Lead</div>
+                </div>
+            </div>
+
+            <!-- Center card - recommendation -->
+            <div class="recommendation-card card-3">
+                <div class="rec-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                </div>
+                <div class="rec-content">
+                    <div class="rec-label">Recommended</div>
+                    <div class="rec-name">Marcus</div>
+                </div>
+            </div>
+
+            <!-- Right card - candidate -->
+            <div class="profile-card card-2">
+                <div class="card-avatar initials" style="background: linear-gradient(135deg, #E8927C, #F5A962);">MK</div>
+                <div class="card-content">
+                    <div class="card-name">Marcus</div>
+                    <div class="card-role">AI Engineer</div>
+                    <div class="card-label">Interested in</div>
+                    <div class="card-highlight">Early stage AI</div>
+                </div>
+            </div>
+
+            <!-- Small floating avatars -->
+            <div class="floating-avatar avatar-1"></div>
+            <div class="floating-avatar avatar-2"></div>
+            <div class="floating-avatar avatar-3"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <h1>Build incredible things, with AI that works.</h1>
+            <p>An AI advisory where exceptional businesses connect with intelligent automation—and start transforming together.</p>
+            <a href="#contact" class="hero-cta">Request access</a>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof">
+        <div class="social-proof-container">
+            <h2 class="section-heading">Exceptional teams are using BitBooth to transform.</h2>
+            <p class="section-text">Leaders working with BitBooth have built AI systems at hyper-growth companies and are connecting the best technology with the right business problems.</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <div class="features-header">
+                <div class="features-label">Why BitBooth</div>
+                <h2 class="section-heading">AI that feels human.</h2>
+                <p class="section-text">We build intelligent agents that understand context, learn from interactions, and deliver results that matter.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h3>Custom Built</h3>
+                    <p>Every agent is designed specifically for your business needs, workflows, and goals. No generic templates.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+                            <path d="M12 2a9 9 0 0 0-9 9c0 4.17 2.84 7.67 6.69 8.69L12 22l2.31-2.31C18.16 18.67 21 15.17 21 11a9 9 0 0 0-9-9zm0 2c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14c-2.67 0-5.33-1.33-5.33-4 0-.89.36-1.7.94-2.33.58-.63 1.39-.94 2.39-.94h4c1 0 1.81.31 2.39.94.58.63.94 1.44.94 2.33 0 2.67-2.66 4-5.33 4z"/>
+                        </svg>
+                    </div>
+                    <h3>Intelligent Learning</h3>
+                    <p>Our agents adapt and improve over time, understanding your business better with every interaction.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+                            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+                        </svg>
+                    </div>
+                    <h3>Seamless Integration</h3>
+                    <p>Works with your existing tools and systems. Deploy in days, not months.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="cta-container">
+            <h2>Ready to transform your workflow?</h2>
+            <p>Join forward-thinking companies already building with BitBooth AI agents.</p>
+            <a href="#contact" class="hero-cta">Get Started Today</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-brand">BitBooth</div>
+                <p class="footer-tagline">AI agents that work for you. Custom built, intelligently designed.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#case-studies">Case Studies</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#careers">Careers</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#privacy">Privacy</a></li>
+                    <li><a href="#terms">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 BitBooth ApS. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
