@@ -1,3 +1,61 @@
+<!--
+================================================================================
+BITBOOTH DESIGN SHOWCASE - AI AGENT INSTRUCTIONS
+================================================================================
+
+This is a design showcase hub for A/B testing different website designs.
+Each design variant lives in its own folder under /designs/.
+
+## HOW TO ADD A NEW DESIGN
+
+1. CREATE THE DESIGN FOLDER
+   - Create a new folder: designs/XX-name/ (e.g., designs/02-modern/)
+   - Use format: XX = two-digit number, name = short lowercase descriptor
+   - Add an index.html file with your complete design
+
+2. ADD A CARD TO THIS FILE
+   - Copy the design-card template below
+   - Update: href, preview-label number, design-name, design-description
+   - Use badge class "current" for the active/recommended design
+   - Use badge without class for new/experimental designs
+
+## DESIGN CARD TEMPLATE
+
+<a href="designs/XX-name/" class="design-card">
+    <div class="design-preview">
+        <span class="preview-label">XX</span>
+    </div>
+    <div class="design-info">
+        <h2 class="design-name">Design Name</h2>
+        <p class="design-description">Brief description of the design approach, color palette, and visual style.</p>
+        <span class="design-badge">New</span>
+    </div>
+</a>
+
+## BADGE OPTIONS
+- <span class="design-badge current">Current</span>  - Green badge for active design
+- <span class="design-badge">New</span>              - Purple badge for new designs
+
+## FILE STRUCTURE
+/
+├── index.html              (This file - design showcase hub)
+├── designs/
+│   ├── 01-calm/
+│   │   └── index.html      (First design variant)
+│   ├── 02-modern/
+│   │   └── index.html      (Second design variant)
+│   └── ...
+
+## BRAND COLORS (defined in :root)
+- Dark Blue:    #15253E  (primary text, dark backgrounds)
+- Light Silver: #F9F7F8  (light backgrounds)
+- Light Blue:   #99D0F2  (accent on dark)
+- Purple:       #7B68DF  (primary accent)
+- Gold:         #D6A319  (secondary accent)
+- Green:        #788c5d  (tertiary accent, "current" badge)
+
+================================================================================
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -218,18 +276,28 @@
                     </div>
                 </a>
 
-                <!-- Add more design cards here as you create them -->
                 <!--
-                <a href="designs/02-modern/" class="design-card">
+                ============================================================
+                AI AGENT: ADD NEW DESIGN CARDS HERE
+                ============================================================
+                Copy this template for each new design:
+
+                <a href="designs/XX-name/" class="design-card">
                     <div class="design-preview">
-                        <span class="preview-label">02</span>
+                        <span class="preview-label">XX</span>
                     </div>
                     <div class="design-info">
-                        <h2 class="design-name">Modern</h2>
-                        <p class="design-description">Description of the design approach and characteristics.</p>
+                        <h2 class="design-name">Design Name</h2>
+                        <p class="design-description">Description of design approach.</p>
                         <span class="design-badge">New</span>
                     </div>
                 </a>
+
+                Remember to:
+                1. Create the folder: designs/XX-name/
+                2. Add index.html to that folder with the full design
+                3. Update XX to next number (02, 03, etc.)
+                ============================================================
                 -->
             </div>
         </div>
