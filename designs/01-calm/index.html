@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI expertise for Nordic investment firms. Senior delivery, domain expertise, no consultancy theater. Previously ATP (€142B AUM).">
+    <title>BitBooth | AI Expertise for Investment Firms</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== CSS RESET & BASE ===== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ===== CSS CUSTOM PROPERTIES ===== */
+        :root {
+            /* Color Palette - Institutional Warmth */
+            --color-navy: #1A2B4D;
+            --color-stone: #8B7355;
+            --color-blue: #4A7C94;
+            --color-bg-warm: #FAF8F5;
+            --color-bg-cream: #F0EDE6;
+            --color-text-primary: #1A1A1A;
+            --color-text-secondary: #5C5C5C;
+            --color-success: #2D5A3D;
+
+            /* Typography */
+            --font-serif: 'Libre Baskerville', Georgia, serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+            /* Spacing - 8px base rhythm */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 32px;
+            --space-xl: 48px;
+            --space-2xl: 64px;
+            --space-3xl: 96px;
+            --space-4xl: 120px;
+            --space-5xl: 160px;
+
+            /* Layout */
+            --container-width: 1100px;
+
+            /* Transitions */
+            --transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        body {
+            font-family: var(--font-sans);
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--color-text-secondary);
+            background-color: var(--color-bg-warm);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            color: var(--color-navy);
+            line-height: 1.3;
+            font-weight: 400;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        /* ===== LAYOUT ===== */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        section {
+            padding: var(--space-5xl) 0;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(250, 248, 245, 0.95);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .nav.scrolled {
+            box-shadow: 0 2px 20px rgba(26, 43, 77, 0.08);
+        }
+
+        .nav-container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: var(--space-md) var(--space-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-navy);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--color-navy);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-stone);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--color-navy);
+            color: var(--color-bg-warm) !important;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .nav-cta::after {
+            display: none;
+        }
+
+        .nav-cta:hover {
+            background: var(--color-blue);
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(26, 43, 77, 0.2);
+        }
+
+        /* Mobile menu toggle */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-navy);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 100px;
+            background: linear-gradient(135deg, var(--color-bg-warm) 0%, var(--color-bg-cream) 100%);
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero-headline {
+            margin-bottom: var(--space-lg);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-subheadline {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-xl);
+            max-width: 750px;
+            animation: fadeInUp 0.8s ease-out 0.1s backwards;
+        }
+
+        .hero-credential {
+            font-size: 1.1rem;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-2xl);
+            padding: var(--space-lg);
+            background: white;
+            border-left: 4px solid var(--color-stone);
+            border-radius: 4px;
+            box-shadow: 0 2px 12px rgba(26, 43, 77, 0.06);
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero-credential strong {
+            color: var(--color-navy);
+            font-weight: 600;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.3s backwards;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--color-navy);
+            color: var(--color-bg-warm);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-blue);
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(26, 43, 77, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-navy);
+            border: 2px solid var(--color-navy);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-navy);
+            color: var(--color-bg-warm);
+        }
+
+        /* ===== CREDIBILITY BAR ===== */
+        .credibility-bar {
+            background: var(--color-bg-cream);
+            padding: var(--space-2xl) 0;
+            border-top: 1px solid rgba(139, 115, 85, 0.2);
+            border-bottom: 1px solid rgba(139, 115, 85, 0.2);
+        }
+
+        .credibility-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        .credibility-item {
+            text-align: left;
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .credibility-item strong {
+            display: block;
+            color: var(--color-navy);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        /* ===== SITUATION SECTION ===== */
+        .situation {
+            background: var(--color-bg-cream);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .situation-cards {
+            display: grid;
+            gap: var(--space-md);
+            margin-top: var(--space-2xl);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .situation-card {
+            padding: var(--space-lg);
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(26, 43, 77, 0.06);
+            transition: var(--transition);
+        }
+
+        .situation-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(26, 43, 77, 0.12);
+        }
+
+        .situation-card strong {
+            color: var(--color-navy);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .situation-closing {
+            text-align: center;
+            margin-top: var(--space-2xl);
+            font-size: 1.1rem;
+            color: var(--color-navy);
+            font-weight: 500;
+        }
+
+        /* ===== DIFFERENTIATION SECTION ===== */
+        .differentiation-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-xl);
+            margin-top: var(--space-2xl);
+        }
+
+        .diff-card {
+            padding: var(--space-xl);
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(26, 43, 77, 0.06);
+            transition: var(--transition);
+        }
+
+        .diff-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(26, 43, 77, 0.12);
+        }
+
+        .diff-card h3 {
+            color: var(--color-navy);
+            margin-bottom: var(--space-md);
+            font-size: 1.5rem;
+        }
+
+        .diff-card p {
+            line-height: 1.8;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            margin-top: var(--space-2xl);
+            overflow-x: auto;
+            background: white;
+            border-radius: 8px;
+            padding: var(--space-xl);
+            box-shadow: 0 2px 12px rgba(26, 43, 77, 0.06);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: var(--space-md);
+            text-align: left;
+            border-bottom: 1px solid var(--color-bg-cream);
+        }
+
+        th {
+            background: var(--color-bg-cream);
+            color: var(--color-navy);
+            font-weight: 600;
+            font-family: var(--font-sans);
+        }
+
+        td {
+            color: var(--color-text-secondary);
+        }
+
+        .table-highlight {
+            background: rgba(139, 115, 85, 0.05);
+            color: var(--color-navy);
+            font-weight: 600;
+        }
+
+        /* ===== SERVICE PATHWAY ===== */
+        .services {
+            background: var(--color-bg-cream);
+        }
+
+        .service-flow {
+            display: grid;
+            gap: var(--space-2xl);
+            margin-top: var(--space-2xl);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+
+        .service-card {
+            padding: var(--space-xl);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(26, 43, 77, 0.06);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(26, 43, 77, 0.12);
+        }
+
+        .service-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--color-success);
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 20px;
+            margin-bottom: var(--space-md);
+        }
+
+        .service-title {
+            margin-bottom: var(--space-sm);
+            font-size: 1.75rem;
+        }
+
+        .service-price {
+            font-family: var(--font-sans);
+            font-size: 1.5rem;
+            color: var(--color-stone);
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+        }
+
+        .service-description {
+            margin-bottom: var(--space-lg);
+            line-height: 1.8;
+        }
+
+        .service-deliverables {
+            list-style: none;
+        }
+
+        .service-deliverables li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            color: var(--color-text-secondary);
+        }
+
+        .service-deliverables li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--color-stone);
+            font-weight: 600;
+        }
+
+        /* ===== PROOF POINTS ===== */
+        .proof-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-xl);
+            margin-top: var(--space-2xl);
+        }
+
+        .proof-stat {
+            text-align: center;
+            padding: var(--space-xl);
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(26, 43, 77, 0.06);
+        }
+
+        .proof-number {
+            font-family: var(--font-serif);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--color-navy);
+            display: block;
+            margin-bottom: var(--space-sm);
+        }
+
+        .proof-label {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .proof-statement {
+            text-align: center;
+            max-width: 800px;
+            margin: var(--space-2xl) auto 0;
+            font-size: 1.1rem;
+            color: var(--color-text-primary);
+            font-style: italic;
+        }
+
+        /* ===== LOW-RISK ENTRY ===== */
+        .low-risk {
+            background: var(--color-bg-cream);
+        }
+
+        .low-risk-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .low-risk-price {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            color: var(--color-stone);
+            margin: var(--space-lg) 0;
+        }
+
+        .low-risk-description {
+            text-align: left;
+            margin: var(--space-xl) 0;
+            line-height: 1.8;
+        }
+
+        .low-risk-cta {
+            margin-top: var(--space-xl);
+        }
+
+        .email-link {
+            color: var(--color-blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .email-link:hover {
+            color: var(--color-navy);
+            text-decoration: underline;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: var(--space-2xl) 0 var(--space-lg);
+            background: var(--color-navy);
+            color: var(--color-bg-warm);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-lg);
+        }
+
+        .footer-company {
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .footer-company strong {
+            display: block;
+            color: var(--color-bg-warm);
+            margin-bottom: 8px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--color-bg-cream);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            :root {
+                --space-5xl: 80px;
+                --space-4xl: 64px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(250, 248, 245, 0.98);
+                padding: var(--space-lg);
+                box-shadow: 0 4px 20px rgba(26, 43, 77, 0.1);
+            }
+
+            .hero {
+                padding-top: 80px;
+            }
+
+            .cta-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .differentiation-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                padding: var(--space-md);
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: var(--space-sm);
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 16px;
+            }
+
+            .service-card,
+            .diff-card {
+                padding: var(--space-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">BitBooth</a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#approach">Approach</a></li>
+                <li><a href="#proof">Proof</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#contact" class="nav-cta">Start a conversation</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-headline">AI expertise for investment firms.<br>Senior delivery. No consultancy theater.</h1>
+                <p class="hero-subheadline">
+                    Strategic AI advisory and implementation for Nordic family offices and PE firms, delivered by a senior practitioner with €142B institutional experience.
+                </p>
+
+                <div class="hero-credential">
+                    <strong>PhD Computer Science</strong> | <strong>20+ years software experience</strong> | <strong>Previously ATP (€142B AUM)</strong> | <strong>5 production AI systems deployed</strong>
+                </div>
+
+                <div class="cta-group">
+                    <a href="#contact" class="btn btn-primary">Schedule an introductory call</a>
+                    <a href="#approach" class="btn btn-secondary">See our approach</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Credibility Bar -->
+    <section class="credibility-bar">
+        <div class="container">
+            <div class="credibility-items">
+                <div class="credibility-item">
+                    <strong>Previously: Engineering Lead, ATP</strong>
+                    €142B AUM institutional investor
+                </div>
+                <div class="credibility-item">
+                    <strong>PhD Computer Science</strong>
+                    20+ years engineering experience
+                </div>
+                <div class="credibility-item">
+                    <strong>5 production AI systems deployed</strong>
+                    18+ months in production use
+                </div>
+                <div class="credibility-item">
+                    <strong>€2.6M documented cost reduction</strong>
+                    Proven efficiency improvements
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Situation Recognition -->
+    <section class="situation">
+        <div class="container">
+            <h2 class="section-title">Sound familiar?</h2>
+
+            <div class="situation-cards">
+                <div class="situation-card">
+                    <strong>Vendors pitch AI-powered platforms</strong>
+                    You can't evaluate if the technology is real or marketing.
+                </div>
+                <div class="situation-card">
+                    <strong>Partners heard peers mention AI wins</strong>
+                    You don't know if those wins apply to your firm.
+                </div>
+                <div class="situation-card">
+                    <strong>Consultants quote a price for an AI project</strong>
+                    You don't know what questions to ask.
+                </div>
+                <div class="situation-card">
+                    <strong>Compliance asks about AI risk</strong>
+                    You're not sure what the policy should say.
+                </div>
+                <div class="situation-card">
+                    <strong>IT manages infrastructure</strong>
+                    But not AI strategy—different expertise required.
+                </div>
+            </div>
+
+            <p class="situation-closing">If any of this resonates, you're exactly who I work with.</p>
+        </div>
+    </section>
+
+    <!-- Approach Differentiation -->
+    <section class="differentiation" id="approach">
+        <div class="container">
+            <h2 class="section-title">What makes this different</h2>
+
+            <div class="differentiation-cards">
+                <div class="diff-card">
+                    <h3>Senior Delivery</h3>
+                    <p>You work directly with a principal-level practitioner. No bait-and-switch with junior consultants.</p>
+                </div>
+                <div class="diff-card">
+                    <h3>Domain Expertise</h3>
+                    <p>Experience in investment operations—deal sourcing, diligence, portfolio monitoring. Not generic "digital transformation."</p>
+                </div>
+                <div class="diff-card">
+                    <h3>No Lock-In</h3>
+                    <p>Full knowledge transfer. You own the IP, the documentation, and the capability. My job is to work myself out of a job.</p>
+                </div>
+            </div>
+
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Dimension</th>
+                            <th class="table-highlight">BitBooth</th>
+                            <th>Big 4</th>
+                            <th>AI Vendors</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Seniority</strong></td>
+                            <td class="table-highlight">Principal delivers</td>
+                            <td>Partner sells, junior delivers</td>
+                            <td>Product/sales team</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Expertise</strong></td>
+                            <td class="table-highlight">Investment-specific</td>
+                            <td>Generic frameworks</td>
+                            <td>Product-limited</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lock-in</strong></td>
+                            <td class="table-highlight">None</td>
+                            <td>Methodology dependency</td>
+                            <td>Product dependency</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Pathway -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">How we work together</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto; color: var(--color-text-secondary);">
+                Start small. Build conviction. Execute with confidence.
+            </p>
+
+            <div class="service-flow">
+                <div class="service-card">
+                    <span class="service-badge">Low commitment entry point</span>
+                    <h3 class="service-title">Advisory Retainer</h3>
+                    <div class="service-price">€2,500 / quarter</div>
+                    <p class="service-description">
+                        A senior AI advisor on call—monthly strategy calls, on-demand access, quarterly deep-dives.
+                    </p>
+                    <ul class="service-deliverables">
+                        <li>Monthly strategy calls with senior advisor</li>
+                        <li>On-demand access for tactical questions</li>
+                        <li>One quarterly deep-dive on specific challenge</li>
+                        <li>Strategic summary memo each quarter</li>
+                    </ul>
+                    <p style="margin-top: var(--space-md); font-weight: 600; color: var(--color-success);">→ Start here if you're exploring</p>
+                </div>
+
+                <div class="service-card">
+                    <span class="service-badge">IC-ready recommendation</span>
+                    <h3 class="service-title">Investment Efficiency Assessment</h3>
+                    <div class="service-price">€35,000 - €50,000</div>
+                    <p class="service-description">
+                        A 4-week technical audit that quantifies your highest-cost operational bottleneck and tells you exactly what to do about it.
+                    </p>
+                    <ul class="service-deliverables">
+                        <li>Current state workflow analysis and mapping</li>
+                        <li>Bottleneck identification with quantified costs</li>
+                        <li>Build vs. buy recommendation with ROI modeling</li>
+                        <li>Implementation roadmap with clear milestones</li>
+                        <li>IC presentation deck included</li>
+                    </ul>
+                    <p style="margin-top: var(--space-md); font-weight: 600; color: var(--color-success);">→ Start here if you're ready to invest but unsure where</p>
+                </div>
+
+                <div class="service-card">
+                    <span class="service-badge">Milestone gates + exit optionality</span>
+                    <h3 class="service-title">Product Implementation</h3>
+                    <div class="service-price">€150,000 - €300,000</div>
+                    <p class="service-description">
+                        Deploy production-grade AI capabilities in 6-12 months—Deal Flow Intelligence, Diligence Acceleration, or Portfolio Monitoring.
+                    </p>
+                    <ul class="service-deliverables">
+                        <li>Production infrastructure on secure cloud platform</li>
+                        <li>Full compliance and security framework</li>
+                        <li>Knowledge transfer and team training</li>
+                        <li>Complete documentation and IP ownership</li>
+                        <li>6 months post-launch support included</li>
+                    </ul>
+                    <p style="margin-top: var(--space-md); font-weight: 600; color: var(--color-success);">→ Start here if you know what you need</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof Points -->
+    <section class="proof" id="proof">
+        <div class="container">
+            <h2 class="section-title">Proven at institutional scale</h2>
+
+            <div class="proof-stats">
+                <div class="proof-stat">
+                    <span class="proof-number">€142B</span>
+                    <span class="proof-label">AUM of institution where methodology was developed</span>
+                </div>
+                <div class="proof-stat">
+                    <span class="proof-number">5</span>
+                    <span class="proof-label">Production AI capabilities deployed</span>
+                </div>
+                <div class="proof-stat">
+                    <span class="proof-number">6 mo</span>
+                    <span class="proof-label">Concept to production for deal tracking system</span>
+                </div>
+                <div class="proof-stat">
+                    <span class="proof-number">€2.6M</span>
+                    <span class="proof-label">Documented cost reduction through efficiency</span>
+                </div>
+                <div class="proof-stat">
+                    <span class="proof-number">18+ mo</span>
+                    <span class="proof-label">In production with continued usage</span>
+                </div>
+            </div>
+
+            <p class="proof-statement">
+                Every system built to pass conservative legal, compliance, and security review. These aren't demos—they're production infrastructure.
+            </p>
+        </div>
+    </section>
+
+    <!-- Low-Risk Entry -->
+    <section class="low-risk" id="contact">
+        <div class="container">
+            <div class="low-risk-content">
+                <h2 class="section-title">Start with a conversation</h2>
+
+                <div class="low-risk-price">€2,500 / quarter</div>
+
+                <div class="low-risk-description">
+                    <p>Not ready for a €40K assessment? The Advisory Retainer gives you senior AI expertise on call for €2,500 per quarter. Monthly strategy calls, on-demand access for tactical questions, and one quarterly deep-dive.</p>
+                    <p style="margin-top: var(--space-md);">Think of it as a trial relationship. If it's valuable, we'll continue. If not, we'll part ways with no hard feelings.</p>
+                </div>
+
+                <div class="low-risk-cta">
+                    <a href="mailto:omar@bitbooth.dk" class="btn btn-primary">Schedule an introductory call</a>
+                    <p style="margin-top: var(--space-md); color: var(--color-text-secondary);">
+                        Or email: <a href="mailto:omar@bitbooth.dk" class="email-link">omar@bitbooth.dk</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-company">
+                    <strong>BitBooth ApS</strong>
+                    Copenhagen, Denmark<br>
+                    CVR: [Business registration number]<br>
+                    <a href="mailto:omar@bitbooth.dk" style="color: var(--color-bg-cream); text-decoration: none;">omar@bitbooth.dk</a>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="https://linkedin.com/in/omarsheikomar" target="_blank">LinkedIn</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#privacy">Privacy</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Navigation Toggle
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        if (navToggle) {
+            navToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking a link
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
+            });
+        }
+
+        // Add shadow to nav on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
