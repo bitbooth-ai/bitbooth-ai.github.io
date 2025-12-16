@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitBooth | AI Agents that Work</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* Brand Colors */
+            --color-dark-blue: #15253E;
+            --color-light-silver: #F9F7F8;
+            --color-light-blue: #99D0F2;
+            --color-purple: #7B68DF;
+            --color-gold: #D6A319;
+            --color-green: #788c5d;
+
+            /* Warm gradient colors for blobs */
+            --color-warm-orange: #F5A962;
+            --color-warm-peach: #FBCEB1;
+            --color-warm-coral: #E8927C;
+            --color-warm-blush: #F4C4B5;
+            --color-warm-amber: #F0B67F;
+
+            /* Background */
+            --color-cream: #FDFBF9;
+
+            /* Typography */
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'Figtree', Arial, sans-serif;
+
+            /* Animation timings */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Respect reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-cream);
+            color: var(--color-dark-blue);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(253, 251, 249, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transform: translateY(-100%);
+            animation: slideDown 0.8s var(--ease-out-expo) 0.2s forwards;
+        }
+
+        @keyframes slideDown {
+            to { transform: translateY(0); }
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-dark-blue);
+            letter-spacing: -0.02em;
+            opacity: 0;
+            animation: fadeInUp 0.6s var(--ease-out-expo) 0.4s forwards;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-cta {
+            background: transparent;
+            color: var(--color-dark-blue);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: 1px solid rgba(21, 37, 62, 0.12);
+            transition: all 0.3s var(--ease-smooth);
+            opacity: 0;
+            animation: fadeInUp 0.6s var(--ease-out-expo) 0.5s forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--color-dark-blue);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s var(--ease-out-expo);
+            z-index: -1;
+        }
+
+        .nav-cta:hover {
+            color: white;
+            border-color: var(--color-dark-blue);
+        }
+
+        .nav-cta:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(21, 37, 62, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-smooth);
+            opacity: 0;
+            animation: fadeInUp 0.6s var(--ease-out-expo) 0.55s forwards;
+        }
+
+        .nav-icon:hover {
+            background: rgba(21, 37, 62, 0.04);
+            transform: scale(1.05);
+        }
+
+        .nav-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--color-dark-blue);
+        }
+
+        .menu-icon {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 10px;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeInUp 0.6s var(--ease-out-expo) 0.6s forwards;
+        }
+
+        .menu-icon span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--color-dark-blue);
+            border-radius: 2px;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .menu-icon:hover span:nth-child(1) {
+            transform: translateX(3px);
+        }
+
+        .menu-icon:hover span:nth-child(3) {
+            transform: translateX(-3px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 32px 80px;
+        }
+
+        /* Gradient Blobs - Enhanced with morphing animation */
+        .gradient-blobs {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0;
+            will-change: transform, border-radius;
+            animation: blobAppear 1.2s var(--ease-out-expo) forwards,
+                       blobMorph 25s ease-in-out infinite;
+        }
+
+        @keyframes blobAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 0.65;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes blobMorph {
+            0%, 100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+                transform: translate(20px, -30px) rotate(5deg);
+            }
+            50% {
+                border-radius: 50% 60% 30% 60% / 30% 40% 70% 50%;
+                transform: translate(-15px, 15px) rotate(-5deg);
+            }
+            75% {
+                border-radius: 40% 30% 60% 50% / 60% 50% 40% 30%;
+                transform: translate(25px, 10px) rotate(3deg);
+            }
+        }
+
+        .blob-1 {
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, var(--color-warm-orange) 0%, transparent 70%);
+            top: 20%;
+            left: 15%;
+            animation-delay: 0.3s, 0s;
+        }
+
+        .blob-2 {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, var(--color-warm-peach) 0%, transparent 70%);
+            top: 30%;
+            left: 35%;
+            animation-delay: 0.5s, -6s;
+        }
+
+        .blob-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--color-warm-coral) 0%, transparent 70%);
+            top: 15%;
+            right: 20%;
+            animation-delay: 0.7s, -12s;
+        }
+
+        .blob-4 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--color-warm-amber) 0%, transparent 70%);
+            top: 40%;
+            right: 25%;
+            animation-delay: 0.9s, -18s;
+        }
+
+        /* Subtle grain overlay for texture */
+        .grain-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Hero Content */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4.2rem);
+            line-height: 1.12;
+            margin-bottom: 24px;
+            color: var(--color-dark-blue);
+            letter-spacing: -0.025em;
+            font-weight: 500;
+            opacity: 0;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.6s forwards;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: rgba(21, 37, 62, 0.6);
+            max-width: 520px;
+            margin: 0 auto 40px;
+            font-weight: 400;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.75s forwards;
+        }
+
+        /* Magnetic Button with micro-interactions */
+        .hero-cta-wrapper {
+            display: inline-block;
+            opacity: 0;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.9s forwards;
+        }
+
+        .hero-cta {
+            background: var(--color-dark-blue);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.4s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--color-purple), var(--color-dark-blue));
+            opacity: 0;
+            transition: opacity 0.4s var(--ease-smooth);
+        }
+
+        .hero-cta span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-cta .cta-arrow {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.4s var(--ease-out-expo);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px -10px rgba(21, 37, 62, 0.35);
+        }
+
+        .hero-cta:hover::before {
+            opacity: 1;
+        }
+
+        .hero-cta:hover .cta-arrow {
+            transform: translateX(4px);
+        }
+
+        .hero-cta:active {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px -5px rgba(21, 37, 62, 0.3);
+        }
+
+        /* Floating Profile Cards with staggered entrance */
+        .floating-cards {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .profile-card {
+            position: absolute;
+            background: white;
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 4px 30px rgba(21, 37, 62, 0.08);
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            max-width: 280px;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: cardEnter 0.8s var(--ease-out-expo) forwards,
+                       cardFloat 8s ease-in-out infinite;
+            transition: box-shadow 0.3s var(--ease-smooth);
+        }
+
+        .profile-card:hover {
+            box-shadow: 0 8px 40px rgba(21, 37, 62, 0.12);
+        }
+
+        @keyframes cardEnter {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-14px);
+            }
+        }
+
+        .profile-card.large {
+            padding: 22px;
+        }
+
+        .card-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-warm-peach), var(--color-warm-coral));
+            flex-shrink: 0;
+            overflow: hidden;
+            transition: transform 0.3s var(--ease-out-back);
+        }
+
+        .profile-card:hover .card-avatar {
+            transform: scale(1.08);
+        }
+
+        .card-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-avatar.initials {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 1.15rem;
+        }
+
+        .card-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .card-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-dark-blue);
+            margin-bottom: 2px;
+        }
+
+        .card-role {
+            font-size: 0.8rem;
+            color: rgba(21, 37, 62, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .card-label {
+            font-size: 0.72rem;
+            color: rgba(21, 37, 62, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .card-highlight {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--color-dark-blue);
+            margin-top: 2px;
+        }
+
+        /* Status indicator pulse */
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--color-green);
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(0.9);
+            }
+        }
+
+        /* Recommendation badge card */
+        .recommendation-card {
+            position: absolute;
+            background: var(--color-dark-blue);
+            color: white;
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 30px rgba(21, 37, 62, 0.2);
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            animation: recommendEnter 0.7s var(--ease-out-expo) 1.4s forwards,
+                       cardFloat 7s ease-in-out infinite;
+        }
+
+        @keyframes recommendEnter {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .recommendation-card .rec-icon {
+            width: 28px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s var(--ease-out-back);
+        }
+
+        .recommendation-card:hover .rec-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .recommendation-card .rec-icon svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .recommendation-card .rec-content {
+            font-size: 0.82rem;
+        }
+
+        .recommendation-card .rec-label {
+            opacity: 0.65;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .recommendation-card .rec-name {
+            font-weight: 600;
+        }
+
+        /* Card positions with staggered delays */
+        .card-1 {
+            top: 22%;
+            left: 4%;
+            animation-delay: 1.1s, 0s;
+        }
+
+        .card-2 {
+            top: 52%;
+            right: 4%;
+            animation-delay: 1.3s, -2s;
+        }
+
+        .card-3 {
+            top: 44%;
+            left: 50%;
+            transform: translateX(-50%) translateY(40px);
+            animation: cardEnterCenter 0.8s var(--ease-out-expo) 1.4s forwards,
+                       cardFloat3 7s ease-in-out infinite;
+        }
+
+        @keyframes cardEnterCenter {
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        @keyframes cardFloat3 {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-14px);
+            }
+        }
+
+        /* Small floating avatars with parallax-like movement */
+        .floating-avatar {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(21, 37, 62, 0.1);
+            opacity: 0;
+            animation: avatarEnter 0.6s var(--ease-out-expo) forwards,
+                       avatarFloat 12s ease-in-out infinite;
+        }
+
+        @keyframes avatarEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 0.85;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes avatarFloat {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            33% {
+                transform: translateY(-25px) scale(1.03);
+            }
+            66% {
+                transform: translateY(10px) scale(0.98);
+            }
+        }
+
+        .avatar-1 {
+            background: linear-gradient(135deg, var(--color-light-blue), var(--color-purple));
+            top: 28%;
+            right: 10%;
+            animation-delay: 1.5s, -3s;
+        }
+
+        .avatar-2 {
+            background: linear-gradient(135deg, var(--color-warm-coral), var(--color-warm-orange));
+            bottom: 28%;
+            left: 7%;
+            animation-delay: 1.7s, -7s;
+        }
+
+        .avatar-3 {
+            background: linear-gradient(135deg, var(--color-purple), var(--color-gold));
+            top: 62%;
+            left: 18%;
+            width: 38px;
+            height: 38px;
+            animation-delay: 1.9s, -1s;
+        }
+
+        /* Social Proof Section with scroll reveal */
+        .social-proof {
+            padding: 120px 32px;
+            background: white;
+            position: relative;
+        }
+
+        .social-proof-container {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Scroll reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s var(--ease-out-expo);
+        }
+
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-heading {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 4vw, 2.6rem);
+            line-height: 1.2;
+            color: var(--color-dark-blue);
+            margin-bottom: 20px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        .section-text {
+            font-size: 1.1rem;
+            color: rgba(21, 37, 62, 0.55);
+            max-width: 580px;
+            margin: 0 auto 56px;
+            line-height: 1.75;
+        }
+
+        /* Stats row with count-up animation feel */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 64px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            transition: transform 0.3s var(--ease-out-back);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-4px);
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 600;
+            color: var(--color-dark-blue);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(21, 37, 62, 0.5);
+            letter-spacing: 0.02em;
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 120px 32px;
+            background: var(--color-cream);
+            position: relative;
+        }
+
+        .features-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 72px;
+        }
+
+        .features-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-purple);
+            margin-bottom: 16px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .features-label::before,
+        .features-label::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 24px;
+            height: 1px;
+            background: var(--color-purple);
+            opacity: 0.4;
+        }
+
+        .features-label::before {
+            right: calc(100% + 12px);
+        }
+
+        .features-label::after {
+            left: calc(100% + 12px);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 18px;
+            padding: 36px;
+            transition: all 0.4s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-warm-peach), var(--color-warm-coral));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s var(--ease-out-expo);
+        }
+
+        .feature-card:nth-child(2)::before {
+            background: linear-gradient(90deg, var(--color-light-blue), var(--color-purple));
+        }
+
+        .feature-card:nth-child(3)::before {
+            background: linear-gradient(90deg, var(--color-purple), var(--color-gold));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(21, 37, 62, 0.1);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 1.5rem;
+            transition: transform 0.4s var(--ease-out-back);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .feature-icon-1 {
+            background: linear-gradient(135deg, var(--color-warm-peach), var(--color-warm-coral));
+        }
+
+        .feature-icon-2 {
+            background: linear-gradient(135deg, var(--color-light-blue), var(--color-purple));
+        }
+
+        .feature-icon-3 {
+            background: linear-gradient(135deg, var(--color-purple), #9b87f5);
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--color-dark-blue);
+            margin-bottom: 14px;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: rgba(21, 37, 62, 0.55);
+            line-height: 1.65;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 140px 32px;
+            background: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--color-warm-peach) 0%, transparent 70%);
+            filter: blur(80px);
+            opacity: 0.35;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .cta-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 4vw, 2.6rem);
+            line-height: 1.2;
+            color: var(--color-dark-blue);
+            margin-bottom: 18px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            color: rgba(21, 37, 62, 0.55);
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-dark-blue);
+            color: var(--color-light-silver);
+            padding: 64px 32px 40px;
+        }
+
+        .footer-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 48px;
+            margin-bottom: 56px;
+        }
+
+        .footer-brand {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            margin-bottom: 14px;
+        }
+
+        .footer-tagline {
+            font-size: 0.9rem;
+            color: rgba(249, 247, 248, 0.55);
+            line-height: 1.7;
+        }
+
+        .footer-section h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            color: var(--color-light-silver);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-section a {
+            color: rgba(249, 247, 248, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s var(--ease-smooth);
+            position: relative;
+        }
+
+        .footer-section a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--color-light-blue);
+            transition: width 0.3s var(--ease-out-expo);
+        }
+
+        .footer-section a:hover {
+            color: var(--color-light-blue);
+        }
+
+        .footer-section a:hover::after {
+            width: 100%;
+        }
+
+        .footer-bottom {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-top: 28px;
+            border-top: 1px solid rgba(249, 247, 248, 0.08);
+            text-align: center;
+            color: rgba(249, 247, 248, 0.4);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-row {
+                gap: 48px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-cta {
+                display: none;
+            }
+
+            .profile-card {
+                display: none;
+            }
+
+            .recommendation-card {
+                display: none;
+            }
+
+            .floating-avatar {
+                display: none;
+            }
+
+            .hero {
+                padding: 90px 24px 60px;
+            }
+
+            .hero-content {
+                padding-top: 50px;
+            }
+
+            .blob {
+                filter: blur(60px);
+            }
+
+            .blob-1 {
+                width: 350px;
+                height: 350px;
+                top: 25%;
+                left: 5%;
+            }
+
+            .blob-2 {
+                width: 280px;
+                height: 280px;
+                top: 35%;
+                left: 40%;
+            }
+
+            .blob-3, .blob-4 {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 36px;
+            }
+
+            .social-proof {
+                padding: 80px 24px;
+            }
+
+            .features {
+                padding: 80px 24px;
+            }
+
+            .cta-section {
+                padding: 100px 24px;
+            }
+
+            .stats-row {
+                gap: 32px;
+            }
+
+            .stat-number {
+                font-size: 2.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">BitBooth</div>
+            <div class="nav-right">
+                <a href="#contact" class="nav-cta">Work with us</a>
+                <div class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="8" r="4"/>
+                        <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+                    </svg>
+                </div>
+                <div class="menu-icon" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Grain texture overlay -->
+        <div class="grain-overlay"></div>
+
+        <!-- Gradient Blobs -->
+        <div class="gradient-blobs">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+            <div class="blob blob-4"></div>
+        </div>
+
+        <!-- Floating Profile Cards -->
+        <div class="floating-cards">
+            <!-- Left card - person hiring -->
+            <div class="profile-card large card-1">
+                <div class="card-avatar initials" style="background: linear-gradient(135deg, #7B68DF, #99D0F2);">SL</div>
+                <div class="card-content">
+                    <div class="card-name"><span class="status-dot"></span>Sarah</div>
+                    <div class="card-role">CTO at Growth Startup</div>
+                    <div class="card-label">Looking for</div>
+                    <div class="card-highlight">AI Integration Lead</div>
+                </div>
+            </div>
+
+            <!-- Center card - recommendation -->
+            <div class="recommendation-card card-3">
+                <div class="rec-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                </div>
+                <div class="rec-content">
+                    <div class="rec-label">Recommended</div>
+                    <div class="rec-name">Marcus</div>
+                </div>
+            </div>
+
+            <!-- Right card - candidate -->
+            <div class="profile-card card-2">
+                <div class="card-avatar initials" style="background: linear-gradient(135deg, #E8927C, #F5A962);">MK</div>
+                <div class="card-content">
+                    <div class="card-name">Marcus</div>
+                    <div class="card-role">AI Engineer</div>
+                    <div class="card-label">Interested in</div>
+                    <div class="card-highlight">Early stage AI</div>
+                </div>
+            </div>
+
+            <!-- Small floating avatars -->
+            <div class="floating-avatar avatar-1"></div>
+            <div class="floating-avatar avatar-2"></div>
+            <div class="floating-avatar avatar-3"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <h1>Build incredible things, with AI that works.</h1>
+            <p>An AI advisory where exceptional businesses connect with intelligent automation—and start transforming together.</p>
+            <div class="hero-cta-wrapper">
+                <a href="#contact" class="hero-cta">
+                    <span>Request access</span>
+                    <svg class="cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof">
+        <div class="social-proof-container">
+            <h2 class="section-heading reveal">Exceptional teams are using BitBooth to transform.</h2>
+            <p class="section-text reveal">Leaders working with BitBooth have built AI systems at hyper-growth companies and are connecting the best technology with the right business problems.</p>
+
+            <div class="stats-row reveal">
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Projects delivered</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Industry verticals</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Client satisfaction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <div class="features-header reveal">
+                <div class="features-label">Why BitBooth</div>
+                <h2 class="section-heading">AI that feels human.</h2>
+                <p class="section-text">We build intelligent agents that understand context, learn from interactions, and deliver results that matter.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card reveal">
+                    <div class="feature-icon feature-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h3>Custom Built</h3>
+                    <p>Every agent is designed specifically for your business needs, workflows, and goals. No generic templates.</p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon feature-icon-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" viewBox="0 0 24 24">
+                            <path d="M12 2a9 9 0 0 0-9 9c0 4.17 2.84 7.67 6.69 8.69L12 22l2.31-2.31C18.16 18.67 21 15.17 21 11a9 9 0 0 0-9-9zm0 2c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14c-2.67 0-5.33-1.33-5.33-4 0-.89.36-1.7.94-2.33.58-.63 1.39-.94 2.39-.94h4c1 0 1.81.31 2.39.94.58.63.94 1.44.94 2.33 0 2.67-2.66 4-5.33 4z"/>
+                        </svg>
+                    </div>
+                    <h3>Intelligent Learning</h3>
+                    <p>Our agents adapt and improve over time, understanding your business better with every interaction.</p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon feature-icon-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="white" viewBox="0 0 24 24">
+                            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+                        </svg>
+                    </div>
+                    <h3>Seamless Integration</h3>
+                    <p>Works with your existing tools and systems. Deploy in days, not months.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="cta-container">
+            <h2 class="reveal">Ready to transform your workflow?</h2>
+            <p class="reveal">Join forward-thinking companies already building with BitBooth AI agents.</p>
+            <div class="hero-cta-wrapper reveal">
+                <a href="#contact" class="hero-cta">
+                    <span>Get Started Today</span>
+                    <svg class="cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-brand">BitBooth</div>
+                <p class="footer-tagline">AI agents that work for you. Custom built, intelligently designed.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#case-studies">Case Studies</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#careers">Careers</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#privacy">Privacy</a></li>
+                    <li><a href="#terms">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 BitBooth ApS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scroll Reveal Script -->
+    <script>
+        // Intersection Observer for scroll reveal animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Add staggered delay for multiple elements
+                    const siblings = entry.target.parentElement.querySelectorAll('.reveal');
+                    const siblingIndex = Array.from(siblings).indexOf(entry.target);
+
+                    setTimeout(() => {
+                        entry.target.classList.add('revealed');
+                    }, siblingIndex * 100);
+
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with .reveal class
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Magnetic button effect for CTAs
+        document.querySelectorAll('.hero-cta').forEach(button => {
+            button.addEventListener('mousemove', (e) => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                button.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px) translateY(-3px)`;
+            });
+
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>
