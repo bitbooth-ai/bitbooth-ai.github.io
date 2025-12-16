@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitBooth | AI Agents that Work</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* Brand Colors */
+            --color-dark-blue: #15253E;
+            --color-light-silver: #F9F7F8;
+            --color-light-blue: #99D0F2;
+            --color-purple: #7B68DF;
+            --color-gold: #D6A319;
+            --color-green: #788c5d;
+
+            /* Liftoff-inspired warm gradient colors */
+            --color-coral: #ff6b6b;
+            --color-warm-pink: #f857a6;
+            --color-soft-purple: #a855f7;
+
+            /* Typography */
+            --font-display: 'DM Serif Display', Georgia, serif;
+            --font-body: 'Outfit', Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-light-silver);
+            color: var(--color-dark-blue);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(249, 247, 248, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(21, 37, 62, 0.08);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 400;
+            color: var(--color-dark-blue);
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-dark-blue);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-purple);
+        }
+
+        .cta-button {
+            background: var(--color-dark-blue);
+            color: var(--color-light-silver);
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: var(--color-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(123, 104, 223, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 32px 80px;
+        }
+
+        /* Animated gradient background */
+        .gradient-mesh {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, var(--color-coral) 0%, transparent 50%),
+                radial-gradient(circle at 80% 40%, var(--color-warm-pink) 0%, transparent 50%),
+                radial-gradient(circle at 60% 70%, var(--color-soft-purple) 0%, transparent 50%),
+                radial-gradient(circle at 30% 80%, var(--color-purple) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, var(--color-light-blue) 0%, transparent 50%),
+                var(--color-light-silver);
+            opacity: 0.6;
+            animation: meshFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes meshFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(20px, -20px) scale(1.05);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.95);
+            }
+        }
+
+        /* Wave shapes */
+        .wave-layer {
+            position: absolute;
+            width: 100%;
+            opacity: 0.4;
+        }
+
+        .wave-1 {
+            top: 15%;
+            left: 0;
+            animation: wave1 18s ease-in-out infinite;
+        }
+
+        .wave-2 {
+            bottom: 20%;
+            right: 0;
+            animation: wave2 22s ease-in-out infinite;
+        }
+
+        @keyframes wave1 {
+            0%, 100% {
+                transform: translateX(0) translateY(0);
+            }
+            50% {
+                transform: translateX(-30px) translateY(-15px);
+            }
+        }
+
+        @keyframes wave2 {
+            0%, 100% {
+                transform: translateX(0) translateY(0) rotate(180deg);
+            }
+            50% {
+                transform: translateX(30px) translateY(15px) rotate(180deg);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            line-height: 1.1;
+            margin-bottom: 24px;
+            color: var(--color-dark-blue);
+            letter-spacing: -0.02em;
+            animation: fadeInUp 0.8s ease-out 0.3s backwards;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: rgba(21, 37, 62, 0.7);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-weight: 400;
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.5s backwards;
+        }
+
+        .primary-cta {
+            background: var(--color-dark-blue);
+            color: var(--color-light-silver);
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .primary-cta:hover {
+            background: var(--color-purple);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(123, 104, 223, 0.4);
+        }
+
+        .secondary-cta {
+            background: white;
+            color: var(--color-dark-blue);
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: 2px solid rgba(21, 37, 62, 0.15);
+        }
+
+        .secondary-cta:hover {
+            border-color: var(--color-purple);
+            color: var(--color-purple);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(21, 37, 62, 0.1);
+        }
+
+        /* Floating cards */
+        .floating-cards {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-card {
+            position: absolute;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(21, 37, 62, 0.12);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .card-1 {
+            top: 15%;
+            left: 8%;
+            animation-delay: 0s;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .card-2 {
+            top: 60%;
+            right: 10%;
+            animation-delay: 1s;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .card-3 {
+            bottom: 15%;
+            left: 12%;
+            animation-delay: 2s;
+            animation: float 6.5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-15px) rotate(1deg);
+            }
+            75% {
+                transform: translateY(15px) rotate(-1deg);
+            }
+        }
+
+        .card-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-coral), var(--color-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .card-content h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-dark-blue);
+            margin-bottom: 2px;
+        }
+
+        .card-content p {
+            font-size: 0.85rem;
+            color: rgba(21, 37, 62, 0.6);
+            margin: 0;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--color-purple);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(123, 104, 223, 0.3);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 32px;
+            background: white;
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(21, 37, 62, 0.1), transparent);
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-purple);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            line-height: 1.2;
+            color: var(--color-dark-blue);
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-description {
+            font-size: 1.2rem;
+            color: rgba(21, 37, 62, 0.6);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 48px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 32px;
+            border-radius: 20px;
+            transition: all 0.4s ease;
+            background: var(--color-light-silver);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(21, 37, 62, 0.08);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            position: relative;
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .icon-1 {
+            background: linear-gradient(135deg, var(--color-coral), var(--color-warm-pink));
+        }
+
+        .icon-2 {
+            background: linear-gradient(135deg, var(--color-soft-purple), var(--color-purple));
+        }
+
+        .icon-3 {
+            background: linear-gradient(135deg, var(--color-purple), var(--color-light-blue));
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-dark-blue);
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: rgba(21, 37, 62, 0.6);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 32px;
+            background: var(--color-light-silver);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-container {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            line-height: 1.2;
+            color: var(--color-dark-blue);
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: rgba(21, 37, 62, 0.6);
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-dark-blue);
+            color: var(--color-light-silver);
+            padding: 64px 32px 32px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-section h4 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            color: var(--color-light-silver);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-section a {
+            color: rgba(249, 247, 248, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--color-light-blue);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 32px;
+            border-top: 1px solid rgba(249, 247, 248, 0.1);
+            text-align: center;
+            color: rgba(249, 247, 248, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .floating-card {
+                display: none;
+            }
+
+            .hero {
+                padding: 100px 24px 60px;
+            }
+
+            .features {
+                padding: 80px 24px;
+            }
+
+            .cta-section {
+                padding: 80px 24px;
+            }
+
+            footer {
+                padding: 48px 24px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">BitBooth</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="#contact" class="cta-button">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Animated gradient background -->
+        <div class="gradient-mesh"></div>
+
+        <!-- Wave layers -->
+        <div class="wave-layer wave-1">
+            <svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width: 100%; height: auto;">
+                <path d="M0,200 C300,280 500,120 800,180 C1000,220 1100,160 1200,200 L1200,400 L0,400 Z" fill="rgba(123, 104, 223, 0.15)"/>
+            </svg>
+        </div>
+
+        <div class="wave-layer wave-2">
+            <svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width: 100%; height: auto;">
+                <path d="M0,180 C250,120 450,260 750,200 C950,160 1050,220 1200,180 L1200,400 L0,400 Z" fill="rgba(255, 107, 107, 0.1)"/>
+            </svg>
+        </div>
+
+        <!-- Floating cards -->
+        <div class="floating-cards">
+            <div class="floating-card card-1">
+                <div class="card-avatar">🎯</div>
+                <div class="card-content">
+                    <h3>AI Strategy</h3>
+                    <p>Tailored solutions</p>
+                </div>
+                <div class="card-badge">✨</div>
+            </div>
+
+            <div class="floating-card card-2">
+                <div class="card-avatar">🚀</div>
+                <div class="card-content">
+                    <h3>Fast Deploy</h3>
+                    <p>Production ready</p>
+                </div>
+                <div class="card-badge">⚡</div>
+            </div>
+
+            <div class="floating-card card-3">
+                <div class="card-avatar">💎</div>
+                <div class="card-content">
+                    <h3>Premium Support</h3>
+                    <p>24/7 assistance</p>
+                </div>
+                <div class="card-badge">🌟</div>
+            </div>
+        </div>
+
+        <!-- Hero content -->
+        <div class="hero-content">
+            <h1>Build incredible things with AI agents.</h1>
+            <p>Transform your business with intelligent automation. BitBooth creates AI agents that understand your needs and work seamlessly with your team.</p>
+            <div class="hero-cta">
+                <a href="#contact" class="primary-cta">Start Building</a>
+                <a href="#features" class="secondary-cta">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <div class="section-header">
+                <div class="section-label">Why BitBooth</div>
+                <h2 class="section-title">AI that feels human.</h2>
+                <p class="section-description">We build intelligent agents that understand context, learn from interactions, and deliver results that matter.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon icon-1">🎨</div>
+                    <h3>Custom Built</h3>
+                    <p>Every agent is designed specifically for your business needs, workflows, and goals. No generic templates.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon icon-2">🧠</div>
+                    <h3>Intelligent Learning</h3>
+                    <p>Our agents adapt and improve over time, understanding your business better with every interaction.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon icon-3">🤝</div>
+                    <h3>Seamless Integration</h3>
+                    <p>Works with your existing tools and systems. Deploy in days, not months.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>Ready to transform your workflow?</h2>
+            <p>Join forward-thinking companies already building with BitBooth AI agents.</p>
+            <a href="#contact" class="primary-cta">Get Started Today</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>BitBooth</h4>
+                <p style="color: rgba(249, 247, 248, 0.6); line-height: 1.6;">AI agents that work for you. Custom built, intelligently designed.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#case-studies">Case Studies</a></li>
+                    <li><a href="#documentation">Documentation</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#careers">Careers</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="#security">Security</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 BitBooth ApS. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
