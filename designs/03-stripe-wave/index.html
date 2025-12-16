@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitBooth | AI Advisory for Nordic Investment Firms</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* BitBooth Brand Colors */
+            --dark-blue: #15253E;
+            --light-silver: #F9F7F8;
+            --light-blue: #99D0F2;
+            --purple: #7B68DF;
+            --gold: #D6A319;
+            --green: #788c5d;
+
+            /* Stripe-inspired warm accents */
+            --coral: #ff6b6b;
+            --pink: #f857a6;
+            --amber: #ffb347;
+            --violet: #a855f7;
+
+            /* Typography */
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'Figtree', Arial, sans-serif;
+
+            /* Spacing */
+            --section-padding: clamp(5rem, 12vw, 10rem);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--light-silver);
+            color: var(--dark-blue);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav.scrolled {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 1px 0 rgba(21, 37, 62, 0.08);
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--dark-blue);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            opacity: 0.75;
+            transition: opacity 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        .nav-cta {
+            background: var(--dark-blue);
+            color: var(--light-silver) !important;
+            padding: 0.6rem 1.25rem;
+            border-radius: 6px;
+            opacity: 1 !important;
+            transition: all 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            background: #1d3454;
+            transform: translateY(-1px);
+        }
+
+        .nav-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--dark-blue);
+            position: absolute;
+            left: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu-btn span:nth-child(1) { top: 8px; }
+        .nav-menu-btn span:nth-child(2) { top: 15px; }
+        .nav-menu-btn span:nth-child(3) { top: 22px; }
+
+        /* ============================================
+           HERO WITH COLORFUL WAVE GRADIENT
+           ============================================ */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: var(--light-silver);
+        }
+
+        /* Colorful animated gradient mesh - Stripe inspired */
+        .hero-gradient {
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 85%;
+            height: 140%;
+            border-radius: 0 0 0 60% / 0 0 0 40%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .hero-gradient::before {
+            content: '';
+            position: absolute;
+            inset: -50%;
+            background:
+                radial-gradient(ellipse 60% 50% at 60% 30%, rgba(248, 87, 166, 0.7) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 60% at 40% 60%, rgba(255, 107, 107, 0.6) 0%, transparent 50%),
+                radial-gradient(ellipse 55% 45% at 70% 70%, rgba(255, 179, 71, 0.65) 0%, transparent 50%),
+                radial-gradient(ellipse 45% 55% at 30% 40%, rgba(168, 85, 247, 0.5) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 50% at 80% 40%, rgba(123, 104, 223, 0.55) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 60% at 50% 80%, rgba(214, 163, 25, 0.45) 0%, transparent 50%);
+            animation: gradientFlow 20s ease-in-out infinite;
+        }
+
+        .hero-gradient::after {
+            content: '';
+            position: absolute;
+            inset: -30%;
+            background:
+                radial-gradient(ellipse 55% 45% at 25% 50%, rgba(255, 107, 107, 0.5) 0%, transparent 50%),
+                radial-gradient(ellipse 45% 55% at 75% 35%, rgba(248, 87, 166, 0.55) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 50% at 55% 65%, rgba(153, 208, 242, 0.4) 0%, transparent 50%);
+            animation: gradientFlow 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes gradientFlow {
+            0%, 100% {
+                transform: translate(0%, 0%) rotate(0deg) scale(1);
+            }
+            25% {
+                transform: translate(5%, -8%) rotate(3deg) scale(1.05);
+            }
+            50% {
+                transform: translate(-3%, 5%) rotate(-2deg) scale(0.98);
+            }
+            75% {
+                transform: translate(-6%, -3%) rotate(2deg) scale(1.02);
+            }
+        }
+
+        /* Wave canvas for additional mesh animation */
+        #wave-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.6;
+        }
+
+        /* Organic wave edge */
+        .hero-wave-edge {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .hero-wave-edge svg {
+            position: absolute;
+            bottom: 0;
+            width: 120%;
+            left: -10%;
+            height: 100%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 8rem 2rem 6rem;
+            width: 100%;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--dark-blue);
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(21, 37, 62, 0.08);
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+            animation-delay: 0.2s;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, var(--coral), var(--pink));
+            border-radius: 50%;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(3.5rem, 9vw, 6rem);
+            font-weight: 700;
+            color: var(--dark-blue);
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            max-width: 12ch;
+            margin-bottom: 1.75rem;
+            opacity: 0;
+            animation: fadeInUp 0.7s ease forwards;
+            animation-delay: 0.35s;
+        }
+
+        .hero-title-gradient {
+            background: linear-gradient(135deg, var(--coral) 0%, var(--pink) 40%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.125rem, 2vw, 1.35rem);
+            color: rgba(21, 37, 62, 0.7);
+            max-width: 44ch;
+            line-height: 1.75;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.7s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 0.7s ease forwards;
+            animation-delay: 0.65s;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.75rem;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--dark-blue);
+            color: var(--light-silver);
+        }
+
+        .btn-primary:hover {
+            background: #1d3454;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(21, 37, 62, 0.25);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--dark-blue);
+            box-shadow: 0 2px 8px rgba(21, 37, 62, 0.08);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 8px 24px rgba(21, 37, 62, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .btn-arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .btn:hover .btn-arrow {
+            transform: translateX(4px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================================
+           TRUST SECTION
+           ============================================ */
+        .trust {
+            background: var(--light-silver);
+            padding: 5rem 2rem;
+            position: relative;
+        }
+
+        .trust-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .trust-label {
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(21, 37, 62, 0.45);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 2rem;
+        }
+
+        .trust-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3.5rem;
+            flex-wrap: wrap;
+        }
+
+        .trust-logo {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: rgba(21, 37, 62, 0.2);
+            letter-spacing: -0.02em;
+            transition: color 0.3s ease;
+        }
+
+        .trust-logo:hover {
+            color: rgba(21, 37, 62, 0.45);
+        }
+
+        /* ============================================
+           SERVICES SECTION
+           ============================================ */
+        .services {
+            background: var(--light-silver);
+            padding: var(--section-padding) 2rem;
+            position: relative;
+        }
+
+        /* Subtle wave pattern decoration */
+        .services::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(21, 37, 62, 0.08), transparent);
+        }
+
+        .services-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--purple);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.25rem, 5vw, 3.25rem);
+            font-weight: 700;
+            color: var(--dark-blue);
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.15rem;
+            color: rgba(21, 37, 62, 0.6);
+            max-width: 50ch;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(21, 37, 62, 0.04);
+        }
+
+        /* Colorful wave gradient accent on cards */
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--coral), var(--pink), var(--purple));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-card:nth-child(2)::before {
+            background: linear-gradient(90deg, var(--amber), var(--gold), var(--green));
+        }
+
+        .service-card:nth-child(3)::before {
+            background: linear-gradient(90deg, var(--light-blue), var(--purple), var(--pink));
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 48px rgba(21, 37, 62, 0.1);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-number {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--coral) 0%, var(--pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card:nth-child(2) .service-number {
+            background: linear-gradient(135deg, var(--amber) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .service-card:nth-child(3) .service-number {
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .service-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-blue);
+            margin-bottom: 0.75rem;
+        }
+
+        .service-tagline {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--purple);
+            font-style: italic;
+            margin-bottom: 1.25rem;
+        }
+
+        .service-card:nth-child(2) .service-tagline {
+            color: var(--gold);
+        }
+
+        .service-card:nth-child(3) .service-tagline {
+            color: var(--light-blue);
+        }
+
+        .service-desc {
+            font-size: 1rem;
+            color: rgba(21, 37, 62, 0.65);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--dark-blue);
+            font-weight: 600;
+            text-decoration: none;
+            transition: gap 0.2s ease;
+        }
+
+        .service-link:hover {
+            gap: 0.75rem;
+        }
+
+        /* ============================================
+           DIFFERENTIATOR SECTION
+           ============================================ */
+        .differentiator {
+            background: var(--light-silver);
+            padding: var(--section-padding) 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Wave decoration */
+        .differentiator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -10%;
+            width: 120%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse 40% 30% at 10% 50%, rgba(248, 87, 166, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 35% 40% at 90% 30%, rgba(255, 179, 71, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .differentiator-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .differentiator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .differentiator-content h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2.25rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--dark-blue);
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            line-height: 1.15;
+        }
+
+        .differentiator-content p {
+            font-size: 1.125rem;
+            color: rgba(21, 37, 62, 0.7);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .differentiator-content .btn {
+            margin-top: 1rem;
+        }
+
+        .differentiator-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2.25rem 1.5rem;
+            background: white;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(21, 37, 62, 0.04);
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(248, 87, 166, 0.03) 0%, rgba(255, 179, 71, 0.02) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(21, 37, 62, 0.1);
+        }
+
+        .stat-item:hover::before {
+            opacity: 1;
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--coral), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .stat-item:nth-child(2) .stat-value {
+            background: linear-gradient(135deg, var(--amber), var(--gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .stat-item:nth-child(3) .stat-value {
+            background: linear-gradient(135deg, var(--light-blue), var(--purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .stat-item:nth-child(4) .stat-value {
+            background: linear-gradient(135deg, var(--green), var(--dark-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: rgba(21, 37, 62, 0.55);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            position: relative;
+        }
+
+        /* ============================================
+           CTA SECTION
+           ============================================ */
+        .cta {
+            background: var(--light-silver);
+            padding: var(--section-padding) 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Colorful wave background */
+        .cta-wave-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .cta-wave-bg::before {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 140%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse 50% 40% at 30% 80%, rgba(248, 87, 166, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 45% 50% at 70% 90%, rgba(255, 179, 71, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 45% at 50% 70%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+        }
+
+        .cta-inner {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2.25rem, 5vw, 3.25rem);
+            font-weight: 700;
+            color: var(--dark-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta p {
+            font-size: 1.15rem;
+            color: rgba(21, 37, 62, 0.65);
+            margin-bottom: 2.5rem;
+            line-height: 1.75;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, var(--coral) 0%, var(--pink) 50%, var(--purple) 100%);
+            color: white;
+            background-size: 200% 200%;
+            transition: all 0.4s ease;
+        }
+
+        .btn-gradient:hover {
+            background-position: 100% 100%;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(248, 87, 166, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--dark-blue);
+            border: 2px solid var(--dark-blue);
+        }
+
+        .btn-outline:hover {
+            background: var(--dark-blue);
+            color: var(--light-silver);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            background: var(--dark-blue);
+            color: var(--light-silver);
+            padding: 5rem 2rem 2rem;
+            position: relative;
+        }
+
+        /* Wave border top */
+        .footer-wave {
+            position: absolute;
+            top: -1px;
+            left: 0;
+            right: 0;
+            height: 80px;
+            overflow: hidden;
+        }
+
+        .footer-wave svg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand {
+            max-width: 280px;
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light-silver);
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            font-size: 0.95rem;
+            color: rgba(249, 247, 248, 0.6);
+            line-height: 1.7;
+        }
+
+        .footer-col h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--light-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-col a {
+            color: rgba(249, 247, 248, 0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-col a:hover {
+            color: var(--light-silver);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(249, 247, 248, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copy {
+            font-size: 0.9rem;
+            color: rgba(249, 247, 248, 0.5);
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-legal a {
+            font-size: 0.9rem;
+            color: rgba(249, 247, 248, 0.5);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-legal a:hover {
+            color: var(--light-silver);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1024px) {
+            .hero-gradient {
+                width: 100%;
+                right: -20%;
+                top: -10%;
+                height: 120%;
+                border-radius: 0 0 0 50% / 0 0 0 30%;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .differentiator-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .nav-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                min-height: auto;
+                padding-top: 5rem;
+                padding-bottom: 4rem;
+            }
+
+            .hero-gradient {
+                width: 140%;
+                right: -40%;
+                top: 0;
+                height: 100%;
+                border-radius: 0;
+            }
+
+            .hero-content {
+                padding: 5rem 1.5rem 4rem;
+            }
+
+            .hero-title {
+                max-width: 100%;
+            }
+
+            .trust-logos {
+                gap: 2rem;
+            }
+
+            .trust-logo {
+                font-size: 1.15rem;
+            }
+
+            .differentiator-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-brand {
+                max-width: 100%;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* ============================================
+           REDUCED MOTION
+           ============================================ */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <a href="#" class="nav-logo">BitBooth</a>
+        <ul class="nav-links">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact" class="nav-cta">Contact</a></li>
+        </ul>
+        <button class="nav-menu-btn" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Colorful gradient mesh background -->
+        <div class="hero-gradient">
+            <canvas id="wave-canvas"></canvas>
+        </div>
+
+        <!-- Wave edge transition -->
+        <div class="hero-wave-edge">
+            <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+                <path fill="var(--light-silver)" d="M0,100 C320,180 420,20 720,100 C1020,180 1120,40 1440,100 L1440,200 L0,200 Z">
+                    <animate attributeName="d"
+                        values="M0,100 C320,180 420,20 720,100 C1020,180 1120,40 1440,100 L1440,200 L0,200 Z;
+                                M0,120 C280,40 520,160 720,80 C920,0 1160,180 1440,120 L1440,200 L0,200 Z;
+                                M0,100 C320,180 420,20 720,100 C1020,180 1120,40 1440,100 L1440,200 L0,200 Z"
+                        dur="15s" repeatCount="indefinite"/>
+                </path>
+            </svg>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-badge">AI Advisory for Nordic Investment Firms</div>
+            <h1 class="hero-title">
+                Transform your firm with <span class="hero-title-gradient">AI expertise</span>
+            </h1>
+            <p class="hero-subtitle">
+                Senior AI advisory with investment experience, delivered at a scale appropriate for boutique firms. No consultancy overhead. No vendor lock-in.
+            </p>
+            <div class="hero-ctas">
+                <a href="#contact" class="btn btn-primary">
+                    Start a conversation
+                    <span class="btn-arrow">&rarr;</span>
+                </a>
+                <a href="#services" class="btn btn-secondary">
+                    Explore services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="trust">
+        <div class="trust-inner">
+            <p class="trust-label">Trusted by Nordic investment professionals</p>
+            <div class="trust-logos">
+                <span class="trust-logo">Family Offices</span>
+                <span class="trust-logo">Boutique PE</span>
+                <span class="trust-logo">Venture Capital</span>
+                <span class="trust-logo">Wealth Managers</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="services-inner">
+            <div class="section-header">
+                <div class="section-eyebrow">How we work</div>
+                <h2 class="section-title">Three ways to partner</h2>
+                <p class="section-subtitle">
+                    Strategic services designed for Nordic investment firms that lack internal AI capabilities.
+                </p>
+            </div>
+
+            <div class="services-grid">
+                <article class="service-card">
+                    <div class="service-number">01</div>
+                    <h3 class="service-title">Technical Advisory Retainer</h3>
+                    <p class="service-tagline">"A senior AI advisor on call for your technical decisions."</p>
+                    <p class="service-desc">
+                        Expert access when you need it. Navigate vendor pitches, evaluate investment opportunities, and get technical clarity on AI decisions.
+                    </p>
+                    <a href="#contact" class="service-link">
+                        Learn more <span>&rarr;</span>
+                    </a>
+                </article>
+
+                <article class="service-card">
+                    <div class="service-number">02</div>
+                    <h3 class="service-title">Efficiency Assessment</h3>
+                    <p class="service-tagline">"A 4-week audit that quantifies your largest bottleneck."</p>
+                    <p class="service-desc">
+                        Know exactly where to invest in AI. A comprehensive diagnostic that maps workflows, identifies inefficiencies, and delivers IC-ready recommendations.
+                    </p>
+                    <a href="#contact" class="service-link">
+                        Learn more <span>&rarr;</span>
+                    </a>
+                </article>
+
+                <article class="service-card">
+                    <div class="service-number">03</div>
+                    <h3 class="service-title">Platform Implementation</h3>
+                    <p class="service-tagline">"Deploy production-grade AI in 6-12 months."</p>
+                    <p class="service-desc">
+                        Transform operations with a proven playbook. Senior technical leadership delivering production-ready systems that navigate compliance.
+                    </p>
+                    <a href="#contact" class="service-link">
+                        Learn more <span>&rarr;</span>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Differentiator Section -->
+    <section class="differentiator" id="about">
+        <div class="differentiator-inner">
+            <div class="differentiator-grid">
+                <div class="differentiator-content">
+                    <h2>Built for Nordic investment culture</h2>
+                    <p>
+                        We understand the conservative, relationship-driven nature of Nordic investment firms. Our approach respects your culture while bringing institutional-grade AI expertise to boutique operations.
+                    </p>
+                    <p>
+                        No aggressive sales tactics. No unnecessary complexity. Just senior expertise delivered with the discretion your firm deserves.
+                    </p>
+                    <a href="#contact" class="btn btn-primary">
+                        Schedule a call
+                        <span class="btn-arrow">&rarr;</span>
+                    </a>
+                </div>
+                <div class="differentiator-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">15+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">$5B+</div>
+                        <div class="stat-label">AUM Advised</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Nordic Focus</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Vendor Lock-in</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <div class="cta-wave-bg"></div>
+        <div class="cta-inner">
+            <h2>Ready to explore AI for your firm?</h2>
+            <p>
+                Whether you're evaluating a vendor, considering an investment in AI capabilities, or just curious about what's possible, let's start with a conversation.
+            </p>
+            <div class="cta-buttons">
+                <a href="mailto:omar@bitbooth.ai" class="btn btn-gradient">
+                    Schedule a call
+                    <span class="btn-arrow">&rarr;</span>
+                </a>
+                <a href="#services" class="btn btn-outline">
+                    View services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-wave">
+            <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+                <path fill="var(--light-silver)" d="M0,40 Q360,80 720,40 T1440,40 L1440,0 L0,0 Z"/>
+            </svg>
+        </div>
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">BitBooth</div>
+                    <p>Senior AI advisory for Nordic investment firms. Institutional expertise without consultancy overhead.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Technical Advisory</a></li>
+                        <li><a href="#services">Efficiency Assessment</a></li>
+                        <li><a href="#services">Platform Implementation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="mailto:omar@bitbooth.ai">omar@bitbooth.ai</a></li>
+                        <li><a href="#">Copenhagen, Denmark</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copy">&copy; 2025 BitBooth ApS. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        const nav = document.getElementById('nav');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Animated flowing wave gradient canvas
+        const canvas = document.getElementById('wave-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+
+            function resizeCanvas() {
+                const parent = canvas.parentElement;
+                canvas.width = parent.offsetWidth;
+                canvas.height = parent.offsetHeight;
+            }
+
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Stripe-inspired warm color palette
+            const colors = [
+                { r: 248, g: 87, b: 166 },  // Pink
+                { r: 255, g: 107, b: 107 }, // Coral
+                { r: 255, g: 179, b: 71 },  // Amber
+                { r: 168, g: 85, b: 247 },  // Violet
+                { r: 123, g: 104, b: 223 }, // Purple (brand)
+                { r: 153, g: 208, b: 242 }  // Light blue (brand)
+            ];
+
+            // Wave-like flowing blobs
+            const blobs = colors.map((color, i) => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                baseX: (canvas.width / colors.length) * i + Math.random() * 100,
+                baseY: Math.random() * canvas.height,
+                radius: 180 + Math.random() * 120,
+                color: color,
+                speed: 0.0003 + Math.random() * 0.0005,
+                offset: Math.random() * Math.PI * 2,
+                amplitude: 80 + Math.random() * 120
+            }));
+
+            let time = 0;
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                time += 1;
+
+                // Update and draw flowing wave blobs
+                blobs.forEach((blob) => {
+                    // Flowing wave motion
+                    blob.x = blob.baseX + Math.sin(time * blob.speed + blob.offset) * blob.amplitude;
+                    blob.y = blob.baseY + Math.cos(time * blob.speed * 0.7 + blob.offset) * blob.amplitude * 0.5;
+
+                    // Draw flowing gradient blob
+                    const gradient = ctx.createRadialGradient(
+                        blob.x, blob.y, 0,
+                        blob.x, blob.y, blob.radius
+                    );
+                    gradient.addColorStop(0, `rgba(${blob.color.r}, ${blob.color.g}, ${blob.color.b}, 0.5)`);
+                    gradient.addColorStop(0.4, `rgba(${blob.color.r}, ${blob.color.g}, ${blob.color.b}, 0.25)`);
+                    gradient.addColorStop(1, `rgba(${blob.color.r}, ${blob.color.g}, ${blob.color.b}, 0)`);
+
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(blob.x, blob.y, blob.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            // Only animate if user hasn't requested reduced motion
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                animate();
+            }
+        }
+    </script>
+</body>
+</html>
