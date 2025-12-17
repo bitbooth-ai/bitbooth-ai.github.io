@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitBooth | Intelligent Advisory for Modern Business</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* BitBooth Brand Colors - Editorial interpretation */
+            --color-dark-blue: #15253E;
+            --color-light-silver: #F9F7F8;
+            --color-light-blue: #99D0F2;
+            --color-purple: #7B68DF;
+            --color-gold: #D6A319;
+            --color-green: #788c5d;
+
+            /* Editorial palette */
+            --color-parchment: #FFFEF9;
+            --color-ink: #1A1A1A;
+            --color-warm-grey: #6B6760;
+            --color-accent-burgundy: #8B3A62;
+
+            /* Typography */
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'Crimson Text', Georgia, serif;
+            --font-accent: 'Lora', Georgia, serif;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-parchment);
+            color: var(--color-ink);
+            line-height: 1.8;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Paper texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* =====================================================
+           DECORATIVE ELEMENTS
+           ===================================================== */
+        .page-corner {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, transparent 0%, transparent 49%, var(--color-dark-blue) 50%);
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .margin-decoration {
+            position: absolute;
+            writing-mode: vertical-rl;
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            color: var(--color-purple);
+            opacity: 0.4;
+            text-transform: uppercase;
+            transform: rotate(180deg);
+        }
+
+        /* =====================================================
+           NAVIGATION
+           ===================================================== */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 254, 249, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 28px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            font-style: italic;
+            color: var(--color-dark-blue);
+            letter-spacing: 0.02em;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.2s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--color-warm-grey);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 400;
+            position: relative;
+            transition: color 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.4s forwards;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--color-purple);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--color-purple);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--color-dark-blue);
+            color: var(--color-parchment);
+            padding: 12px 28px;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.6s forwards;
+        }
+
+        .nav-cta:hover {
+            background: var(--color-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(123, 104, 223, 0.2);
+        }
+
+        /* =====================================================
+           HERO SECTION
+           ===================================================== */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 60px 80px;
+            position: relative;
+        }
+
+        .hero-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+        }
+
+        /* Drop cap effect */
+        .hero-content::before {
+            content: 'B';
+            position: absolute;
+            font-family: var(--font-display);
+            font-size: 14rem;
+            font-weight: 600;
+            color: var(--color-purple);
+            opacity: 0.05;
+            left: -60px;
+            top: -40px;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .hero-label {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--color-purple);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeInUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.3s forwards;
+            display: inline-block;
+            position: relative;
+            padding-left: 60px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 45px;
+            height: 1px;
+            background: var(--color-purple);
+            transform: translateY(-50%);
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            line-height: 1.15;
+            margin-bottom: 36px;
+            color: var(--color-dark-blue);
+            font-weight: 600;
+            opacity: 0;
+            animation: fadeInUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.5s forwards;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            font-weight: 600;
+            color: var(--color-purple);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-intro {
+            font-family: var(--font-accent);
+            font-size: 1.35rem;
+            line-height: 1.75;
+            color: var(--color-warm-grey);
+            margin-bottom: 48px;
+            max-width: 580px;
+            opacity: 0;
+            animation: fadeInUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.7s forwards;
+        }
+
+        .hero-intro::first-letter {
+            font-size: 3.5rem;
+            font-weight: 600;
+            float: left;
+            line-height: 0.85;
+            margin-right: 8px;
+            margin-top: 8px;
+            color: var(--color-purple);
+            font-family: var(--font-display);
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            opacity: 0;
+            animation: fadeInUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.9s forwards;
+        }
+
+        .btn-primary {
+            background: var(--color-dark-blue);
+            color: var(--color-parchment);
+            padding: 18px 42px;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            letter-spacing: 0.03em;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--color-purple), var(--color-dark-blue));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-primary span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(21, 37, 62, 0.2);
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-secondary {
+            color: var(--color-warm-grey);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            letter-spacing: 0.03em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            color: var(--color-purple);
+        }
+
+        .btn-secondary::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .btn-secondary:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* Hero aside - pull quote style */
+        .hero-aside {
+            padding: 48px;
+            border-left: 3px solid var(--color-gold);
+            background: rgba(214, 163, 25, 0.03);
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) 1.1s forwards;
+        }
+
+        .hero-aside::before {
+            content: '"';
+            font-family: var(--font-display);
+            font-size: 8rem;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: var(--color-gold);
+            opacity: 0.15;
+            line-height: 1;
+        }
+
+        .hero-aside blockquote {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: var(--color-dark-blue);
+            font-style: italic;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-aside cite {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--color-warm-grey);
+            font-style: normal;
+            display: block;
+        }
+
+        .hero-aside cite::before {
+            content: '— ';
+        }
+
+        /* =====================================================
+           FEATURES SECTION
+           ===================================================== */
+        .features {
+            padding: 140px 60px;
+            background: var(--color-light-silver);
+            position: relative;
+        }
+
+        .features-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            max-width: 750px;
+            margin-bottom: 100px;
+        }
+
+        .section-number {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--color-purple);
+            letter-spacing: 0.2em;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.2;
+            color: var(--color-dark-blue);
+            margin-bottom: 28px;
+            font-weight: 600;
+        }
+
+        .section-description {
+            font-family: var(--font-accent);
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--color-warm-grey);
+        }
+
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+        }
+
+        .feature-item {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 60px;
+            align-items: start;
+            position: relative;
+        }
+
+        .feature-item::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: 140px;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--color-purple), transparent);
+            opacity: 0.2;
+        }
+
+        .feature-item:last-child::after {
+            display: none;
+        }
+
+        .feature-number {
+            font-family: var(--font-display);
+            font-size: 5rem;
+            font-weight: 600;
+            color: var(--color-purple);
+            opacity: 0.15;
+            line-height: 1;
+            position: sticky;
+            top: 120px;
+        }
+
+        .feature-content h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--color-dark-blue);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .feature-content p {
+            font-family: var(--font-accent);
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: var(--color-warm-grey);
+            margin-bottom: 16px;
+        }
+
+        .feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .feature-tag {
+            font-size: 0.85rem;
+            padding: 6px 16px;
+            background: rgba(123, 104, 223, 0.08);
+            color: var(--color-purple);
+            border: 1px solid rgba(123, 104, 223, 0.2);
+            font-weight: 500;
+            letter-spacing: 0.03em;
+        }
+
+        /* =====================================================
+           TESTIMONIAL SECTION
+           ===================================================== */
+        .testimonial-section {
+            padding: 140px 60px;
+            background: var(--color-parchment);
+            position: relative;
+        }
+
+        .testimonial-container {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .testimonial-quote {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            line-height: 1.5;
+            color: var(--color-dark-blue);
+            font-style: italic;
+            font-weight: 500;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .testimonial-quote::before,
+        .testimonial-quote::after {
+            font-size: 4rem;
+            color: var(--color-gold);
+            opacity: 0.3;
+        }
+
+        .testimonial-quote::before {
+            content: '"';
+            margin-right: 8px;
+        }
+
+        .testimonial-quote::after {
+            content: '"';
+            margin-left: 8px;
+        }
+
+        .testimonial-author {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            color: var(--color-warm-grey);
+        }
+
+        .testimonial-author strong {
+            color: var(--color-dark-blue);
+            font-weight: 600;
+        }
+
+        /* =====================================================
+           CTA SECTION
+           ===================================================== */
+        .cta-section {
+            padding: 140px 60px;
+            background: var(--color-dark-blue);
+            color: var(--color-parchment);
+            text-align: center;
+            position: relative;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.3;
+            margin-bottom: 28px;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        .cta-section p {
+            font-family: var(--font-accent);
+            font-size: 1.25rem;
+            line-height: 1.75;
+            color: rgba(249, 247, 248, 0.8);
+            margin-bottom: 48px;
+        }
+
+        .cta-button {
+            background: var(--color-gold);
+            color: var(--color-dark-blue);
+            padding: 18px 48px;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--color-light-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(214, 163, 25, 0.3);
+        }
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+        footer {
+            background: var(--color-light-silver);
+            padding: 80px 60px 40px;
+            border-top: 1px solid rgba(26, 26, 26, 0.08);
+        }
+
+        .footer-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr repeat(3, 1fr);
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            font-style: italic;
+            color: var(--color-dark-blue);
+            margin-bottom: 20px;
+        }
+
+        .footer-tagline {
+            font-family: var(--font-accent);
+            font-size: 1.05rem;
+            color: var(--color-warm-grey);
+            line-height: 1.7;
+            max-width: 320px;
+        }
+
+        .footer-section h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--color-dark-blue);
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 14px;
+        }
+
+        .footer-section a {
+            color: var(--color-warm-grey);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .footer-section a:hover {
+            color: var(--color-purple);
+        }
+
+        .footer-bottom {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding-top: 40px;
+            border-top: 1px solid rgba(26, 26, 26, 0.08);
+            text-align: center;
+            color: var(--color-warm-grey);
+            font-size: 0.9rem;
+        }
+
+        /* =====================================================
+           SCROLL REVEAL
+           ===================================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .hero-aside {
+                max-width: 600px;
+            }
+
+            .feature-item {
+                grid-template-columns: 100px 1fr;
+                gap: 40px;
+            }
+
+            .feature-item::after {
+                left: 100px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 24px 32px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .nav-link {
+                display: none;
+            }
+
+            .hero {
+                padding: 80px 32px 60px;
+            }
+
+            .hero-content::before {
+                font-size: 8rem;
+                left: -30px;
+                top: -20px;
+            }
+
+            .features {
+                padding: 100px 32px;
+            }
+
+            .feature-item {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .feature-number {
+                position: static;
+                font-size: 3rem;
+            }
+
+            .feature-item::after {
+                left: 0;
+            }
+
+            .testimonial-section {
+                padding: 100px 32px;
+            }
+
+            .cta-section {
+                padding: 100px 32px;
+            }
+
+            footer {
+                padding: 60px 32px 32px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative elements -->
+    <div class="page-corner"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">BitBooth</div>
+            <div class="nav-links">
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#approach" class="nav-link">Approach</a>
+                <a href="#insights" class="nav-link">Insights</a>
+                <a href="#contact" class="nav-cta">Begin a Conversation</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-label">AI Advisory & Implementation</div>
+                <h1>Build intelligence into your <em>business foundation</em></h1>
+                <p class="hero-intro">We partner with ambitious organizations to design and deploy AI solutions that transform operations, elevate experiences, and unlock sustainable competitive advantage through thoughtful automation.</p>
+                <div class="hero-cta-group">
+                    <a href="#contact" class="btn-primary"><span>Discuss Your Vision</span></a>
+                    <a href="#approach" class="btn-secondary">Our Approach</a>
+                </div>
+            </div>
+
+            <aside class="hero-aside">
+                <blockquote>AI should feel inevitable—not intrusive.</blockquote>
+                <cite>Our Philosophy on Integration</cite>
+            </aside>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="services">
+        <div class="features-container">
+            <header class="section-header reveal">
+                <div class="section-number">I. Services</div>
+                <h2 class="section-title">Capabilities designed for lasting impact</h2>
+                <p class="section-description">We approach each engagement as a partnership, combining strategic insight with technical precision to create solutions that endure.</p>
+            </header>
+
+            <div class="features-list">
+                <article class="feature-item reveal">
+                    <div class="feature-number">01</div>
+                    <div class="feature-content">
+                        <h3>Strategic AI Consulting</h3>
+                        <p>Begin with clarity. We assess your operations, identify high-leverage opportunities, and design a roadmap aligned with your business objectives and technical capabilities.</p>
+                        <p>From feasibility studies to implementation strategy, we ensure every decision is grounded in both possibility and pragmatism.</p>
+                        <div class="feature-tags">
+                            <span class="feature-tag">Opportunity Assessment</span>
+                            <span class="feature-tag">Technical Roadmapping</span>
+                            <span class="feature-tag">ROI Modeling</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="feature-item reveal">
+                    <div class="feature-number">02</div>
+                    <div class="feature-content">
+                        <h3>Custom Agent Development</h3>
+                        <p>Intelligence tailored to your context. We architect AI agents that understand your workflows, integrate seamlessly with existing systems, and deliver measurable outcomes.</p>
+                        <p>No generic solutions. Every agent is built from the ground up to solve your specific challenges with precision and reliability.</p>
+                        <div class="feature-tags">
+                            <span class="feature-tag">Process Automation</span>
+                            <span class="feature-tag">Customer Intelligence</span>
+                            <span class="feature-tag">Decision Support</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="feature-item reveal">
+                    <div class="feature-number">03</div>
+                    <div class="feature-content">
+                        <h3>Integration & Optimization</h3>
+                        <p>Deploy with confidence. We handle the complexity of integration, ensuring your AI solutions work harmoniously within your existing infrastructure.</p>
+                        <p>Post-launch, we monitor performance, gather insights, and continuously refine systems to maximize value and adapt to evolving needs.</p>
+                        <div class="feature-tags">
+                            <span class="feature-tag">System Integration</span>
+                            <span class="feature-tag">Performance Monitoring</span>
+                            <span class="feature-tag">Continuous Improvement</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial-section reveal">
+        <div class="testimonial-container">
+            <p class="testimonial-quote">The transformation has been remarkable—our team now focuses on strategic work while AI handles the routine, with results that exceeded our projections.</p>
+            <p class="testimonial-author"><strong>Sarah Chen</strong>, Chief Operating Officer</p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="cta-container">
+            <h2>Let's explore what's possible</h2>
+            <p>Whether you're beginning your AI journey or looking to expand existing capabilities, we're here to guide you toward solutions that drive real business value.</p>
+            <a href="#contact" class="cta-button">Schedule a Consultation</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-brand">BitBooth</div>
+                <p class="footer-tagline">Intelligent solutions for organizations that value precision, elegance, and enduring impact.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#consulting">AI Consulting</a></li>
+                    <li><a href="#development">Agent Development</a></li>
+                    <li><a href="#integration">Integration Services</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#approach">Our Approach</a></li>
+                    <li><a href="#case-studies">Case Studies</a></li>
+                    <li><a href="#careers">Careers</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#insights">Insights</a></li>
+                    <li><a href="#whitpapers">Whitepapers</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 BitBooth ApS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scroll Reveal Script -->
+    <script>
+        // Intersection Observer for scroll reveal
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('active');
+                    }, index * 150);
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -80px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Smooth parallax on large decorative letter
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scrollY = window.scrollY;
+                    const heroContent = document.querySelector('.hero-content');
+
+                    if (heroContent && window.innerWidth > 768) {
+                        const before = window.getComputedStyle(heroContent, ':before');
+                        // Subtle parallax effect via opacity and position
+                        const opacity = Math.max(0, 0.05 - scrollY * 0.0001);
+                        heroContent.style.setProperty('--before-opacity', opacity);
+                    }
+
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    </script>
+</body>
+</html>
