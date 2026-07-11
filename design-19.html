@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Field Guide to Buttercream Flora — Cheeky Bite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@400;600&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF6EA;
+    --paper-deep:#F4EBD7;
+    --ink:#33402F;
+    --ink-soft:#5C6A57;
+    --rose:#C96F8E;
+    --rose-soft:#F3D8E1;
+    --gold:#C99B3F;
+    --pencil:#8A7DB8;
+    --rule:1.5px solid rgba(51,64,47,.35);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(201,155,63,.06), transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(201,111,142,.05), transparent 50%);
+    color:var(--ink);
+    font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:1.65;
+    overflow-x:hidden;
+  }
+  img{display:block;max-width:100%}
+  .hand{font-family:'Caveat',cursive;color:var(--pencil)}
+  .sans{font-family:'Nunito Sans',sans-serif}
+
+  .page{max-width:64rem;margin:0 auto;padding:0 clamp(1.1rem,4vw,3rem)}
+
+  /* ---------- COVER ---------- */
+  .cover{min-height:94vh;display:grid;place-items:center;text-align:center;padding:3rem 1rem;position:relative}
+  .cover .frame{border:2.5px solid var(--ink);padding:clamp(1.6rem,5vw,3.4rem) clamp(1.2rem,6vw,4rem);
+    position:relative;max-width:42rem;background:rgba(255,255,255,.35)}
+  .cover .frame::before{content:"";position:absolute;inset:7px;border:1px solid var(--ink);pointer-events:none}
+  .cover .society{font-family:'Nunito Sans';font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;color:var(--ink-soft)}
+  .cover h1{font-size:clamp(2.3rem,6.5vw,4.2rem);font-weight:600;line-height:1.06;margin:.9rem 0 .4rem;text-wrap:balance}
+  .cover h1 em{font-style:italic;color:var(--rose)}
+  .cover .sub{font-style:italic;font-size:1.2rem;color:var(--ink-soft)}
+  .cover .edition{margin-top:1.6rem;display:inline-block;border-top:var(--rule);border-bottom:var(--rule);
+    padding:.5rem 1.4rem;font-family:'Nunito Sans';font-size:.72rem;letter-spacing:.2em;text-transform:uppercase}
+  .cover .annot{position:absolute;font-size:1.35rem;transform:rotate(-4deg)}
+  .a1{top:12%;left:6%}
+  .a2{bottom:14%;right:5%;transform:rotate(3deg)}
+  @media(max-width:700px){.cover .annot{display:none}}
+  .cover .down{margin-top:2rem;font-family:'Nunito Sans';font-size:.8rem;letter-spacing:.15em;color:var(--ink-soft)}
+
+  /* botanical corner flourish */
+  .flourish{position:absolute;width:120px;opacity:.5;pointer-events:none}
+  .fl-tl{top:20px;left:20px}
+  .fl-br{bottom:20px;right:20px;transform:rotate(180deg)}
+
+  /* ---------- TOC ---------- */
+  .toc{max-width:36rem;margin:0 auto;padding:3rem 1.2rem 4rem}
+  .toc h2{text-align:center;font-size:1.9rem;font-weight:600;margin-bottom:1.6rem}
+  .toc ol{list-style:none}
+  .toc a{display:flex;align-items:baseline;gap:.6rem;color:inherit;text-decoration:none;padding:.45rem 0;font-size:1.15rem}
+  .toc a:hover .t{color:var(--rose)}
+  .toc .t{font-style:italic}
+  .toc .dots{flex:1;border-bottom:2px dotted rgba(51,64,47,.45);transform:translateY(-4px)}
+  .toc .pg{font-family:'Nunito Sans';font-size:.85rem}
+
+  /* ---------- PLATES ---------- */
+  .plate{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(1.6rem,4vw,3.2rem);
+    align-items:start;margin:5.5rem 0;position:relative}
+  .plate:nth-of-type(even) .fig{order:2}
+  .fig{position:relative}
+  .fig .mat{border:2px solid var(--ink);padding:12px;background:#fff;
+    box-shadow:0 14px 30px rgba(51,64,47,.12)}
+  .fig img{width:100%;aspect-ratio:4/3.2;object-fit:cover;
+    filter:none;transition:filter 1.2s ease}
+  @media (prefers-reduced-motion: no-preference){
+    .rv .fig img{filter:sepia(.55) saturate(.6)}
+    .rv.in .fig img{filter:none}
+  }
+  .fig .plate-no{position:absolute;top:-14px;left:22px;background:var(--paper);padding:0 .7rem;
+    font-family:'Nunito Sans';font-size:.7rem;letter-spacing:.28em;text-transform:uppercase}
+  .fig .fig-annot{position:absolute;bottom:-16px;right:8%;font-size:1.35rem;transform:rotate(-3deg)}
+  .fig .pin{position:absolute;top:-9px;left:50%;transform:translateX(-50%);width:16px;height:16px;
+    border-radius:50%;background:var(--rose);border:2px solid var(--ink);box-shadow:0 2px 3px rgba(0,0,0,.25)}
+
+  .entry .latin{font-size:clamp(1.7rem,3.6vw,2.5rem);font-style:italic;font-weight:500;line-height:1.1}
+  .entry .common{font-family:'Nunito Sans';font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--rose);margin:.4rem 0 1rem}
+  .entry p.desc{max-width:32rem}
+  .tax{margin-top:1.2rem;border:var(--rule);border-left:4px solid var(--gold);
+    background:rgba(255,255,255,.45);padding:.9rem 1.1rem;font-size:1.02rem}
+  .tax dl{display:grid;grid-template-columns:auto 1fr;gap:.15rem 1.1rem}
+  .tax dt{font-family:'Nunito Sans';font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-soft);align-self:baseline;padding-top:.2rem}
+  .tax dd{font-style:italic}
+  .fieldnote{margin-top:1rem;font-size:1.4rem;line-height:1.3}
+  .fieldnote::before{content:"✎ ";font-size:1rem}
+
+  /* reveal */
+  .rv{opacity:1;transform:none}
+  @media (prefers-reduced-motion: no-preference){
+    .rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+    .rv.in{opacity:1;transform:none}
+  }
+
+  /* section headers */
+  .chapter{text-align:center;margin:6rem 0 1rem;position:relative}
+  .chapter .orn{font-size:1.2rem;letter-spacing:.6em;color:var(--gold)}
+  .chapter h2{font-size:clamp(1.9rem,4.5vw,2.9rem);font-weight:600}
+  .chapter .note{font-style:italic;color:var(--ink-soft)}
+
+  /* ---------- FAUNA (macarons) — specimen row ---------- */
+  .fauna-strip{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.2rem,3vw,2.4rem);margin:3.5rem 0 5rem}
+  .specimen{border:2px solid var(--ink);background:#fff;padding:10px;position:relative;
+    transform:rotate(var(--r,-1deg));transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+  .specimen:hover{transform:rotate(0) scale(1.02)}
+  .specimen img{width:100%;aspect-ratio:4/3.4;object-fit:cover}
+  .specimen .tag{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%) rotate(-2deg);
+    background:var(--paper-deep);border:1.5px solid var(--ink);padding:.15rem .9rem;
+    font-family:'Nunito Sans';font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+  .specimen .string{position:absolute;top:-22px;left:50%;width:1.5px;height:22px;background:var(--ink);transform:translateX(-50%)}
+  .fauna-caption{grid-column:1/-1;text-align:center;font-style:italic;color:var(--ink-soft);max-width:38rem;margin:1rem auto 0}
+
+  /* habitat band */
+  .habitat{margin:5rem 0;border:2px solid var(--ink);position:relative;background:#fff;padding:12px}
+  .habitat img{width:100%;max-height:430px;object-fit:cover}
+  .habitat .lbl{position:absolute;top:-14px;left:26px;background:var(--paper);padding:0 .7rem;
+    font-family:'Nunito Sans';font-size:.7rem;letter-spacing:.28em;text-transform:uppercase}
+  .habitat figcaption{padding:.9rem .4rem .3rem;font-style:italic;text-align:center;color:var(--ink-soft)}
+  .habitat .h-annot{position:absolute;bottom:12%;right:4%;font-size:1.5rem;transform:rotate(-5deg);
+    background:rgba(251,246,234,.85);padding:.1rem .6rem;border-radius:6px}
+
+  /* ---------- SPECIMEN REQUEST FORM (clipboard) ---------- */
+  .request{max-width:34rem;margin:5rem auto 6rem;position:relative}
+  .clipboard{background:#fff;border:2px solid var(--ink);padding:2.2rem 1.8rem 2rem;
+    box-shadow:0 16px 34px rgba(51,64,47,.14);position:relative}
+  .clipboard::before{content:"";position:absolute;top:-16px;left:50%;transform:translateX(-50%);
+    width:96px;height:30px;background:var(--gold);border:2px solid var(--ink);border-radius:8px}
+  .clipboard::after{content:"";position:absolute;top:-6px;left:50%;transform:translateX(-50%);
+    width:40px;height:12px;background:var(--paper);border:2px solid var(--ink);border-radius:4px}
+  .clipboard h2{text-align:center;font-size:1.8rem;font-weight:600;margin-bottom:.2rem}
+  .clipboard .formno{text-align:center;font-family:'Nunito Sans';font-size:.68rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ink-soft);margin-bottom:1.4rem}
+  form{display:grid;gap:1.1rem}
+  .fld label{display:block;font-family:'Nunito Sans';font-size:.7rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-soft);margin-bottom:.2rem}
+  .fld label small{text-transform:none;letter-spacing:.02em}
+  .fld input,.fld textarea{width:100%;border:0;border-bottom:2px solid var(--ink);background:transparent;
+    font-family:'Cormorant Garamond';font-size:1.25rem;font-style:italic;padding:.3rem .1rem;color:var(--ink)}
+  .fld input:focus,.fld textarea:focus{outline:none;border-bottom-color:var(--rose);
+    background:linear-gradient(transparent 80%, var(--rose-soft) 80%)}
+  .stamp-btn{justify-self:center;margin-top:.6rem;border:2.5px solid var(--rose);color:var(--rose);
+    background:none;border-radius:10px;padding:.7rem 2rem;font-family:'Nunito Sans';font-weight:700;
+    letter-spacing:.18em;text-transform:uppercase;font-size:.8rem;cursor:pointer;
+    transform:rotate(-2deg);transition:transform .2s,background .2s,color .2s}
+  .stamp-btn:hover{background:var(--rose);color:#fff;transform:rotate(0) scale(1.05)}
+  .approved{display:none;text-align:center;margin-top:1rem}
+  .approved .stamp{display:inline-block;border:3px double var(--rose);color:var(--rose);border-radius:10px;
+    padding:.5rem 1.4rem;font-family:'Nunito Sans';font-weight:800;letter-spacing:.24em;text-transform:uppercase;
+    font-size:.9rem;transform:rotate(-6deg)}
+  @media (prefers-reduced-motion: no-preference){
+    .approved.show .stamp{animation:stamp .45s cubic-bezier(.34,1.8,.64,1)}
+    @keyframes stamp{0%{transform:rotate(-6deg) scale(2.4);opacity:0}100%{transform:rotate(-6deg) scale(1);opacity:1}}
+  }
+  .approved p{margin-top:.7rem;font-style:italic}
+
+  /* footnotes / footer */
+  .colophon{border-top:var(--rule);max-width:64rem;margin:0 auto;padding:1.6rem clamp(1.1rem,4vw,3rem) 2.6rem;
+    font-size:.95rem;color:var(--ink-soft);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  .colophon .fn{font-style:italic}
+
+  /* page numbers */
+  .pgno{text-align:center;font-family:'Nunito Sans';font-size:.72rem;letter-spacing:.3em;color:var(--ink-soft);margin:2.5rem 0}
+
+  @media(max-width:760px){
+    .plate{grid-template-columns:1fr;margin:4rem 0}
+    .plate:nth-of-type(even) .fig{order:0}
+    .fauna-strip{grid-template-columns:1fr;gap:2.4rem}
+    body{font-size:1.08rem}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<header class="cover">
+  <svg class="flourish fl-tl" viewBox="0 0 100 100" aria-hidden="true">
+    <path d="M4 96 C 10 60, 30 40, 60 30 M20 80 q 8 -2 10 -10 M32 64 q 10 -1 12 -12 M48 46 q 12 0 14 -12" fill="none" stroke="#33402F" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="62" cy="28" r="5" fill="none" stroke="#C96F8E" stroke-width="1.6"/>
+    <circle cx="62" cy="28" r="1.6" fill="#C96F8E"/>
+  </svg>
+  <svg class="flourish fl-br" viewBox="0 0 100 100" aria-hidden="true">
+    <path d="M4 96 C 10 60, 30 40, 60 30 M20 80 q 8 -2 10 -10 M32 64 q 10 -1 12 -12 M48 46 q 12 0 14 -12" fill="none" stroke="#33402F" stroke-width="1.6" stroke-linecap="round"/>
+    <circle cx="62" cy="28" r="5" fill="none" stroke="#C96F8E" stroke-width="1.6"/>
+    <circle cx="62" cy="28" r="1.6" fill="#C96F8E"/>
+  </svg>
+  <div>
+    <div class="frame rv">
+      <div class="society">The Cheeky Bite Confectionery Society · est. one kitchen ago</div>
+      <h1>A Field Guide to<br><em>Buttercream Flora</em><br>&amp; Confectionery Fauna</h1>
+      <p class="sub">Being a complete taxonomy of edible flowers, sentient macarons,<br>and Thai sweets masquerading as fruit</p>
+      <span class="edition">Second Edition · Fully Illustrated · Entirely Delicious</span>
+    </div>
+    <span class="annot a1 hand">every specimen<br>piped by hand!</span>
+    <span class="annot a2 hand">do lick the pages →<br>(figuratively)</span>
+    <div class="down">SCROLL TO BEGIN THE EXPEDITION ↓</div>
+  </div>
+</header>
+
+<!-- ============ TOC ============ -->
+<nav class="toc rv" aria-label="Contents">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#plate1"><span class="t">Paeonia cremora</span> — the Blushing Peony<span class="dots"></span><span class="pg">pl. I</span></a></li>
+    <li><a href="#plate2"><span class="t">Dahlia sacchara</span> — the Ivory Dahlia<span class="dots"></span><span class="pg">pl. II</span></a></li>
+    <li><a href="#plate3"><span class="t">Rosa lilacina</span> — the Impossible Lilac<span class="dots"></span><span class="pg">pl. III</span></a></li>
+    <li><a href="#plate4"><span class="t">Fructus siamensis</span> — the Glass Fruit<span class="dots"></span><span class="pg">pl. IV</span></a></li>
+    <li><a href="#fauna"><span class="t">Macaronidae</span> — the Character Fauna<span class="dots"></span><span class="pg">pl. V</span></a></li>
+    <li><a href="#habitat">The Natural Habitat<span class="dots"></span><span class="pg">pl. VI</span></a></li>
+    <li><a href="#request">Specimen Request Form<span class="dots"></span><span class="pg">appx.</span></a></li>
+  </ol>
+</nav>
+
+<main class="page">
+
+  <!-- CHAPTER: FLORA -->
+  <div class="chapter rv">
+    <div class="orn">❧ ❧ ❧</div>
+    <h2>Part the First: Flora</h2>
+    <p class="note">On flowers that grow from piping bags rather than soil</p>
+  </div>
+
+  <!-- PLATE I -->
+  <section class="plate rv" id="plate1">
+    <figure class="fig">
+      <span class="pin"></span>
+      <div class="mat"><img src="images/229617.jpg" alt="Pink and cream buttercream peonies"></div>
+      <span class="plate-no">Plate I</span>
+      <span class="fig-annot hand">note the ruffle!</span>
+    </figure>
+    <div class="entry">
+      <h3 class="latin">Paeonia cremora</h3>
+      <div class="common">The Blushing Peony</div>
+      <p class="desc">The flagship of the genus. Petals are piped one by one upon a rotating flower nail, then lifted onto the cake with scissors and a held breath. Blooms year-round, unlike its garden cousin, and never wilts — it is eaten long before it gets the chance.</p>
+      <div class="tax">
+        <dl>
+          <dt>Kingdom</dt><dd>Confectionery</dd>
+          <dt>Order</dt><dd>Buttercreamales</dd>
+          <dt>Habitat</dt><dd>celebration tables, birthday centrepieces</dd>
+          <dt>Flowering</dt><dd>by commission, all seasons</dd>
+          <dt>Status</dt><dd>abundant, briefly</dd>
+        </dl>
+      </div>
+      <p class="fieldnote hand">Field note: guests will ask if it's real. It is real. It's just also butter.</p>
+    </div>
+  </section>
+
+  <!-- PLATE II -->
+  <section class="plate rv" id="plate2">
+    <figure class="fig">
+      <span class="pin"></span>
+      <div class="mat"><img src="images/229619.jpg" alt="White buttercream dahlias"></div>
+      <span class="plate-no">Plate II</span>
+      <span class="fig-annot hand">100+ petals, one flower</span>
+    </figure>
+    <div class="entry">
+      <h3 class="latin">Dahlia sacchara</h3>
+      <div class="common">The Ivory Dahlia</div>
+      <p class="desc">Remarkable for its geometric precision: concentric rings of petals in warm ivory, each placed at an angle the mathematics of which the baker refuses to explain, calling it merely "practice." A patient species.</p>
+      <div class="tax">
+        <dl>
+          <dt>Kingdom</dt><dd>Confectionery</dd>
+          <dt>Order</dt><dd>Buttercreamales</dd>
+          <dt>Petal count</dt><dd>upwards of one hundred; all edible</dd>
+          <dt>Temperament</dt><dd>serene</dd>
+          <dt>Shortcuts taken</dt><dd>none recorded</dd>
+        </dl>
+      </div>
+      <p class="fieldnote hand">Field note: photographed at actual patience level.</p>
+    </div>
+  </section>
+
+  <!-- PLATE III -->
+  <section class="plate rv" id="plate3">
+    <figure class="fig">
+      <span class="pin"></span>
+      <div class="mat"><img src="images/229618.jpg" alt="Lilac buttercream roses"></div>
+      <span class="plate-no">Plate III</span>
+      <span class="fig-annot hand">colour not found in nature</span>
+    </figure>
+    <div class="entry">
+      <h3 class="latin">Rosa lilacina</h3>
+      <div class="common">The Impossible Lilac</div>
+      <p class="desc">Occurs in a shade of lilac unknown to natural rose populations, achievable only in a piping bag at the exact right pressure on a good day. Frequently sighted in bouquet-box formations alongside <em>Paeonia cremora</em> (see Plate I) — the full florist's window, compressed into one sliceable square.</p>
+      <div class="tax">
+        <dl>
+          <dt>Kingdom</dt><dd>Confectionery</dd>
+          <dt>Order</dt><dd>Buttercreamales</dd>
+          <dt>Rarity</dt><dd>high; each bloom unrepeatable</dd>
+          <dt>Companion species</dt><dd>lilies, blossoms, gold leaf</dd>
+        </dl>
+      </div>
+      <p class="fieldnote hand">Field note: the bouquet cakes (pl. VI) carry whole colonies of these.</p>
+    </div>
+  </section>
+
+  <!-- CHAPTER: EXOTICS -->
+  <div class="chapter rv">
+    <div class="orn">❧ ❧ ❧</div>
+    <h2>Part the Second: Exotic Species</h2>
+    <p class="note">Specimens of the Siam lineage — ลูกชุบ — a royal Thai craft, made at a kitchen table</p>
+  </div>
+
+  <!-- PLATE IV -->
+  <section class="plate rv" id="plate4">
+    <figure class="fig">
+      <span class="pin"></span>
+      <div class="mat"><img src="images/1782399389414.jpg" alt="Look choup — Thai fruit-shaped mung bean sweets, glossy and miniature"></div>
+      <span class="plate-no">Plate IV</span>
+      <span class="fig-annot hand">NOT actual fruit!!</span>
+    </figure>
+    <div class="entry">
+      <h3 class="latin">Fructus siamensis</h3>
+      <div class="common">The Glass Fruit · Look Choup</div>
+      <p class="desc">A master of mimicry. Sculpted from sweetened mung bean, hand-painted, then dipped in glaze until it shines like glass — this species imitates mangoes, chillies, and cherries so convincingly that dinner guests have been recorded arguing about it. Related species: <em>Rosa crustula</em> (rose pia), a flaky pastry rose that shatters politely upon first bite.</p>
+      <div class="tax">
+        <dl>
+          <dt>Kingdom</dt><dd>Confectionery</dd>
+          <dt>Order</dt><dd>Siamensia</dd>
+          <dt>Origin</dt><dd>royal Thai kitchens, generations deep</dd>
+          <dt>Defence mechanism</dt><dd>being mistaken for décor</dd>
+          <dt>Gloss</dt><dd>glass-like; do not water</dd>
+        </dl>
+      </div>
+      <p class="fieldnote hand">Field note: the chilli one fools somebody at every single party.</p>
+    </div>
+  </section>
+
+  <!-- CHAPTER: FAUNA -->
+  <div class="chapter rv" id="fauna">
+    <div class="orn">❧ ❧ ❧</div>
+    <h2>Part the Third: Fauna</h2>
+    <p class="note">On the Macaronidae — shell-dwelling creatures with hand-piped faces and strong opinions</p>
+  </div>
+
+  <div class="fauna-strip">
+    <figure class="specimen rv" style="--r:-2deg">
+      <span class="string"></span>
+      <img src="images/1780894899980.jpg" alt="Bear and lemon character macarons on a plate in window light">
+      <figcaption class="tag">Ursus macaron &amp; Citrus ridens</figcaption>
+    </figure>
+    <figure class="specimen rv" style="--r:1.5deg">
+      <span class="string"></span>
+      <img src="images/1782399389268.jpg" alt="Christmas character macarons">
+      <figcaption class="tag">The December migration</figcaption>
+    </figure>
+    <p class="fauna-caption rv">Each face is piped by hand, and therefore each specimen exhibits its own personality — a phenomenon the baker describes as "mildly chaotic, entirely on purpose." The bear (<em>Ursus macaron</em>) is the most frequently requested; the lemon (<em>Citrus ridens</em>, "the laughing lemon") the most frequently impersonated. The December migration arrives every Christmas and sells out with alarming speed.</p>
+  </div>
+
+  <!-- HABITAT -->
+  <div class="chapter rv" id="habitat">
+    <div class="orn">❧ ❧ ❧</div>
+    <h2>The Natural Habitat</h2>
+    <p class="note">Where specimens originate: one workbench, two hands, no factory</p>
+  </div>
+
+  <figure class="habitat rv">
+    <span class="lbl">Plate VI</span>
+    <img src="images/1783770350417.jpg" alt="Hands piping tiny faces onto macarons at the workbench">
+    <span class="h-annot hand">the entire company, pictured</span>
+    <figcaption>The baker at work, giving a macaron the correct eyebrows. Every specimen in this guide originated at this table — which is why the wise collector requests theirs early.</figcaption>
+  </figure>
+
+  <figure class="habitat rv">
+    <span class="lbl">Plate VII</span>
+    <img src="images/229626.jpg" alt="Pastel bouquet cake crowned with buttercream lilies">
+    <span class="h-annot hand">a full colony in bloom!</span>
+    <figcaption>A mature bouquet cake in full flower — lilies, roses and blossoms in one pastel colony. Commissioned for the tables everyone gathers around.</figcaption>
+  </figure>
+
+  <div class="pgno">· 24 ·</div>
+
+  <!-- REQUEST FORM -->
+  <section class="request rv" id="request">
+    <div class="clipboard">
+      <h2>Specimen Request Form</h2>
+      <div class="formno">Appendix A · Form CB-01 · No pith helmet required</div>
+      <form id="orderForm">
+        <div class="fld">
+          <label for="contact">Collector's email or telephone</label>
+          <input id="contact" required placeholder="where the baker may reach you" autocomplete="email">
+        </div>
+        <div class="fld">
+          <label for="species">Species sought <small>(optional)</small></label>
+          <input id="species" placeholder="e.g. one dozen Ursus macaron">
+        </div>
+        <div class="fld">
+          <label for="occasion">Expedition notes <small>(optional — occasion, date)</small></label>
+          <textarea id="occasion" rows="2" placeholder="a peony colony for mother's 60th…"></textarea>
+        </div>
+        <button class="stamp-btn" type="submit">Submit to the Society</button>
+      </form>
+      <div class="approved" id="approved">
+        <span class="stamp">Approved</span>
+        <p>Your request is logged in the ledger.<br>The baker will call you back to plan the expedition.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="colophon">
+  <span>Cheeky Bite · sweet as art</span>
+  <span class="fn">¹ All species listed are edible. ² All species listed will be eaten. ³ This is their purpose, and they are at peace with it.</span>
+</footer>
+
+<script>
+(function(){
+  const io = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.15});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  document.getElementById('orderForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    e.target.style.display='none';
+    const a = document.getElementById('approved');
+    a.style.display='block';
+    requestAnimationFrame(()=>a.classList.add('show'));
+  });
+})();
+</script>
+</body>
+</html>

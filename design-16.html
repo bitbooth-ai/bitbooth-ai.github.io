@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheeky Bite — Sugar Trail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFF8EC;
+    --ink:#43303F;
+    --pink:#F76FA0;
+    --pink-soft:#FFD9E8;
+    --yellow:#FFC93C;
+    --yellow-soft:#FFF0C2;
+    --mint:#7ED8B4;
+    --mint-soft:#DDF6EC;
+    --lilac:#C9A6E8;
+    --lilac-soft:#F0E4FB;
+    --red:#F25C54;
+    --shadow:0 10px 0 -4px rgba(67,48,63,.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    background-image:radial-gradient(rgba(67,48,63,.05) 1.2px, transparent 1.2px);
+    background-size:26px 26px;
+    color:var(--ink);
+    font-family:'Nunito',sans-serif;font-size:1.05rem;line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.f{font-family:'Fredoka',sans-serif}
+  img{display:block;max-width:100%}
+
+  /* ---------- HERO / START ---------- */
+  .hero{min-height:92vh;display:grid;place-items:center;text-align:center;padding:3rem 1.2rem 5rem;position:relative}
+  .board-title{max-width:46rem}
+  .kicker{display:inline-block;background:var(--yellow);border:3px solid var(--ink);border-radius:999px;
+    padding:.3rem 1.1rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem;
+    box-shadow:var(--shadow);transform:rotate(-2deg)}
+  h1{font-size:clamp(2.8rem,9vw,5.6rem);line-height:1.02;font-weight:700;margin:1.2rem 0 .4rem;text-wrap:balance}
+  h1 .sw{display:inline-block;color:var(--pink);transform:rotate(2deg)}
+  .hero p.sub{max-width:34rem;margin:0 auto;font-size:1.1rem}
+  .hero .rules{margin-top:2rem;display:inline-flex;flex-wrap:wrap;gap:.6rem;justify-content:center}
+  .rule{background:#fff;border:2.5px solid var(--ink);border-radius:14px;padding:.45rem .9rem;font-weight:600;font-size:.86rem;box-shadow:var(--shadow)}
+  .rule b{color:var(--pink)}
+  .start-tile{margin-top:2.6rem;display:inline-grid;place-items:center;background:var(--mint);border:3.5px solid var(--ink);
+    border-radius:20px;padding:1rem 2.4rem;font-family:'Fredoka';font-weight:700;font-size:1.5rem;letter-spacing:.14em;
+    box-shadow:var(--shadow);animation:bob 2.6s ease-in-out infinite;cursor:pointer;text-decoration:none;color:var(--ink)}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-9px) rotate(1deg)}}
+  .down-arrow{margin-top:1.4rem;font-size:1.6rem;animation:bob 2.6s ease-in-out infinite .3s}
+
+  /* floating deco sprinkles */
+  .sprinkle{position:absolute;border-radius:999px;pointer-events:none}
+  .sp1{width:14px;height:34px;background:var(--pink);top:14%;left:12%;transform:rotate(30deg)}
+  .sp2{width:12px;height:28px;background:var(--yellow);top:24%;right:14%;transform:rotate(-40deg)}
+  .sp3{width:12px;height:28px;background:var(--mint);bottom:20%;left:20%;transform:rotate(70deg)}
+  .sp4{width:14px;height:32px;background:var(--lilac);bottom:26%;right:18%;transform:rotate(-15deg)}
+
+  /* ---------- TRAIL ---------- */
+  .trail{position:relative;max-width:72rem;margin:0 auto;padding:2rem 1.2rem 4rem}
+  .trail svg.path-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+  .path-base{fill:none;stroke:rgba(67,48,63,.18);stroke-width:2.5;stroke-dasharray:1 8;stroke-linecap:round}
+  .path-done{fill:none;stroke:var(--pink);stroke-width:3;stroke-dasharray:1 8;stroke-linecap:round}
+
+  /* token — a little macaron with a face */
+  #token{position:absolute;width:54px;height:54px;margin:-27px 0 0 -27px;z-index:5;pointer-events:none;
+    transition:transform .2s}
+  #token .shell{width:100%;height:100%;border-radius:50%;background:var(--pink-soft);border:3px solid var(--ink);
+    position:relative;box-shadow:0 6px 0 -2px rgba(67,48,63,.2)}
+  #token .shell::before{content:"";position:absolute;left:6px;right:6px;top:46%;height:8px;background:#fff;
+    border-radius:99px;border:2px solid var(--ink)}
+  #token .eye{position:absolute;width:6px;height:6px;background:var(--ink);border-radius:50%;top:32%}
+  #token .eye.l{left:30%} #token .eye.r{right:30%}
+  #token .smile{position:absolute;width:12px;height:7px;border:2px solid var(--ink);border-top:none;border-radius:0 0 12px 12px;top:38%;left:50%;transform:translateX(-50%)}
+
+  /* stops */
+  .stop{position:relative;z-index:1;display:grid;gap:1.6rem;align-items:center;margin:9rem 0;
+    grid-template-columns:1fr 1fr}
+  .stop:nth-of-type(even) .card{order:2}
+  .stop:nth-of-type(even) .blurb{order:1;text-align:right}
+  .stop:nth-of-type(even) .blurb .tile-num{margin-left:auto}
+  .card{background:#fff;border:3.5px solid var(--ink);border-radius:24px;padding:.9rem;box-shadow:var(--shadow);
+    transform:rotate(var(--tilt,-1.5deg));transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+  .card:hover{transform:rotate(0deg) scale(1.02)}
+  .card img{border-radius:16px;aspect-ratio:4/3;object-fit:cover;width:100%}
+  .card.tall img{aspect-ratio:3/4}
+  .card figcaption{padding:.7rem .4rem .2rem;font-weight:600;font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+  .card figcaption .price{font-family:'Fredoka';background:var(--yellow-soft);border:2px solid var(--ink);border-radius:99px;padding:.05rem .6rem;font-size:.8rem}
+  .tile-num{width:3.2rem;height:3.2rem;border-radius:14px;border:3px solid var(--ink);display:grid;place-items:center;
+    font-family:'Fredoka';font-weight:700;font-size:1.3rem;box-shadow:var(--shadow);margin-bottom:1rem;transform:rotate(-4deg)}
+  .stop h2{font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.1;margin-bottom:.6rem;text-wrap:balance}
+  .stop .blurb p{max-width:30rem}
+  .stop:nth-of-type(even) .blurb p{margin-left:auto}
+  .stop .fun{margin-top:.9rem;display:inline-block;background:var(--paper);border:2px dashed var(--ink);
+    border-radius:12px;padding:.4rem .8rem;font-size:.85rem;font-style:italic}
+  .c-pink .tile-num{background:var(--pink-soft)} .c-yellow .tile-num{background:var(--yellow-soft)}
+  .c-mint .tile-num{background:var(--mint-soft)} .c-lilac .tile-num{background:var(--lilac-soft)}
+
+  /* bonus tiles between stops */
+  .bonus{position:relative;z-index:1;text-align:center;margin:-4rem 0}
+  .bonus span{display:inline-block;background:var(--lilac-soft);border:2.5px solid var(--ink);border-radius:999px;
+    padding:.4rem 1.2rem;font-family:'Fredoka';font-weight:600;font-size:.9rem;transform:rotate(1.5deg);box-shadow:var(--shadow)}
+
+  /* flower fan stop */
+  .fan{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+  .fan .card{padding:.5rem}
+  .fan .card img{aspect-ratio:1;border-radius:12px}
+  .fan .card:nth-child(1){--tilt:-3deg}
+  .fan .card:nth-child(2){--tilt:2deg;translate:0 -12px}
+  .fan .card:nth-child(3){--tilt:-1deg}
+
+  /* reveal animation */
+  .rv{opacity:1;transform:none}
+  @media (prefers-reduced-motion: no-preference){
+    .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1)}
+    .rv.in{opacity:1;transform:none}
+  }
+
+  /* ---------- FINISH ---------- */
+  .finish{position:relative;z-index:1;max-width:44rem;margin:4rem auto 6rem;padding:0 1.2rem}
+  .prize{position:relative;background:#fff;border:4px solid var(--ink);border-radius:28px;padding:2.4rem 2rem;
+    text-align:center;box-shadow:0 14px 0 -6px rgba(67,48,63,.16);overflow:hidden}
+  .prize::before{content:"";position:absolute;inset:10px;border:2.5px dashed var(--pink);border-radius:20px;pointer-events:none}
+  .finish-flag{display:inline-block;background:var(--ink);color:var(--paper);font-family:'Fredoka';font-weight:700;
+    letter-spacing:.2em;padding:.35rem 1.3rem;border-radius:999px;font-size:.85rem;margin-bottom:1rem}
+  .prize h2{font-size:clamp(2rem,5vw,2.8rem);margin-bottom:.5rem}
+  .prize p{max-width:28rem;margin:0 auto 1.6rem}
+  form{display:grid;gap:.8rem;max-width:24rem;margin:0 auto;text-align:left;position:relative;z-index:2}
+  label{font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.08em}
+  label small{font-weight:600;text-transform:none;letter-spacing:0;opacity:.65}
+  input,textarea{width:100%;border:2.5px solid var(--ink);border-radius:12px;padding:.65rem .8rem;
+    font-family:'Nunito';font-size:1rem;background:var(--paper);color:var(--ink)}
+  input:focus,textarea:focus{outline:3px solid var(--yellow);outline-offset:1px}
+  button.cta{margin-top:.4rem;background:var(--pink);color:#fff;border:3px solid var(--ink);border-radius:16px;
+    padding:.85rem;font-family:'Fredoka';font-weight:700;font-size:1.15rem;cursor:pointer;
+    box-shadow:0 6px 0 -1px var(--ink);transition:transform .15s,box-shadow .15s}
+  button.cta:hover{transform:translateY(-2px);box-shadow:0 8px 0 -1px var(--ink)}
+  button.cta:active{transform:translateY(3px);box-shadow:0 2px 0 -1px var(--ink)}
+  .sent{display:none;font-family:'Fredoka';font-size:1.3rem;color:var(--ink);padding:1.5rem 0}
+  .confetti{position:absolute;top:-10px;width:10px;height:16px;border-radius:3px;z-index:1;
+    animation:fall 2.8s linear forwards}
+  @keyframes fall{to{transform:translateY(115vh) rotate(720deg);opacity:0}}
+  @media (prefers-reduced-motion: reduce){
+    .confetti{display:none}
+    .start-tile,.down-arrow{animation:none}
+  }
+
+  footer{text-align:center;padding:2rem 1rem 3rem;font-size:.85rem;opacity:.7}
+
+  /* dice corner button */
+  .dice{position:fixed;right:1.1rem;bottom:1.1rem;z-index:50;width:56px;height:56px;background:#fff;
+    border:3px solid var(--ink);border-radius:16px;font-size:1.6rem;cursor:pointer;box-shadow:var(--shadow);
+    display:grid;place-items:center;transition:transform .2s}
+  .dice:hover{transform:rotate(12deg) scale(1.06)}
+  .dice.rolling{animation:roll .5s ease}
+  @keyframes roll{50%{transform:rotate(180deg) scale(1.2)}}
+
+  /* ---------- MOBILE ---------- */
+  @media(max-width:760px){
+    .stop{grid-template-columns:1fr;margin:6.5rem 0}
+    .stop:nth-of-type(even) .card{order:1}
+    .stop:nth-of-type(even) .blurb{order:2;text-align:left}
+    .stop:nth-of-type(even) .blurb .tile-num{margin-left:0}
+    .stop:nth-of-type(even) .blurb p{margin-left:0}
+    .fan{grid-template-columns:repeat(2,1fr)}
+    .fan .card:nth-child(3){grid-column:1/-1}
+    #token{width:42px;height:42px;margin:-21px 0 0 -21px}
+    .bonus{margin:-2.5rem 0}
+  }
+</style>
+</head>
+<body>
+
+<button class="dice" id="dice" title="Roll the dice — jump somewhere sweet" aria-label="Roll the dice to jump to a random stop">🎲</button>
+
+<!-- ============ START ============ -->
+<header class="hero">
+  <span class="sprinkle sp1"></span><span class="sprinkle sp2"></span>
+  <span class="sprinkle sp3"></span><span class="sprinkle sp4"></span>
+  <div class="board-title">
+    <span class="kicker">Cheeky Bite presents</span>
+    <h1>The <span class="sw">Sugar&nbsp;Trail</span></h1>
+    <p class="sub">A board game you play by scrolling. Six stops, one bakery, everything piped and painted by a single pair of hands. Your token is already on the board.</p>
+    <div class="rules">
+      <span class="rule"><b>Rule 1</b> — scroll to move</span>
+      <span class="rule"><b>Rule 2</b> — no sharing the bear macaron</span>
+      <span class="rule"><b>Rule 3</b> — everyone wins</span>
+    </div>
+    <br>
+    <a class="start-tile" href="#stop1">START ▸</a>
+    <div class="down-arrow">↓</div>
+  </div>
+</header>
+
+<!-- ============ TRAIL ============ -->
+<div class="trail" id="trail">
+  <svg class="path-svg" viewBox="0 0 100 1000" preserveAspectRatio="none" aria-hidden="true">
+    <path id="basePath" class="path-base" d="M50 0 C 50 40, 20 60, 20 100 S 80 160, 80 210 S 20 280, 20 340 S 80 410, 80 470 S 20 540, 20 610 S 80 680, 80 750 S 20 820, 20 880 S 50 940, 50 1000" />
+    <path id="donePath" class="path-done" d="M50 0 C 50 40, 20 60, 20 100 S 80 160, 80 210 S 20 280, 20 340 S 80 410, 80 470 S 20 540, 20 610 S 80 680, 80 750 S 20 820, 20 880 S 50 940, 50 1000" />
+  </svg>
+  <div id="token" aria-hidden="true">
+    <div class="shell"><span class="eye l"></span><span class="eye r"></span><span class="smile"></span></div>
+  </div>
+
+  <!-- STOP 1 -->
+  <section class="stop c-pink rv" id="stop1">
+    <figure class="card tall" style="--tilt:-2deg">
+      <img src="images/1780894899980.jpg" alt="Character macarons — a bear and a lemon with painted faces, in window light">
+      <figcaption>bear &amp; lemon, best friends <span class="price">by the box</span></figcaption>
+    </figure>
+    <div class="blurb">
+      <div class="tile-num">1</div>
+      <h2>Character Macarons</h2>
+      <p>Little bears, smug lemons, whole seasonal casts. Each face is piped by hand, which means each one comes out with its own personality — mildly chaotic, entirely on purpose.</p>
+      <span class="fun">★ Board effect: too cute to eat. Eat it anyway.</span>
+    </div>
+  </section>
+
+  <div class="bonus rv"><span>🍬 Bonus tile — you found a sprinkle. +2 joy.</span></div>
+
+  <!-- STOP 2 -->
+  <section class="stop c-yellow rv">
+    <figure class="card" style="--tilt:1.5deg">
+      <img src="images/1782399389414.jpg" alt="Look choup — Thai fruit-shaped mung bean sweets, glossy and miniature">
+      <figcaption>look choup, tiny fruit illusions <span class="price">per set</span></figcaption>
+    </figure>
+    <div class="blurb">
+      <div class="tile-num">2</div>
+      <h2>Look Choup</h2>
+      <p>Thai marzipan-style sweets shaped as miniature fruit — mango, chilli, cherry — sculpted from mung bean, painted, then glazed until they shine like glass. A royal Thai craft, made at a kitchen table.</p>
+      <span class="fun">★ Board effect: guests will refuse to believe they aren't real fruit.</span>
+    </div>
+  </section>
+
+  <div class="bonus rv"><span>🎯 Shortcut tile — smell of jasmine, skip ahead one square.</span></div>
+
+  <!-- STOP 3 -->
+  <section class="stop c-mint rv">
+    <figure class="card" style="--tilt:-1.5deg">
+      <img src="images/1782399389465.jpg" alt="Rose pia cakes — delicate Thai pastry shaped like roses">
+      <figcaption>rose pia, flaky petals <span class="price">per box</span></figcaption>
+    </figure>
+    <div class="blurb">
+      <div class="tile-num">3</div>
+      <h2>Rose Pia</h2>
+      <p>Flaky Thai pastry folded petal by petal into a rose. It shatters politely when you bite it, which is the pastry equivalent of a standing ovation.</p>
+      <span class="fun">★ Board effect: crumbs on your shirt. Worth it.</span>
+    </div>
+  </section>
+
+  <div class="bonus rv"><span>🫖 Rest tile — pause for tea. The trail will wait.</span></div>
+
+  <!-- STOP 4 -->
+  <section class="stop c-lilac rv">
+    <div class="fan">
+      <figure class="card"><img src="images/229617.jpg" alt="Pink and cream buttercream peonies"></figure>
+      <figure class="card"><img src="images/229619.jpg" alt="White buttercream dahlias"></figure>
+      <figure class="card"><img src="images/229500.jpg" alt="Purple buttercream peonies"></figure>
+    </div>
+    <div class="blurb">
+      <div class="tile-num">4</div>
+      <h2>Buttercream Bouquets</h2>
+      <p>Peonies, dahlias, roses — piped petal by petal on a flower nail, then lifted onto the cake with scissors and held breath. Bouquets you can slice.</p>
+      <span class="fun">★ Board effect: someone at the party will ask if the flowers are real. Someone always does.</span>
+    </div>
+  </section>
+
+  <div class="bonus rv"><span>💐 Lucky tile — a petal landed exactly right on the first try.</span></div>
+
+  <!-- STOP 5 -->
+  <section class="stop c-pink rv">
+    <figure class="card" style="--tilt:2deg">
+      <img src="images/229626.jpg" alt="Pastel bouquet cake crowned with buttercream lilies">
+      <figcaption>the full bouquet cake <span class="price">commission</span></figcaption>
+    </figure>
+    <div class="blurb">
+      <div class="tile-num">5</div>
+      <h2>The Showstopper</h2>
+      <p>The whole garden on one cake — lilies, roses, blossoms, in pastels that photograph like a spring morning. Built for the table everyone gathers around.</p>
+      <span class="fun">★ Board effect: all other desserts at the event forfeit their turn.</span>
+    </div>
+  </section>
+
+  <!-- STOP 6 -->
+  <section class="stop c-yellow rv">
+    <figure class="card" style="--tilt:-1deg">
+      <img src="images/1783770350417.jpg" alt="Hands piping tiny faces onto macarons at the workbench">
+      <figcaption>the workbench, mid-game <span class="price">one person</span></figcaption>
+    </figure>
+    <div class="blurb">
+      <div class="tile-num">6</div>
+      <h2>Behind the Board</h2>
+      <p>No factory, no team, no shortcuts — one baker, one piping bag, and the patience to give a macaron the correct eyebrows. That's the whole company.</p>
+      <span class="fun">★ Board effect: this is why there's a waitlist.</span>
+    </div>
+  </section>
+</div>
+
+<!-- ============ FINISH ============ -->
+<section class="finish rv" id="finish">
+  <div class="prize" id="prize">
+    <span class="finish-flag">🏁 FINISH</span>
+    <h2>You win. Claim your prize.</h2>
+    <p>Leave a number or an email and the baker calls you back to plan your order. That's it — no forms longer than the trail.</p>
+    <form id="orderForm">
+      <div>
+        <label for="contact">Email or phone</label>
+        <input id="contact" name="contact" required autocomplete="email" placeholder="you@example.com / 07…">
+      </div>
+      <div>
+        <label for="msg">Your prize <small>(optional — e.g. "12 bear macarons, a birthday")</small></label>
+        <textarea id="msg" name="msg" rows="3" placeholder="Tell me what you're dreaming of…"></textarea>
+      </div>
+      <button class="cta" type="submit">Collect 🏆</button>
+    </form>
+    <div class="sent" id="sent">🎉 Done! The baker will call you back.<br><small style="font-family:'Nunito';font-size:.9rem;font-weight:600">Play again any time. The bear macaron holds no grudges.</small></div>
+  </div>
+</section>
+
+<footer>Cheeky Bite · sweet as art · every piece piped, shaped &amp; painted by one person</footer>
+
+<script>
+(function(){
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* reveal */
+  const io = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.18});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  /* token follows the trail */
+  const trail = document.getElementById('trail');
+  const base  = document.getElementById('basePath');
+  const done  = document.getElementById('donePath');
+  const token = document.getElementById('token');
+  const LEN = base.getTotalLength();
+  done.style.strokeDasharray = 'none';
+  done.style.strokeDasharray = '1 8';
+  let lastP = 0;
+  function place(){
+    const r = trail.getBoundingClientRect();
+    const p = Math.min(1, Math.max(0, (innerHeight*0.55 - r.top) / r.height));
+    const pt = base.getPointAtLength(p * LEN);
+    token.style.left = (pt.x) + '%';
+    token.style.top  = (pt.y / 10) + '%';
+    token.style.transform = 'rotate(' + ((p > lastP ? 1 : -1) * 8) + 'deg)';
+    /* progress trace */
+    done.style.strokeDasharray = (p*LEN) + ' ' + LEN;
+    lastP = p;
+  }
+  if(!reduced){
+    addEventListener('scroll', place, {passive:true});
+    addEventListener('resize', place);
+  }
+  place();
+
+  /* dice: jump to a random stop */
+  const dice = document.getElementById('dice');
+  const faces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+  const stops = [...document.querySelectorAll('.stop'), document.getElementById('finish')];
+  dice.addEventListener('click', ()=>{
+    const n = Math.floor(Math.random()*stops.length);
+    dice.classList.add('rolling');
+    dice.textContent = faces[n % 6];
+    setTimeout(()=>dice.classList.remove('rolling'), 520);
+    stops[n].scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block:'center'});
+  });
+
+  /* confetti at finish (once) */
+  const prize = document.getElementById('prize');
+  let popped = false;
+  function confetti(){
+    if(popped || reduced) return; popped = true;
+    const colors = ['#F76FA0','#FFC93C','#7ED8B4','#C9A6E8','#F25C54'];
+    for(let i=0;i<36;i++){
+      const c = document.createElement('span');
+      c.className='confetti';
+      c.style.left = Math.random()*100 + 'vw';
+      c.style.background = colors[i % colors.length];
+      c.style.animationDelay = (Math.random()*0.8)+'s';
+      c.style.position='fixed';
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(), 4000);
+    }
+  }
+  const fo = new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ confetti(); fo.disconnect(); } }); },{threshold:.4});
+  fo.observe(prize);
+
+  /* form */
+  document.getElementById('orderForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    e.target.style.display='none';
+    document.getElementById('sent').style.display='block';
+    popped=false; confetti();
+  });
+})();
+</script>
+</body>
+</html>

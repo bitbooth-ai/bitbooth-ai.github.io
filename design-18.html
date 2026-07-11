@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheeky Bite — The Buttercream Color System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFDF8;
+    --ink:#26202A;
+    --line:#26202A;
+    --peony:#F7A8C4;
+    --butter:#FFD666;
+    --pistachio:#B8E0C2;
+    --lilac:#D4BCEB;
+    --cherry:#EF6461;
+    --sky:#A8D8F0;
+    --chip-r:18px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Space Grotesk',sans-serif;line-height:1.6;overflow-x:hidden}
+  .mono{font-family:'Space Mono',monospace}
+  img{display:block;max-width:100%}
+  ::selection{background:var(--butter)}
+
+  /* registration marks in corners */
+  .regmark{position:fixed;width:22px;height:22px;z-index:60;pointer-events:none;opacity:.5}
+  .regmark::before,.regmark::after{content:"";position:absolute;background:var(--ink)}
+  .regmark::before{left:50%;top:0;bottom:0;width:1.5px;transform:translateX(-50%)}
+  .regmark::after{top:50%;left:0;right:0;height:1.5px;transform:translateY(-50%)}
+  .rm-tl{top:10px;left:10px}.rm-tr{top:10px;right:10px}.rm-bl{bottom:10px;left:10px}.rm-br{bottom:10px;right:10px}
+
+  header.top{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:2px solid var(--line);
+    display:flex;align-items:center;gap:1rem;padding:.7rem clamp(1rem,4vw,2.5rem);flex-wrap:wrap}
+  .brand{font-weight:700;letter-spacing:-.02em;font-size:1.05rem}
+  .brand .mono{font-size:.7rem;display:block;letter-spacing:.1em;opacity:.6}
+  header.top nav{margin-left:auto;display:flex;gap:1.2rem;font-size:.85rem}
+  header.top nav a{color:inherit;text-decoration:none;font-family:'Space Mono';position:relative}
+  header.top nav a::after{content:"";position:absolute;left:0;bottom:-3px;height:2px;width:0;background:var(--cherry);transition:width .25s}
+  header.top nav a:hover::after{width:100%}
+
+  /* ---------- HERO: fanned deck ---------- */
+  .hero{padding:clamp(3rem,8vw,6rem) clamp(1rem,4vw,2.5rem) 4rem;max-width:76rem;margin:0 auto;
+    display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center}
+  .hero h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.02;letter-spacing:-.03em;font-weight:700;text-wrap:balance}
+  .hero h1 em{font-style:normal;background:linear-gradient(transparent 62%, var(--peony) 62%)}
+  .hero .lede{margin-top:1.2rem;max-width:32rem;font-size:1.08rem}
+  .hero .std{margin-top:1.8rem;display:inline-block;border:2px solid var(--line);border-radius:10px;
+    padding:.5rem .9rem;font-family:'Space Mono';font-size:.75rem;letter-spacing:.06em}
+  .deck{position:relative;height:min(420px,60vw);}
+  .deck .chip-mini{position:absolute;left:50%;top:50%;width:min(190px,42vw);aspect-ratio:3/4.3;
+    border:2px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 10px 24px rgba(38,32,42,.12);
+    transform-origin:50% 118%;overflow:hidden;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+  .chip-mini img{width:100%;height:72%;object-fit:cover}
+  .chip-mini .bar{height:12%;display:block}
+  .chip-mini .code{padding:.3rem .5rem;font-family:'Space Mono';font-size:.6rem;letter-spacing:.04em}
+  .deck .chip-mini{transform:translate(-50%,-55%) rotate(0deg)}
+  body.loaded .d1{transform:translate(-50%,-55%) rotate(-24deg)}
+  body.loaded .d2{transform:translate(-50%,-55%) rotate(-12deg)}
+  body.loaded .d3{transform:translate(-50%,-55%) rotate(0deg)}
+  body.loaded .d4{transform:translate(-50%,-55%) rotate(12deg)}
+  body.loaded .d5{transform:translate(-50%,-55%) rotate(24deg)}
+  .deck:hover .d1{transform:translate(-50%,-55%) rotate(-30deg) translateY(-8px)}
+  .deck:hover .d5{transform:translate(-50%,-55%) rotate(30deg) translateY(-8px)}
+  @media (prefers-reduced-motion: reduce){
+    .deck .chip-mini,.deck:hover .chip-mini{transition:none}
+  }
+
+  /* ---------- SYSTEM INTRO STRIP ---------- */
+  .strip{border-block:2px solid var(--line);display:grid;grid-template-columns:repeat(6,1fr)}
+  .strip div{padding:1rem .6rem;text-align:center;font-family:'Space Mono';font-size:.68rem;letter-spacing:.05em;
+    border-right:2px solid var(--line)}
+  .strip div:last-child{border-right:0}
+  .strip b{display:block;font-size:.95rem;margin-bottom:.15rem}
+
+  /* ---------- CHIP SECTIONS ---------- */
+  .lib{max-width:76rem;margin:0 auto;padding:4rem clamp(1rem,4vw,2.5rem)}
+  .lib h2{font-size:clamp(1.6rem,3.5vw,2.3rem);letter-spacing:-.02em;margin-bottom:.4rem}
+  .lib .sub{font-family:'Space Mono';font-size:.8rem;opacity:.65;margin-bottom:2.2rem}
+  .chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.6rem}
+
+  .chip{border:2px solid var(--line);border-radius:var(--chip-r);background:#fff;overflow:hidden;
+    position:relative;transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s;cursor:pointer}
+  .chip:hover{transform:translateY(-6px) rotate(-.6deg);box-shadow:0 16px 30px rgba(38,32,42,.14)}
+  .chip::after{content:"";position:absolute;top:0;right:26px;width:14px;height:14px;background:var(--paper);
+    border:2px solid var(--line);border-top:0;border-radius:0 0 8px 8px} /* punch notch */
+  .chip img{width:100%;aspect-ratio:4/3.1;object-fit:cover;border-bottom:2px solid var(--line)}
+  .chip .swatches{display:flex;height:26px;border-bottom:2px solid var(--line)}
+  .chip .swatches i{flex:1}
+  .chip .meta{padding:.9rem 1rem 1rem}
+  .chip .code{font-family:'Space Mono';font-weight:700;font-size:.95rem;letter-spacing:.02em;display:flex;align-items:center;gap:.5rem}
+  .chip .code .copy{margin-left:auto;font-size:.65rem;border:1.5px solid var(--line);border-radius:6px;
+    padding:.1rem .45rem;background:none;cursor:pointer;font-family:'Space Mono';transition:background .2s}
+  .chip:hover .code .copy{background:var(--butter)}
+  .chip .name{font-size:1.15rem;font-weight:700;margin:.15rem 0 .3rem;letter-spacing:-.01em}
+  .chip .desc{font-size:.88rem;opacity:.85;line-height:1.5}
+  .chip .specs{margin-top:.7rem;display:flex;gap:.4rem;flex-wrap:wrap}
+  .chip .specs span{font-family:'Space Mono';font-size:.62rem;border:1.5px solid var(--line);
+    border-radius:99px;padding:.12rem .55rem;letter-spacing:.03em}
+
+  /* reveal */
+  .rv{opacity:1;transform:none}
+  @media (prefers-reduced-motion: no-preference){
+    .rv{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1)}
+    .rv.in{opacity:1;transform:none}
+    .chips .chip.rv:nth-child(2){transition-delay:.08s}
+    .chips .chip.rv:nth-child(3){transition-delay:.16s}
+  }
+
+  /* ---------- PROCESS BAND ---------- */
+  .process{border-block:2px solid var(--line);background:#fff}
+  .process .inner{max-width:76rem;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;align-items:center}
+  .process img{width:100%;height:100%;object-fit:cover;border-right:2px solid var(--line)}
+  .process .txt{padding:clamp(1.5rem,4vw,3.5rem)}
+  .process .txt .mono{font-size:.72rem;letter-spacing:.12em;opacity:.6}
+  .process h2{font-size:clamp(1.5rem,3vw,2.2rem);letter-spacing:-.02em;margin:.4rem 0 .8rem}
+  .process p{max-width:30rem}
+  .process .note{margin-top:1rem;font-family:'Space Mono';font-size:.75rem;border-left:3px solid var(--cherry);padding-left:.8rem}
+
+  /* ---------- ORDER: mix your palette ---------- */
+  .order{max-width:56rem;margin:0 auto;padding:4.5rem clamp(1rem,4vw,2.5rem) 5rem}
+  .order .card{border:2px solid var(--line);border-radius:var(--chip-r);background:#fff;overflow:hidden}
+  .order .bar-top{display:flex;height:16px;border-bottom:2px solid var(--line)}
+  .order .bar-top i{flex:1}
+  .order .pad{padding:clamp(1.4rem,4vw,2.4rem)}
+  .order h2{font-size:clamp(1.6rem,3.5vw,2.2rem);letter-spacing:-.02em}
+  .order .mono-sub{font-family:'Space Mono';font-size:.75rem;opacity:.65;margin:.3rem 0 1.4rem}
+  .palette{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.4rem}
+  .pchip{cursor:pointer}
+  .pchip input{position:absolute;opacity:0;pointer-events:none}
+  .pchip span{display:inline-flex;align-items:center;gap:.45rem;border:2px solid var(--line);border-radius:99px;
+    padding:.4rem .9rem;font-family:'Space Mono';font-size:.72rem;transition:transform .15s,background .2s;background:var(--paper)}
+  .pchip i{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--line)}
+  .pchip input:checked + span{background:var(--ink);color:var(--paper);transform:scale(1.04)}
+  .pchip input:focus-visible + span{outline:3px solid var(--sky)}
+  form.of{display:grid;gap:.9rem}
+  form.of label{font-family:'Space Mono';font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+  form.of label small{text-transform:none;letter-spacing:0;opacity:.6}
+  form.of input,form.of textarea{width:100%;border:2px solid var(--line);border-radius:10px;padding:.7rem .85rem;
+    font-family:'Space Grotesk';font-size:1rem;background:var(--paper)}
+  form.of input:focus,form.of textarea:focus{outline:3px solid var(--peony)}
+  .submit{justify-self:start;border:2px solid var(--line);border-radius:12px;background:var(--butter);
+    font-family:'Space Grotesk';font-weight:700;font-size:1.05rem;padding:.8rem 1.8rem;cursor:pointer;
+    box-shadow:4px 4px 0 var(--line);transition:transform .12s,box-shadow .12s}
+  .submit:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--line)}
+  .submit:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--line)}
+  .done-msg{display:none;font-family:'Space Mono';padding:1rem 0 0}
+
+  footer{border-top:2px solid var(--line);padding:1.4rem clamp(1rem,4vw,2.5rem);
+    display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-family:'Space Mono';font-size:.72rem;letter-spacing:.05em}
+
+  /* toast */
+  .toast{position:fixed;bottom:1.2rem;left:50%;transform:translate(-50%,150%);z-index:100;
+    background:var(--ink);color:var(--paper);font-family:'Space Mono';font-size:.8rem;
+    padding:.65rem 1.2rem;border-radius:10px;transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+  .toast.show{transform:translate(-50%,0)}
+
+  @media(max-width:820px){
+    .hero{grid-template-columns:1fr;gap:2rem}
+    .deck{height:min(340px,74vw)}
+    .strip{grid-template-columns:repeat(3,1fr)}
+    .strip div:nth-child(3){border-right:0}
+    .strip div:nth-child(-n+3){border-bottom:2px solid var(--line)}
+    .process .inner{grid-template-columns:1fr}
+    .process img{border-right:0;border-bottom:2px solid var(--line);max-height:320px}
+  }
+</style>
+</head>
+<body>
+<span class="regmark rm-tl"></span><span class="regmark rm-tr"></span>
+<span class="regmark rm-bl"></span><span class="regmark rm-br"></span>
+<div class="toast" id="toast">copied</div>
+
+<header class="top">
+  <div class="brand">Cheeky Bite<span class="mono">BUTTERCREAM COLOR SYSTEM™</span></div>
+  <nav>
+    <a href="#flora">flora</a>
+    <a href="#fauna">fauna</a>
+    <a href="#siam">siam</a>
+    <a href="#order">order</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <h1>Every shade here is <em>edible</em>.</h1>
+    <p class="lede">A color-matching system for celebrations. Peony pinks, dahlia creams, look-choup mango — each swatch below is a real thing, piped and painted by one baker, catalogued like ink but made of butter and sugar.</p>
+    <span class="std mono">STANDARD: CB-2026 · FINISH: BUTTERCREAM MATTE · LIGHTFAST: EAT PROMPTLY</span>
+  </div>
+  <div class="deck" aria-hidden="true">
+    <div class="chip-mini d1"><img src="images/229618.jpg" alt=""><span class="bar" style="background:var(--lilac)"></span><span class="code">CB 618-L</span></div>
+    <div class="chip-mini d2"><img src="images/1782399389414.jpg" alt=""><span class="bar" style="background:var(--butter)"></span><span class="code">CB 414-M</span></div>
+    <div class="chip-mini d3"><img src="images/1780894899980.jpg" alt=""><span class="bar" style="background:var(--peony)"></span><span class="code">CB 980-B</span></div>
+    <div class="chip-mini d4"><img src="images/229617.jpg" alt=""><span class="bar" style="background:#F4C7D6"></span><span class="code">CB 617-P</span></div>
+    <div class="chip-mini d5"><img src="images/229619.jpg" alt=""><span class="bar" style="background:#F2EBDD"></span><span class="code">CB 619-W</span></div>
+  </div>
+</section>
+
+<div class="strip">
+  <div><b>47</b>shades piped</div>
+  <div><b>1</b>baker</div>
+  <div><b>0</b>machines</div>
+  <div><b>100%</b>hand-mixed</div>
+  <div><b>2</b>cuisines</div>
+  <div><b>∞</b>petals</div>
+</div>
+
+<!-- FLORA -->
+<section class="lib" id="flora">
+  <h2>Series 01 — Buttercream Flora</h2>
+  <p class="sub">// piped petal-by-petal on a flower nail, lifted with scissors and held breath</p>
+  <div class="chips">
+    <article class="chip rv" data-code="CB 617-P “Peony Pink”">
+      <img src="images/229617.jpg" alt="Pink and cream buttercream peonies">
+      <div class="swatches"><i style="background:#F4A9BE"></i><i style="background:#F8CDD9"></i><i style="background:#FBEDE6"></i><i style="background:#EFD9A7"></i></div>
+      <div class="meta">
+        <div class="code">CB 617-P <button class="copy">COPY</button></div>
+        <div class="name">Peony Pink</div>
+        <p class="desc">The flagship shade. Ruffled peonies in pink and cream — the color of being the favourite person at the party.</p>
+        <div class="specs"><span>FINISH: MATTE</span><span>MEDIUM: BUTTER</span><span>SLICEABLE</span></div>
+      </div>
+    </article>
+    <article class="chip rv" data-code="CB 619-W “Dahlia White”">
+      <img src="images/229619.jpg" alt="White buttercream dahlias">
+      <div class="swatches"><i style="background:#F5EFE3"></i><i style="background:#EDE3CE"></i><i style="background:#D9CDB4"></i><i style="background:#B9AE95"></i></div>
+      <div class="meta">
+        <div class="code">CB 619-W <button class="copy">COPY</button></div>
+        <div class="name">Dahlia White</div>
+        <p class="desc">Geometric petals in warm ivory. Guests will lean in to check if they're real. They're butter. They always were.</p>
+        <div class="specs"><span>FINISH: MATTE</span><span>PETALS: MANY</span><span>REAL: NO</span></div>
+      </div>
+    </article>
+    <article class="chip rv" data-code="CB 618-L “Lilac Rose”">
+      <img src="images/229618.jpg" alt="Lilac buttercream roses">
+      <div class="swatches"><i style="background:#C8A9DD"></i><i style="background:#DCC5EC"></i><i style="background:#EFE3F7"></i><i style="background:#9F86B8"></i></div>
+      <div class="meta">
+        <div class="code">CB 618-L <button class="copy">COPY</button></div>
+        <div class="name">Lilac Rose</div>
+        <p class="desc">Roses in a lilac that doesn't exist in nature — only in a piping bag, at the exact right pressure, on a good day.</p>
+        <div class="specs"><span>FINISH: MATTE</span><span>RARITY: HIGH</span></div>
+      </div>
+    </article>
+    <article class="chip rv" data-code="CB 625-X “Bouquet Box”">
+      <img src="images/229625.jpg" alt="Square bouquet-box cake in pink, gold and blue">
+      <div class="swatches"><i style="background:#F3B8C8"></i><i style="background:#E8C879"></i><i style="background:#A9C6E4"></i><i style="background:#F6EBDD"></i></div>
+      <div class="meta">
+        <div class="code">CB 625-X <button class="copy">COPY</button></div>
+        <div class="name">Bouquet Box</div>
+        <p class="desc">The full-spectrum sampler: a florist's window compressed into one square cake. Multi-shade certification included.</p>
+        <div class="specs"><span>FORMAT: SQUARE</span><span>SHADES: ALL</span></div>
+      </div>
+    </article>
+    <article class="chip rv" data-code="CB 626-S “Showstopper”">
+      <img src="images/229626.jpg" alt="Pastel bouquet cake with lilies">
+      <div class="swatches"><i style="background:#F6CBD8"></i><i style="background:#F9E7B8"></i><i style="background:#CDE6D5"></i><i style="background:#E3D3EF"></i></div>
+      <div class="meta">
+        <div class="code">CB 626-S <button class="copy">COPY</button></div>
+        <div class="name">Showstopper</div>
+        <p class="desc">Lilies, roses, blossoms — the pastel gradient that makes every other dessert at the event quietly excuse itself.</p>
+        <div class="specs"><span>USE: CENTREPIECE</span><span>GASPS: GUARANTEED</span></div>
+      </div>
+    </article>
+    <article class="chip rv" data-code="CB 499-C “Chrysanth Cream”">
+      <img src="images/229499.jpg" alt="Cream buttercream chrysanthemum close-up">
+      <div class="swatches"><i style="background:#F2E9D8"></i><i style="background:#E6D9BE"></i><i style="background:#D2C3A2"></i><i style="background:#F9F4EA"></i></div>
+      <div class="meta">
+        <div class="code">CB 499-C <button class="copy">COPY</button></div>
+        <div class="name">Chrysanth Cream</div>
+        <p class="desc">Hundreds of petals, one flower, zero shortcuts. Shown at actual patience level.</p>
+        <div class="specs"><span>PETALS: 100+</span><span>SHORTCUTS: 0</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- PROCESS BAND -->
+<div class="process rv">
+  <div class="inner">
+    <img src="images/1783770350417.jpg" alt="Hands piping tiny faces onto macarons at the workbench">
+    <div class="txt">
+      <span class="mono">// COLOR LAB, POPULATION: 1</span>
+      <h2>Every shade is mixed by the same two hands.</h2>
+      <p>There's no factory behind the swatch book — just one baker tinting buttercream a half-drop at a time, piping test petals, and giving macarons the correct eyebrows. That's the quality control department, the R&amp;D lab, and the CEO.</p>
+      <p class="note">BATCH VARIATION: each piece is slightly, wonderfully unrepeatable.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FAUNA -->
+<section class="lib" id="fauna">
+  <h2>Series 02 — Character Fauna</h2>
+  <p class="sub">// macarons with faces, personalities, and opinions</p>
+  <div class="chips">
+    <article class="chip rv" data-code="CB 980-B “Bear Brown”">
+      <img src="images/1780894899980.jpg" alt="Bear and lemon character macarons on a plate">
+      <div class="swatches"><i style="background:#C98F5F"></i><i style="background:#F3D64E"></i><i style="background:#F8E8D8"></i><i style="background:#8A5A3B"></i></div>
+      <div class="meta">
+        <div class="code">CB 980-B <button class="copy">COPY</button></div>
+        <div class="name">Bear Brown &amp; Lemon</div>
+        <p class="desc">The bestsellers. Each face piped by hand, so each comes out with its own personality. Mildly chaotic; entirely on purpose.</p>
+        <div class="specs"><span>MOOD: SMUG</span><span>EDIBLE: TRAGICALLY</span></div>
+      </div>
+    </article>
+    <article class="chip rv" data-code="CB 268-N “Nutcracker Red”">
+      <img src="images/1782399389268.jpg" alt="Christmas character macarons">
+      <div class="swatches"><i style="background:#D94F4F"></i><i style="background:#5F9E6E"></i><i style="background:#F7F1E5"></i><i style="background:#E9B94E"></i></div>
+      <div class="meta">
+        <div class="code">CB 268-N <button class="copy">COPY</button></div>
+        <div class="name">Nutcracker Red</div>
+        <p class="desc">The Christmas cast, reporting for duty every December. Seasonal availability; year-round demand.</p>
+        <div class="specs"><span>SEASON: DEC</span><span>WAITLIST: YES</span></div>
+      </div>
+    </article>
+    <article class="chip rv" data-code="CB 340-V “Roulade Violet”">
+      <img src="images/1782399389340.jpg" alt="Blueberry roulade">
+      <div class="swatches"><i style="background:#7B6BA8"></i><i style="background:#B9AEDA"></i><i style="background:#F3EFFA"></i><i style="background:#4E4374"></i></div>
+      <div class="meta">
+        <div class="code">CB 340-V <button class="copy">COPY</button></div>
+        <div class="name">Roulade Violet</div>
+        <p class="desc">The occasional guest star: blueberry roulade, rolled tight and gone by lunchtime.</p>
+        <div class="specs"><span>STATUS: LIMITED</span><span>SHELF LIFE: MINUTES</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- SIAM -->
+<section class="lib" id="siam">
+  <h2>Series 03 — Siam Palette</h2>
+  <p class="sub">// royal Thai crafts, made at a kitchen table · ลูกชุบ</p>
+  <div class="chips">
+    <article class="chip rv" data-code="CB 414-M “Look Choup Mango”">
+      <img src="images/1782399389414.jpg" alt="Look choup — Thai fruit-shaped mung bean sweets">
+      <div class="swatches"><i style="background:#F5A623"></i><i style="background:#E4572E"></i><i style="background:#76B041"></i><i style="background:#FBE7A1"></i></div>
+      <div class="meta">
+        <div class="code">CB 414-M <button class="copy">COPY</button></div>
+        <div class="name">Look Choup Mango</div>
+        <p class="desc">Mung-bean sweets sculpted into miniature fruit, painted, then glazed until they shine like glass. Guests will refuse to believe they aren't real.</p>
+        <div class="specs"><span>ORIGIN: THAI ROYAL</span><span>GLOSS: GLASS</span></div>
+      </div>
+    </article>
+    <article class="chip rv" data-code="CB 465-R “Rose Pia Blush”">
+      <img src="images/1782399389465.jpg" alt="Rose pia — flaky Thai pastry shaped like roses">
+      <div class="swatches"><i style="background:#E8A0B4"></i><i style="background:#F6D3DD"></i><i style="background:#FBF0E8"></i><i style="background:#C97B92"></i></div>
+      <div class="meta">
+        <div class="code">CB 465-R <button class="copy">COPY</button></div>
+        <div class="name">Rose Pia Blush</div>
+        <p class="desc">Flaky pastry folded petal by petal into a rose. Shatters politely — the pastry equivalent of a standing ovation.</p>
+        <div class="specs"><span>TEXTURE: SHATTER</span><span>CRUMBS: WORTH IT</span></div>
+      </div>
+    </article>
+    <article class="chip rv" data-code="CB 501-N “Nail Blossom”">
+      <img src="images/229501.jpg" alt="Pink buttercream blossoms on flower nails">
+      <div class="swatches"><i style="background:#F1B7C8"></i><i style="background:#F9DCE5"></i><i style="background:#C4C4C4"></i><i style="background:#FDF6F0"></i></div>
+      <div class="meta">
+        <div class="code">CB 501-N <button class="copy">COPY</button></div>
+        <div class="name">Nail Blossom</div>
+        <p class="desc">Work-in-progress shade: blossoms still on their flower nails, minutes before joining a cake.</p>
+        <div class="specs"><span>STAGE: WIP</span><span>NAIL: FLOWER, NOT FINGER</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ORDER -->
+<section class="order" id="order">
+  <div class="card rv">
+    <div class="bar-top">
+      <i style="background:var(--peony)"></i><i style="background:var(--butter)"></i>
+      <i style="background:var(--pistachio)"></i><i style="background:var(--lilac)"></i>
+      <i style="background:var(--cherry)"></i><i style="background:var(--sky)"></i>
+    </div>
+    <div class="pad">
+      <h2>Mix your palette.</h2>
+      <p class="mono-sub">// pick shades, leave a contact — the colorist calls you back</p>
+      <div class="palette" role="group" aria-label="Choose your shades">
+        <label class="pchip"><input type="checkbox" name="shade" value="CB 617-P"><span><i style="background:#F4A9BE"></i>CB 617-P PEONY</span></label>
+        <label class="pchip"><input type="checkbox" name="shade" value="CB 980-B"><span><i style="background:#C98F5F"></i>CB 980-B BEAR</span></label>
+        <label class="pchip"><input type="checkbox" name="shade" value="CB 414-M"><span><i style="background:#F5A623"></i>CB 414-M MANGO</span></label>
+        <label class="pchip"><input type="checkbox" name="shade" value="CB 465-R"><span><i style="background:#E8A0B4"></i>CB 465-R ROSE PIA</span></label>
+        <label class="pchip"><input type="checkbox" name="shade" value="CB 626-S"><span><i style="background:#F6CBD8"></i>CB 626-S SHOWSTOPPER</span></label>
+        <label class="pchip"><input type="checkbox" name="shade" value="CB 268-N"><span><i style="background:#D94F4F"></i>CB 268-N CHRISTMAS</span></label>
+      </div>
+      <form class="of" id="orderForm">
+        <div>
+          <label for="contact">EMAIL OR PHONE</label>
+          <input id="contact" required placeholder="you@example.com / 07…" autocomplete="email">
+        </div>
+        <div>
+          <label for="notes">NOTES <small>(optional — occasion, date, dreams)</small></label>
+          <textarea id="notes" rows="3" placeholder="a lilac rose cake for a spring wedding…"></textarea>
+        </div>
+        <button class="submit" type="submit">Request color match →</button>
+        <p class="done-msg" id="doneMsg">✓ PALETTE RECEIVED. The baker will call you back to match your occasion exactly.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>CHEEKY BITE · BUTTERCREAM COLOR SYSTEM™</span>
+  <span>SWEET AS ART · ALL SHADES PIPED BY ONE PERSON</span>
+</footer>
+
+<script>
+(function(){
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* fan the hero deck after load */
+  requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.add('loaded')));
+
+  /* reveals */
+  const io = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.15});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  /* copy chip code */
+  let t;
+  function toast(msg){
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(t); t = setTimeout(()=>el.classList.remove('show'), 2200);
+  }
+  document.querySelectorAll('.chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      const code = chip.dataset.code;
+      if(navigator.clipboard) navigator.clipboard.writeText(code).catch(()=>{});
+      toast(code + ' copied — it tastes like it looks');
+    });
+  });
+
+  /* form */
+  document.getElementById('orderForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const picked = [...document.querySelectorAll('input[name=shade]:checked')].map(c=>c.value);
+    e.target.querySelector('.submit').style.display='none';
+    const d = document.getElementById('doneMsg');
+    if(picked.length) d.textContent = '✓ PALETTE RECEIVED (' + picked.join(', ') + '). The baker will call you back.';
+    d.style.display='block';
+    toast('sent ✓');
+  });
+})();
+</script>
+</body>
+</html>

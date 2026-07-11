@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CheekyOS — Cheeky Bite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --desk:#CDEBF7;
+    --ink:#2E2438;
+    --chrome:#FFE3EF;
+    --chrome-deep:#F9B8D4;
+    --butter:#FFEFB8;
+    --mint:#CFF3E4;
+    --lilac:#E7DBFA;
+    --accent:#E9558E;
+    --win-shadow:6px 6px 0 rgba(46,36,56,.22);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--desk);
+    background-image:
+      linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px);
+    background-size:28px 28px;
+    color:var(--ink);
+    font-family:'Nunito',sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  .px{font-family:'Pixelify Sans',sans-serif}
+  img{display:block;max-width:100%}
+  button{font-family:inherit;color:inherit}
+
+  /* ---------- MENU BAR ---------- */
+  .menubar{position:fixed;top:0;left:0;right:0;height:34px;z-index:200;
+    background:#fff;border-bottom:2.5px solid var(--ink);
+    display:flex;align-items:center;gap:1.1rem;padding:0 .9rem;font-size:.88rem;font-weight:700}
+  .menubar .logo{font-size:1rem}
+  .menubar .m{cursor:pointer;position:relative;padding:.15rem .35rem;border-radius:6px}
+  .menubar .m:hover{background:var(--chrome)}
+  .menubar .drop{display:none;position:absolute;top:calc(100% + 6px);left:0;min-width:12.5rem;
+    background:#fff;border:2.5px solid var(--ink);border-radius:10px;box-shadow:var(--win-shadow);
+    padding:.35rem;font-weight:600;font-size:.85rem}
+  .menubar .m.open .drop{display:block}
+  .drop button{display:block;width:100%;text-align:left;background:none;border:0;padding:.4rem .6rem;
+    border-radius:6px;cursor:pointer;font-size:.85rem;font-weight:600}
+  .drop button:hover{background:var(--butter)}
+  .drop hr{border:0;border-top:1.5px dashed rgba(46,36,56,.25);margin:.3rem .4rem}
+  .menubar .clock{margin-left:auto;font-variant-numeric:tabular-nums;font-weight:800}
+  .menubar .batt{font-size:.8rem}
+
+  /* ---------- DESKTOP ICONS ---------- */
+  .desktop{position:relative;min-height:100vh;padding:56px 1rem 90px}
+  .icons{position:fixed;top:56px;right:14px;display:grid;gap:14px;z-index:5}
+  .icon{width:82px;background:none;border:0;cursor:pointer;text-align:center;font-family:'Nunito';font-weight:700;font-size:.72rem;color:var(--ink)}
+  .icon .pic{width:56px;height:56px;margin:0 auto 4px;border:2.5px solid var(--ink);border-radius:12px;
+    display:grid;place-items:center;font-size:1.6rem;background:#fff;box-shadow:3px 3px 0 rgba(46,36,56,.2);
+    transition:transform .15s}
+  .icon:hover .pic{transform:scale(1.08) rotate(-3deg)}
+  .icon:active .pic{transform:scale(.95)}
+  .icon .lbl{background:#fff;border-radius:6px;padding:0 4px;display:inline-block;border:1.5px solid var(--ink)}
+
+  /* ---------- WINDOWS ---------- */
+  .win{position:absolute;background:#fff;border:3px solid var(--ink);border-radius:14px;
+    box-shadow:var(--win-shadow);min-width:260px;max-width:min(92vw,560px);
+    display:none;flex-direction:column;overflow:hidden}
+  .win.open{display:flex}
+  @media (prefers-reduced-motion: no-preference){
+    .win.open{animation:pop .28s cubic-bezier(.34,1.56,.64,1)}
+    @keyframes pop{from{transform:scale(.7);opacity:0}}
+  }
+  .tbar{display:flex;align-items:center;gap:.5rem;background:var(--chrome);
+    border-bottom:2.5px solid var(--ink);padding:.4rem .6rem;cursor:grab;user-select:none}
+  .tbar:active{cursor:grabbing}
+  .tbar .stripes{flex:1;height:10px;background:repeating-linear-gradient(0deg,var(--chrome-deep) 0 2px,transparent 2px 5px);border-radius:2px}
+  .tbar .title{font-family:'Pixelify Sans';font-size:.95rem;font-weight:600;white-space:nowrap}
+  .tbar .close{width:20px;height:20px;border:2px solid var(--ink);border-radius:6px;background:#fff;
+    cursor:pointer;display:grid;place-items:center;font-size:.7rem;font-weight:800;line-height:1}
+  .tbar .close:hover{background:var(--accent);color:#fff}
+  .win .body{padding:1rem;overflow:auto;max-height:min(62vh,520px)}
+  .win .statusline{border-top:2px solid var(--ink);background:var(--butter);
+    font-family:'Pixelify Sans';font-size:.78rem;padding:.25rem .7rem;display:flex;justify-content:space-between}
+
+  /* window content styles */
+  .viewer img{border:2.5px solid var(--ink);border-radius:10px;width:100%}
+  .viewer .cap{margin-top:.6rem;font-size:.9rem;font-weight:600;display:flex;justify-content:space-between;gap:.6rem;align-items:baseline}
+  .viewer .cap .tag{font-family:'Pixelify Sans';background:var(--mint);border:2px solid var(--ink);border-radius:99px;padding:.05rem .6rem;font-size:.75rem;white-space:nowrap}
+  .folder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.7rem}
+  .thumb{border:0;background:none;cursor:pointer;text-align:center;font-family:'Nunito';font-weight:700;font-size:.72rem;color:var(--ink)}
+  .thumb img{width:100%;aspect-ratio:1;object-fit:cover;border:2.5px solid var(--ink);border-radius:10px;transition:transform .15s}
+  .thumb:hover img{transform:scale(1.05) rotate(2deg)}
+  .thumb span{display:block;margin-top:.25rem}
+  .readme p{margin-bottom:.8rem;line-height:1.65;font-size:.95rem}
+  .readme .ascii{font-family:'Pixelify Sans';color:var(--accent);font-size:1.05rem;margin-bottom:.8rem}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:.25rem .9rem;font-size:.9rem;margin-top:.6rem}
+  .kv dt{font-weight:800}
+  form{display:grid;gap:.7rem}
+  label{font-weight:800;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+  label small{font-weight:600;text-transform:none;opacity:.65}
+  input,textarea{width:100%;border:2.5px solid var(--ink);border-radius:8px;padding:.55rem .7rem;
+    font-family:'Nunito';font-size:.95rem;background:#FFFDF6}
+  input:focus,textarea:focus{outline:3px solid var(--chrome-deep)}
+  .btnrow{display:flex;gap:.6rem;justify-content:flex-end;margin-top:.2rem}
+  .osbtn{border:2.5px solid var(--ink);border-radius:10px;background:#fff;padding:.5rem 1.1rem;
+    font-weight:800;cursor:pointer;box-shadow:3px 3px 0 rgba(46,36,56,.25);transition:transform .12s,box-shadow .12s}
+  .osbtn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 rgba(46,36,56,.25)}
+  .osbtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(46,36,56,.25)}
+  .osbtn.primary{background:var(--accent);color:#fff}
+  .sent-note{display:none;text-align:center;padding:1rem 0;font-family:'Pixelify Sans';font-size:1.1rem}
+
+  /* ---------- DOCK ---------- */
+  .dock{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:150;
+    background:#fff;border:3px solid var(--ink);border-radius:18px;box-shadow:var(--win-shadow);
+    display:flex;gap:.35rem;padding:.4rem .6rem}
+  .dock button{width:52px;height:52px;border:0;background:none;font-size:1.7rem;cursor:pointer;
+    border-radius:12px;transition:transform .18s;position:relative}
+  .dock button:hover{transform:translateY(-8px) scale(1.15);background:var(--butter)}
+  .dock button.running::after{content:"";position:absolute;bottom:1px;left:50%;transform:translateX(-50%);
+    width:5px;height:5px;border-radius:50%;background:var(--accent)}
+  .dock .sep{width:2px;background:rgba(46,36,56,.2);margin:.3rem .2rem;border-radius:2px}
+
+  /* boot splash */
+  .boot{position:fixed;inset:0;z-index:500;background:var(--chrome);display:grid;place-items:center;text-align:center}
+  .boot .inner{max-width:20rem}
+  .boot .face{font-size:3.4rem}
+  .boot h1{font-family:'Pixelify Sans';font-size:1.6rem;margin:.5rem 0 .9rem}
+  .boot .bar{height:16px;border:2.5px solid var(--ink);border-radius:99px;overflow:hidden;background:#fff}
+  .boot .bar i{display:block;height:100%;width:0;background:repeating-linear-gradient(45deg,var(--accent) 0 8px,var(--chrome-deep) 8px 16px)}
+  .boot small{display:block;margin-top:.5rem;font-weight:700;font-size:.78rem}
+  @media (prefers-reduced-motion: no-preference){
+    .boot .bar i{animation:load 1.4s ease forwards}
+    @keyframes load{to{width:100%}}
+    .boot.done{animation:bye .4s ease forwards}
+    @keyframes bye{to{opacity:0;visibility:hidden}}
+  }
+  .boot.done{opacity:0;visibility:hidden;transition:opacity .3s, visibility .3s}
+
+  /* toast */
+  .toast{position:fixed;top:44px;left:50%;transform:translate(-50%,-140%);z-index:400;
+    background:var(--ink);color:#fff;font-family:'Pixelify Sans';font-size:.9rem;
+    padding:.55rem 1.1rem;border-radius:10px;transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+  .toast.show{transform:translate(-50%,0)}
+
+  /* ---------- MOBILE: windows become a stacked feed ---------- */
+  @media(max-width:720px){
+    .icons{display:none}
+    .desktop{padding:52px .8rem 90px;display:grid;gap:1rem;align-content:start}
+    .win{position:static !important;display:flex;max-width:100%;width:100% !important}
+    .tbar{cursor:default}
+    .tbar .close{display:none}
+    .win .body{max-height:none}
+    .menubar .m.hide-m{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="boot" id="boot">
+  <div class="inner">
+    <div class="face">🧁</div>
+    <h1>CheekyOS 9.6</h1>
+    <div class="bar"><i></i></div>
+    <small>warming the oven… loading buttercream drivers…</small>
+  </div>
+</div>
+
+<div class="toast" id="toast">copied ✓</div>
+
+<!-- MENU BAR -->
+<nav class="menubar px">
+  <span class="logo">🍒</span>
+  <span class="m" data-menu><b>CheekyOS</b>
+    <span class="drop">
+      <button data-open="w-readme">About This Bakery…</button>
+      <hr>
+      <button data-open="w-order">Order… <span style="float:right;opacity:.5">⌘O</span></button>
+      <button onclick="document.getElementById('toast').dataset.msg='sleep is for after the macarons';showToast('zzz… no.')">Sleep</button>
+    </span>
+  </span>
+  <span class="m hide-m" data-menu>File
+    <span class="drop">
+      <button data-open="w-macarons">Open Macarons.jpg</button>
+      <button data-open="w-flowers">Open Flowers 📁</button>
+      <button data-open="w-thai">Open Thai Sweets 📁</button>
+      <hr>
+      <button onclick="showToast('nothing here is ever deleted 💾')">Empty Trash…</button>
+    </span>
+  </span>
+  <span class="m hide-m" data-menu>Special
+    <span class="drop">
+      <button onclick="showToast('sprinkles enabled ✨')">Enable Sprinkles</button>
+      <button onclick="showToast('the bear sees you 🐻')">Talk to the Bear</button>
+      <button data-open="w-studio">Peek in the Kitchen</button>
+    </span>
+  </span>
+  <span class="clock" id="clock">--:--</span>
+  <span class="batt">🔋 100% sugar</span>
+</nav>
+
+<!-- DESKTOP -->
+<main class="desktop" id="desktop">
+
+  <!-- desktop icons -->
+  <div class="icons">
+    <button class="icon" data-open="w-macarons"><span class="pic">🐻</span><span class="lbl">Macarons.jpg</span></button>
+    <button class="icon" data-open="w-flowers"><span class="pic">💐</span><span class="lbl">Flowers</span></button>
+    <button class="icon" data-open="w-thai"><span class="pic">🥭</span><span class="lbl">Thai Sweets</span></button>
+    <button class="icon" data-open="w-readme"><span class="pic">📄</span><span class="lbl">ReadMe.txt</span></button>
+    <button class="icon" data-open="w-order"><span class="pic">☎️</span><span class="lbl">Order.app</span></button>
+  </div>
+
+  <!-- ReadMe window -->
+  <section class="win open" id="w-readme" style="left:4%;top:70px;width:380px">
+    <header class="tbar"><button class="close" aria-label="Close">✕</button><span class="title">ReadMe.txt</span><span class="stripes"></span></header>
+    <div class="body readme">
+      <p class="ascii">*** WELCOME TO CHEEKY BITE ***</p>
+      <p><b>Cheeky Bite</b> is a one-woman artisan bakery. Character macarons with hand-painted faces, Thai sweets shaped like tiny fruit, and buttercream flowers piped petal by petal.</p>
+      <p>Every file on this desktop is a real thing she made. Double-click around. Nothing will crash — she's careful like that.</p>
+      <dl class="kv">
+        <dt>Version</dt><dd>one baker, no updates needed</dd>
+        <dt>Memory</dt><dd>every order remembered</dd>
+        <dt>Uptime</dt><dd>since the first bear macaron</dd>
+      </dl>
+    </div>
+    <footer class="statusline"><span>1 of 1 baker</span><span>100% handmade</span></footer>
+  </section>
+
+  <!-- Macarons viewer -->
+  <section class="win open" id="w-macarons" style="left:38%;top:120px;width:420px">
+    <header class="tbar"><button class="close" aria-label="Close">✕</button><span class="title">Macarons.jpg — Preview</span><span class="stripes"></span></header>
+    <div class="body viewer">
+      <img src="images/1780894899980.jpg" alt="Bear and lemon character macarons on a plate in window light">
+      <p class="cap">A bear and a lemon, waiting for a party. Each face piped by hand. <span class="tag">character macarons</span></p>
+    </div>
+    <footer class="statusline"><span>1780894899980.jpg</span><span>flavour: joy</span></footer>
+  </section>
+
+  <!-- Flowers folder -->
+  <section class="win" id="w-flowers" style="left:12%;top:220px;width:520px">
+    <header class="tbar"><button class="close" aria-label="Close">✕</button><span class="title">📁 Buttercream Flowers</span><span class="stripes"></span></header>
+    <div class="body">
+      <div class="folder-grid">
+        <button class="thumb" data-view="images/229617.jpg" data-cap="Pink and cream peonies — piped petal by petal on a flower nail."><img src="images/229617.jpg" alt="Pink and cream buttercream peonies"><span>peonies.jpg</span></button>
+        <button class="thumb" data-view="images/229619.jpg" data-cap="White dahlias. Someone will ask if they're real. They're butter."><img src="images/229619.jpg" alt="White buttercream dahlias"><span>dahlias.jpg</span></button>
+        <button class="thumb" data-view="images/229618.jpg" data-cap="Lilac roses, ready to be lifted onto a cake with scissors and held breath."><img src="images/229618.jpg" alt="Lilac buttercream roses"><span>roses.jpg</span></button>
+        <button class="thumb" data-view="images/229625.jpg" data-cap="The bouquet box — a whole florist's window you can slice."><img src="images/229625.jpg" alt="Square bouquet-box cake in pink, gold and blue"><span>bouquet-box.jpg</span></button>
+        <button class="thumb" data-view="images/229626.jpg" data-cap="The showstopper: lilies and roses in pastels, built for the centre of the table."><img src="images/229626.jpg" alt="Pastel bouquet cake with lilies"><span>showstopper.jpg</span></button>
+        <button class="thumb" data-view="images/229501.jpg" data-cap="Blossoms mid-pipe, still on their flower nails."><img src="images/229501.jpg" alt="Pink buttercream blossoms on flower nails"><span>in-progress.jpg</span></button>
+      </div>
+    </div>
+    <footer class="statusline"><span>6 items</span><span>0 wilted</span></footer>
+  </section>
+
+  <!-- Thai sweets folder -->
+  <section class="win" id="w-thai" style="left:44%;top:300px;width:520px">
+    <header class="tbar"><button class="close" aria-label="Close">✕</button><span class="title">📁 Thai Sweets</span><span class="stripes"></span></header>
+    <div class="body">
+      <div class="folder-grid">
+        <button class="thumb" data-view="images/1782399389414.jpg" data-cap="Look choup — mung-bean sweets sculpted and painted into tiny glass-shiny fruit. A royal Thai craft."><img src="images/1782399389414.jpg" alt="Look choup, Thai fruit-shaped sweets"><span>look-choup.jpg</span></button>
+        <button class="thumb" data-view="images/1782399389465.jpg" data-cap="Rose pia — flaky pastry folded into roses. Shatters politely."><img src="images/1782399389465.jpg" alt="Rose pia cakes"><span>rose-pia.jpg</span></button>
+        <button class="thumb" data-view="images/1782399389340.jpg" data-cap="Blueberry roulade — the occasional guest star."><img src="images/1782399389340.jpg" alt="Blueberry roulade"><span>roulade.jpg</span></button>
+        <button class="thumb" data-view="images/1782399389268.jpg" data-cap="The Christmas macaron cast, reporting for duty every December."><img src="images/1782399389268.jpg" alt="Christmas character macarons"><span>xmas-set.jpg</span></button>
+      </div>
+    </div>
+    <footer class="statusline"><span>4 items</span><span>ตลาดหวาน</span></footer>
+  </section>
+
+  <!-- Image viewer (populated by thumbs) -->
+  <section class="win" id="w-view" style="left:26%;top:150px;width:440px">
+    <header class="tbar"><button class="close" aria-label="Close">✕</button><span class="title" id="viewTitle">Preview</span><span class="stripes"></span></header>
+    <div class="body viewer">
+      <img id="viewImg" src="images/229617.jpg" alt="">
+      <p class="cap" id="viewCap"></p>
+    </div>
+    <footer class="statusline"><span>preview</span><span>tastes better in person</span></footer>
+  </section>
+
+  <!-- Kitchen window -->
+  <section class="win" id="w-studio" style="left:20%;top:180px;width:460px">
+    <header class="tbar"><button class="close" aria-label="Close">✕</button><span class="title">kitchen-cam.mov</span><span class="stripes"></span></header>
+    <div class="body viewer">
+      <img src="images/1783770350417.jpg" alt="Hands piping faces onto macarons at the workbench">
+      <p class="cap">Live from the workbench: one baker giving a macaron the correct eyebrows. This is the entire company. <span class="tag">no factory</span></p>
+    </div>
+    <footer class="statusline"><span>REC ●</span><span>uptime: since the first bear</span></footer>
+  </section>
+
+  <!-- Order dialog -->
+  <section class="win" id="w-order" style="left:32%;top:90px;width:400px">
+    <header class="tbar"><button class="close" aria-label="Close">✕</button><span class="title">Order.app — system dialog</span><span class="stripes"></span></header>
+    <div class="body">
+      <p style="font-weight:700;margin-bottom:.8rem">☎️ Leave a number or email — the baker calls you back. No accounts, no carts, no CAPTCHA asking if you're a robot. (Robots don't order macarons.)</p>
+      <form id="orderForm">
+        <div>
+          <label for="contact">Email or phone</label>
+          <input id="contact" name="contact" required placeholder="you@example.com / 07…" autocomplete="email">
+        </div>
+        <div>
+          <label for="want">What are you dreaming of? <small>(optional)</small></label>
+          <textarea id="want" rows="3" placeholder="e.g. a peony cake for mum's 60th"></textarea>
+        </div>
+        <div class="btnrow">
+          <button type="button" class="osbtn" onclick="closeWin('w-order')">Cancel</button>
+          <button type="submit" class="osbtn primary">Send ▸</button>
+        </div>
+      </form>
+      <div class="sent-note" id="sentNote">✓ Message queued.<br>The baker will call you back. 🧁</div>
+    </div>
+    <footer class="statusline"><span>Order.app v1.0</span><span>err 0: everything is fine</span></footer>
+  </section>
+</main>
+
+<!-- DOCK -->
+<nav class="dock" aria-label="Dock">
+  <button data-open="w-macarons" title="Macarons" class="running">🐻</button>
+  <button data-open="w-flowers" title="Buttercream flowers">💐</button>
+  <button data-open="w-thai" title="Thai sweets">🥭</button>
+  <button data-open="w-studio" title="The kitchen">🎥</button>
+  <span class="sep"></span>
+  <button data-open="w-readme" title="ReadMe" class="running">📄</button>
+  <button data-open="w-order" title="Order" style="background:var(--chrome)">☎️</button>
+</nav>
+
+<script>
+(function(){
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const mobile = () => matchMedia('(max-width:720px)').matches;
+
+  /* boot splash */
+  const boot = document.getElementById('boot');
+  setTimeout(()=>boot.classList.add('done'), reduced ? 100 : 1600);
+
+  /* clock */
+  const clock = document.getElementById('clock');
+  function tick(){
+    const d = new Date();
+    clock.textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  }
+  tick(); setInterval(tick, 15000);
+
+  /* toast */
+  let toastT;
+  window.showToast = function(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(()=>t.classList.remove('show'), 2200);
+  };
+
+  /* menus */
+  document.querySelectorAll('[data-menu]').forEach(m=>{
+    m.addEventListener('click', e=>{
+      const was = m.classList.contains('open');
+      document.querySelectorAll('[data-menu]').forEach(x=>x.classList.remove('open'));
+      if(!was) m.classList.add('open');
+      e.stopPropagation();
+    });
+  });
+  document.addEventListener('click', ()=>document.querySelectorAll('[data-menu]').forEach(x=>x.classList.remove('open')));
+
+  /* window management */
+  let z = 20;
+  function front(w){ w.style.zIndex = ++z; }
+  window.openWin = function(id){
+    const w = document.getElementById(id);
+    w.classList.remove('open'); void w.offsetWidth; /* restart pop animation */
+    w.classList.add('open'); front(w);
+    if(mobile()) w.scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block:'start'});
+    document.querySelectorAll('.dock [data-open]').forEach(b=>{
+      if(b.dataset.open===id) b.classList.add('running');
+    });
+  };
+  window.closeWin = function(id){
+    document.getElementById(id).classList.remove('open');
+    document.querySelectorAll('.dock [data-open]').forEach(b=>{
+      if(b.dataset.open===id) b.classList.remove('running');
+    });
+  };
+  document.querySelectorAll('[data-open]').forEach(b=>{
+    b.addEventListener('click', ()=>openWin(b.dataset.open));
+  });
+  document.querySelectorAll('.win .close').forEach(c=>{
+    c.addEventListener('click', e=>{ closeWin(c.closest('.win').id); e.stopPropagation(); });
+  });
+  document.querySelectorAll('.win').forEach(w=>{
+    w.addEventListener('pointerdown', ()=>front(w));
+  });
+
+  /* drag (desktop only) */
+  document.querySelectorAll('.tbar').forEach(bar=>{
+    bar.addEventListener('pointerdown', e=>{
+      if(mobile() || e.target.classList.contains('close')) return;
+      const w = bar.closest('.win');
+      front(w);
+      const r = w.getBoundingClientRect();
+      const parent = w.offsetParent.getBoundingClientRect();
+      const ox = e.clientX - r.left, oy = e.clientY - r.top;
+      w.style.width = r.width + 'px';
+      function move(ev){
+        w.style.left = Math.max(0, ev.clientX - parent.left - ox) + 'px';
+        w.style.top  = Math.max(0, ev.clientY - parent.top - oy) + 'px';
+      }
+      function up(){ removeEventListener('pointermove', move); removeEventListener('pointerup', up); }
+      addEventListener('pointermove', move);
+      addEventListener('pointerup', up);
+      e.preventDefault();
+    });
+  });
+
+  /* thumbnail viewer */
+  document.querySelectorAll('.thumb').forEach(t=>{
+    t.addEventListener('click', ()=>{
+      const img = document.getElementById('viewImg');
+      img.src = t.dataset.view;
+      img.alt = t.querySelector('img').alt;
+      document.getElementById('viewCap').textContent = t.dataset.cap;
+      document.getElementById('viewTitle').textContent = t.querySelector('span').textContent + ' — Preview';
+      openWin('w-view');
+    });
+  });
+
+  /* order form */
+  document.getElementById('orderForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    e.target.style.display='none';
+    document.getElementById('sentNote').style.display='block';
+    showToast('order sent to the kitchen ✓');
+  });
+
+  /* keyboard: cmd/ctrl+O opens order */
+  addEventListener('keydown', e=>{
+    if((e.metaKey||e.ctrlKey) && e.key==='o'){ e.preventDefault(); openWin('w-order'); }
+  });
+
+  /* mobile: ensure key windows visible as feed */
+  if(mobile()){
+    ['w-readme','w-macarons','w-flowers','w-thai','w-studio','w-order'].forEach(id=>{
+      document.getElementById(id).classList.add('open');
+    });
+    document.getElementById('w-view').classList.remove('open');
+  }
+})();
+</script>
+</body>
+</html>
