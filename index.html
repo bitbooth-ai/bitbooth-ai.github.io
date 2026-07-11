@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheeky Bite — Design Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300;0,62..125,500;0,62..125,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: oklch(0.22 0.02 300);
+    --ink: oklch(0.96 0.005 300);
+    --soft: oklch(0.78 0.02 300);
+    --line: oklch(0.38 0.02 300);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:'Archivo',sans-serif;font-weight:300;line-height:1.6;
+    min-height:100vh;padding:clamp(2rem,6vw,5rem) clamp(1.2rem,5vw,4rem);
+  }
+  header{max-width:70rem;margin:0 auto 3.5rem}
+  h1{font-stretch:125%;font-weight:800;text-transform:uppercase;font-size:clamp(2rem,6vw,4.2rem);line-height:1;text-wrap:balance}
+  header p{color:var(--soft);margin-top:1.2rem;max-width:60ch}
+  header p b{color:var(--ink);font-weight:500}
+
+  main{max-width:70rem;margin:0 auto}
+  .design{
+    display:grid;grid-template-columns:7rem 1fr auto;gap:1.5rem;align-items:center;
+    padding:1.8rem 0;border-top:1px solid var(--line);
+    text-decoration:none;color:inherit;transition:background .2s;
+  }
+  .design:last-of-type{border-bottom:1px solid var(--line)}
+  .design:hover{background:oklch(0.26 0.025 300)}
+  .design .swatch{
+    height:4.4rem;border-radius:6px;
+    display:grid;place-items:center;
+    font-weight:800;font-stretch:125%;font-size:1.3rem;
+  }
+  .design h2{font-weight:500;font-size:clamp(1.15rem,2.4vw,1.6rem)}
+  .design p{color:var(--soft);font-size:.95rem;max-width:58ch;margin-top:.2rem}
+  .design .go{font-weight:800;font-stretch:125%;font-size:1.4rem}
+  .s2{background:oklch(0.62 0.24 5);color:oklch(0.90 0.17 95)}
+  .s5{background:oklch(0.87 0.05 305);color:oklch(0.30 0.07 320)}
+  @media(max-width:640px){
+    .design{grid-template-columns:4.5rem 1fr}
+    .design .go{display:none}
+    .design .swatch{height:3.2rem;font-size:1rem}
+  }
+  footer{max-width:70rem;margin:2.5rem auto 0;color:var(--soft);font-size:.85rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>Cheeky Bite —<br>two design directions</h1>
+  <p>One bakery, two surviving websites. Same photography, same products — <b>character macarons, Thai sweets, buttercream flower cakes</b>. Eight earlier directions were culled (dark themes, text-over-photo readability, joyless palettes — see PRODUCT.md for reasons). These two are light, joyful, and sell happiness. Click through and pick a lane.</p>
+</header>
+
+<main>
+  <a class="design" href="design-02.html">
+    <span class="swatch s2">02</span>
+    <span>
+      <h2>Sugar Rush</h2>
+      <p>Candy-pop maximalism. Hot pink, stickers, marquee ticker, chunky type, desserts with attitude. Loud on purpose.</p>
+    </span>
+    <span class="go">&rarr;</span>
+  </a>
+
+  <a class="design" href="design-05.html">
+    <span class="swatch s5">05</span>
+    <span>
+      <h2>Pressed Flowers</h2>
+      <p>Lilac scrapbook romance. Taped polaroids, handwritten notes, a keepsake album from the baker's kitchen table.</p>
+    </span>
+    <span class="go">&rarr;</span>
+  </a>
+</main>
+
+<footer>Both are single-file, responsive, and use the real photography in <code>images/</code>.</footer>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheeky Bite — a baker's keepsake album</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --lilac: oklch(0.87 0.05 305);
+    --lilac-deep: oklch(0.78 0.07 305);
+    --aubergine: oklch(0.30 0.07 320);
+    --aubergine-soft: oklch(0.40 0.06 320);
+    --paper-card: oklch(0.99 0.005 305);
+    --rose: oklch(0.62 0.14 355);
+    --leaf: oklch(0.52 0.08 150);
+    --tape: oklch(0.88 0.09 95 / .75);
+    --tape2: oklch(0.85 0.07 355 / .7);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--lilac);
+    background-image:radial-gradient(oklch(0.82 0.06 305) 1px, transparent 1.5px);
+    background-size:26px 26px;
+    color:var(--aubergine);
+    font-family:'EB Garamond',serif;
+    font-size:1.08rem;line-height:1.7;
+  }
+  h1,h2,h3{line-height:1.1;text-wrap:balance;font-weight:500}
+  img{display:block;max-width:100%}
+  a{color:inherit}
+  .hand{font-family:'Caveat',cursive;font-weight:600}
+
+  /* ---------- ribbon nav ---------- */
+  nav{
+    display:flex;justify-content:center;flex-wrap:wrap;gap:.4rem 2rem;align-items:center;
+    padding:1.2rem 1rem .4rem;font-size:1.25rem;
+  }
+  nav a{font-family:'Caveat',cursive;font-weight:600;text-decoration:none;color:var(--aubergine-soft);transition:color .25s}
+  nav a:hover{color:var(--rose)}
+  nav .home{font-size:1.5rem;color:var(--aubergine)}
+
+  /* ---------- hero collage ---------- */
+  .hero{
+    max-width:76rem;margin:0 auto;position:relative;
+    display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;
+    padding:clamp(2rem,6vw,4.5rem) clamp(1rem,4vw,3rem) clamp(3rem,7vw,5rem);
+  }
+  .hero-words h1{
+    font-size:clamp(2.6rem,6vw,4.6rem);
+  }
+  .hero-words h1 .hand{display:block;font-size:clamp(1.6rem,3vw,2.4rem);color:var(--rose);transform:rotate(-2deg);margin-bottom:.4rem}
+  .hero-words p{margin-top:1.4rem;max-width:44ch;font-size:1.15rem}
+  .hero-words .cta{
+    display:inline-block;margin-top:1.8rem;
+    font-family:'Caveat',cursive;font-weight:600;font-size:1.45rem;
+    color:var(--paper-card);background:var(--aubergine);
+    padding:.5rem 1.8rem;border-radius:999px;text-decoration:none;
+    transform:rotate(-1.5deg);transition:transform .2s cubic-bezier(.22,.61,.36,1),background .2s;
+  }
+  .hero-words .cta:hover{transform:rotate(0) scale(1.04);background:var(--rose)}
+  .collage{position:relative;min-height:520px}
+  .polaroid{
+    position:absolute;background:var(--paper-card);
+    padding:.7rem .7rem 2.6rem;box-shadow:0 10px 28px oklch(0.3 0.07 320/.25);
+    transition:transform .3s cubic-bezier(.22,.61,.36,1);
+  }
+  .polaroid:hover{transform:scale(1.04) rotate(0deg) !important;z-index:5}
+  .polaroid img{width:100%;aspect-ratio:1;object-fit:cover}
+  .polaroid figcaption{
+    font-family:'Caveat',cursive;font-weight:600;font-size:1.3rem;
+    text-align:center;margin-top:.55rem;color:var(--aubergine-soft);
+  }
+  .polaroid::before{
+    content:"";position:absolute;top:-12px;left:50%;translate:-50% 0;
+    width:90px;height:26px;background:var(--tape);transform:rotate(-3deg);
+  }
+  .c1{width:56%;top:0;left:0;transform:rotate(-4deg);z-index:2}
+  .c2{width:48%;top:24%;right:0;transform:rotate(3deg);z-index:3}
+  .c2::before{background:var(--tape2)}
+  .c3{width:46%;bottom:0;left:8%;transform:rotate(2deg)}
+  @media(max-width:860px){
+    .hero{grid-template-columns:1fr}
+    .collage{min-height:0;display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center}
+    .polaroid{position:static;width:min(46%,15rem) !important}
+  }
+
+  /* ---------- doodle divider ---------- */
+  .stem{display:block;margin:0 auto;padding:1rem 0}
+
+  /* ---------- album pages ---------- */
+  .album{max-width:70rem;margin:0 auto;padding:0 clamp(1rem,4vw,3rem) clamp(2rem,5vw,4rem)}
+  .album-title{text-align:center;margin-bottom:3rem}
+  .album-title .hand{font-size:clamp(1.5rem,3vw,2rem);color:var(--rose)}
+  .album-title h2{font-size:clamp(2rem,4.5vw,3.2rem)}
+  .page{
+    background:var(--paper-card);
+    display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(1.5rem,4vw,3rem);
+    padding:clamp(1.5rem,4vw,3rem);
+    box-shadow:0 14px 34px oklch(0.3 0.07 320/.18);
+    margin-bottom:clamp(2.5rem,6vw,4rem);position:relative;
+  }
+  .page:nth-child(odd){transform:rotate(-.5deg)}
+  .page:nth-child(even){transform:rotate(.5deg)}
+  .page::after{
+    content:"";position:absolute;top:-13px;right:8%;
+    width:110px;height:28px;background:var(--tape);transform:rotate(2deg);
+  }
+  .page .photo{position:relative}
+  .page .photo img{width:100%;aspect-ratio:4/5;object-fit:cover}
+  .page .photo .note{
+    position:absolute;bottom:-1rem;left:-1rem;
+    font-family:'Caveat',cursive;font-weight:600;font-size:1.35rem;color:var(--paper-card);
+    background:var(--rose);padding:.25rem 1.1rem;border-radius:999px;transform:rotate(-4deg);
+  }
+  .page h3{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:.9rem}
+  .page h3 .hand{color:var(--rose);font-size:1.2em}
+  .page p{max-width:56ch}
+  .page p+p{margin-top:.8rem}
+  .page .recipe-line{
+    margin-top:1.4rem;padding-top:1rem;border-top:1px dashed var(--lilac-deep);
+    font-family:'Caveat',cursive;font-weight:400;font-size:1.35rem;color:var(--aubergine-soft);
+  }
+  @media(max-width:760px){.page{grid-template-columns:1fr}}
+
+  /* ---------- gallery wall ---------- */
+  .wall{max-width:76rem;margin:0 auto;padding:0 clamp(1rem,4vw,3rem) clamp(3rem,6vw,5rem)}
+  .wall-title{text-align:center;margin-bottom:2.5rem}
+  .wall-title h2{font-size:clamp(2rem,4.5vw,3.2rem)}
+  .wall-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.8rem}
+  .wall-grid .polaroid{position:static;transform:rotate(var(--r,-2deg));width:auto}
+  .wall-grid .polaroid:nth-child(2){--r:2deg}
+  .wall-grid .polaroid:nth-child(3){--r:-1deg}
+  .wall-grid .polaroid:nth-child(4){--r:3deg}
+  .wall-grid .polaroid:nth-child(5){--r:-3deg}
+  .wall-grid .polaroid:nth-child(6){--r:1.5deg}
+
+  /* ---------- letter ---------- */
+  .letter{
+    max-width:44rem;margin:0 auto clamp(3rem,7vw,5rem);
+    background:var(--paper-card);
+    padding:clamp(2rem,5vw,3.5rem);
+    box-shadow:0 14px 34px oklch(0.3 0.07 320/.18);
+    transform:rotate(-.6deg);position:relative;
+  }
+  .letter::before{
+    content:"";position:absolute;top:-13px;left:50%;translate:-50% 0;
+    width:110px;height:28px;background:var(--tape2);transform:rotate(-2deg);
+  }
+  .letter .hand{font-size:1.9rem;color:var(--rose)}
+  .letter p{margin-top:.9rem}
+  .letter .sig{font-family:'Caveat',cursive;font-size:1.7rem;margin-top:1.4rem;color:var(--aubergine)}
+  .letter .cta{
+    display:inline-block;margin-top:1.2rem;font-family:'Caveat',cursive;font-weight:600;font-size:1.4rem;
+    color:var(--paper-card);background:var(--aubergine);padding:.45rem 1.6rem;border-radius:999px;
+    text-decoration:none;transform:rotate(1deg);transition:background .2s;
+  }
+  .letter .cta:hover{background:var(--rose)}
+
+  footer{
+    text-align:center;padding:0 1rem 2.5rem;
+    font-family:'Caveat',cursive;font-weight:600;font-size:1.35rem;color:var(--aubergine-soft);
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .polaroid,.hero-words .cta,.letter .cta{transition:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="home" href="#">✿ Cheeky Bite</a>
+  <a href="#album">the album</a>
+  <a href="#wall">flower wall</a>
+  <a href="#letter">a note for you</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-words">
+    <h1>
+      <span class="hand">from my kitchen, with frosting —</span>
+      A keepsake album of things I baked for people I like.
+    </h1>
+    <p>I pipe little faces onto macarons, shape tiny fruit out of mung bean the way Thai grandmothers taught, and grow whole gardens out of buttercream. This is my scrapbook. You can eat everything in it.</p>
+    <a class="cta" href="#letter">bake something for me ♡</a>
+  </div>
+  <div class="collage">
+    <figure class="polaroid c1"><img src="images/229626.jpg" alt="Bouquet cake with pastel buttercream flowers and lilies"><figcaption>the wedding bouquet you can slice</figcaption></figure>
+    <figure class="polaroid c2"><img src="images/1780894899980.jpg" alt="Bear and lemon character macarons"><figcaption>mr. bear &amp; the lemon twins</figcaption></figure>
+    <figure class="polaroid c3"><img src="images/1782399389414.jpg" alt="Look choup, tiny fruit-shaped sweets"><figcaption>a fruit stall, three bites wide</figcaption></figure>
+  </div>
+</section>
+
+<svg class="stem" width="120" height="54" viewBox="0 0 120 54" fill="none" aria-hidden="true">
+  <path d="M6 46 C 36 40, 84 40, 114 46" stroke="oklch(0.52 0.08 150)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M38 42 q -4 -12 -14 -16 q 12 0 16 12" fill="oklch(0.52 0.08 150)"/>
+  <path d="M82 42 q 4 -12 14 -16 q -12 0 -16 12" fill="oklch(0.52 0.08 150)"/>
+  <circle cx="60" cy="34" r="7" fill="oklch(0.62 0.14 355)"/>
+  <circle cx="52" cy="28" r="5" fill="oklch(0.72 0.11 355)"/>
+  <circle cx="68" cy="28" r="5" fill="oklch(0.72 0.11 355)"/>
+  <circle cx="60" cy="22" r="5" fill="oklch(0.72 0.11 355)"/>
+</svg>
+
+<section class="album" id="album">
+  <div class="album-title">
+    <p class="hand">chapter one, two &amp; three</p>
+    <h2>The things I make</h2>
+  </div>
+
+  <article class="page">
+    <div class="photo">
+      <img src="images/1783770350417.jpg" alt="Hands piping tiny faces onto rows of macaron shells" loading="lazy">
+      <span class="note">steady hands only!</span>
+    </div>
+    <div>
+      <h3>Macarons with <span class="hand">personality</span></h3>
+      <p>Every shell rests overnight, and every face is piped freehand the next morning — bears with sleepy eyes, lemons mid-laugh, a December parade of santas and snowmen. No two are ever quite the same, which is exactly the point.</p>
+      <p>Custom characters for birthdays, favours and people who need cheering up.</p>
+      <p class="recipe-line">☞ makes: joy, roughly two dozen pieces at a time</p>
+    </div>
+  </article>
+
+  <article class="page">
+    <div class="photo">
+      <img src="images/1782399389465.jpg" alt="Rose pia cake crowned with sculpted pink roses" loading="lazy">
+      <span class="note">smells like roses. is cake.</span>
+    </div>
+    <div>
+      <h3>Sweets from <span class="hand">Thailand</span></h3>
+      <p>Look choup are tiny fruits sculpted from sweetened mung bean and dipped in glossy jelly — a craft from the old royal kitchens that I refuse to let become a factory thing. Rose pia is flaky pastry under a crown of rose-scented cream petals.</p>
+      <p>Both are made in small batches, painted by brush, and gone by Sunday.</p>
+      <p class="recipe-line">☞ secret ingredient: a grandmother's patience</p>
+    </div>
+  </article>
+
+  <article class="page">
+    <div class="photo">
+      <img src="images/229625.jpg" alt="Square bouquet-box cake full of buttercream flowers" loading="lazy">
+      <span class="note">yes, the flowers are frosting</span>
+    </div>
+    <div>
+      <h3>Gardens made of <span class="hand">buttercream</span></h3>
+      <p>Peonies, dahlias, ranunculus and roses — each one piped petal by petal on a spinning nail, chilled until firm, then lifted into place with warm scissors. A bouquet cake takes a full day of piping before assembly even starts.</p>
+      <p>For weddings, showers, and anyone who deserves flowers they can also eat.</p>
+      <p class="recipe-line">☞ one dahlia = forty petals = zero regrets</p>
+    </div>
+  </article>
+</section>
+
+<section class="wall" id="wall">
+  <div class="wall-title">
+    <p class="hand" style="color:var(--rose);font-size:1.6rem">pressed, piped &amp; photographed</p>
+    <h2>The flower wall</h2>
+  </div>
+  <div class="wall-grid">
+    <figure class="polaroid"><img src="images/229500.jpg" alt="Deep purple buttercream peonies" loading="lazy"><figcaption>plum peonies, tuesday</figcaption></figure>
+    <figure class="polaroid"><img src="images/229618.jpg" alt="Lilac buttercream roses" loading="lazy"><figcaption>lilac roses ♡</figcaption></figure>
+    <figure class="polaroid"><img src="images/229619.jpg" alt="White buttercream dahlias" loading="lazy"><figcaption>dahlias before the frost</figcaption></figure>
+    <figure class="polaroid"><img src="images/229617.jpg" alt="Blush pink and cream peonies" loading="lazy"><figcaption>blush batch no. 3</figcaption></figure>
+    <figure class="polaroid"><img src="images/229501.jpg" alt="Pink buttercream blossoms on flower nails" loading="lazy"><figcaption>still on their nails</figcaption></figure>
+    <figure class="polaroid"><img src="images/229627.jpg" alt="Pastel bouquet cake, side view" loading="lazy"><figcaption>the whole garden, gathered</figcaption></figure>
+  </div>
+</section>
+
+<section class="letter" id="letter">
+  <p class="hand">dear you,</p>
+  <p>If you've got a wedding, a birthday, a baby on the way, or just a Tuesday that needs rescuing — write to me. Tell me who it's for and what makes them laugh. I'll sketch something, we'll trade a few notes, and then I'll spend a very happy day piping it into existence.</p>
+  <p>Orders open every week. They go fast, but so does buttercream.</p>
+  <p class="sig">— the baker at Cheeky Bite</p>
+  <a class="cta" href="mailto:hello@cheekybite.example">hello@cheekybite.example</a>
+</section>
+
+<footer>✿ every petal piped by hand · cheeky bite ✿</footer>
+
+</body>
+</html>
