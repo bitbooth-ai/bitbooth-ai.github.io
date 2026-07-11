@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheeky Bite — Best in Show</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Karla:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* design-12 — The Bake Sale. County-fair gingham, blue-ribbon energy.
+     Ref: a small-town fair bake sale table × vintage county-fair poster. */
+  :root{
+    --milk: oklch(0.99 0.005 25);
+    --cherry: oklch(0.55 0.20 25);
+    --cherry-deep: oklch(0.44 0.17 25);
+    --sky: oklch(0.88 0.06 230);
+    --sky-deep: oklch(0.55 0.12 250);
+    --ink: oklch(0.25 0.04 25);
+    --soft: oklch(0.42 0.05 25);
+    --gingham:
+      repeating-linear-gradient(0deg, oklch(0.55 0.20 25/.22) 0 14px, transparent 14px 28px),
+      repeating-linear-gradient(90deg, oklch(0.55 0.20 25/.22) 0 14px, transparent 14px 28px),
+      oklch(0.99 0.005 25);
+    --z-nav: 40;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--milk);color:var(--ink);
+    font-family:'Karla',sans-serif;line-height:1.65;
+  }
+  h1,h2,h3{font-family:'Alfa Slab One',serif;font-weight:400;line-height:1.08;text-wrap:balance}
+  img{display:block;max-width:100%}
+
+  /* ---------- gingham banner + nav ---------- */
+  .cloth{background:var(--gingham);padding:.9rem 1rem;text-align:center;border-bottom:3px solid var(--cherry)}
+  .cloth span{
+    display:inline-block;background:var(--milk);border:3px solid var(--cherry);border-radius:999px;
+    font-weight:700;font-size:.95rem;padding:.3rem 1.3rem;color:var(--cherry-deep);
+  }
+  nav{
+    position:sticky;top:0;z-index:var(--z-nav);
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    background:var(--milk);border-bottom:3px solid var(--ink);
+    padding:.75rem clamp(1rem,4vw,2.5rem);
+  }
+  .logo{font-family:'Alfa Slab One',serif;font-size:1.3rem;color:var(--cherry);text-decoration:none}
+  nav .bell{
+    background:var(--cherry);color:var(--milk);text-decoration:none;font-weight:700;
+    padding:.5rem 1.4rem;border-radius:999px;transition:background .2s,transform .2s cubic-bezier(.16,1,.3,1);
+  }
+  nav .bell:hover{background:var(--sky-deep);transform:scale(1.05)}
+
+  /* ---------- hero ---------- */
+  .hero{max-width:64rem;margin:0 auto;text-align:center;padding:clamp(2.5rem,7vw,5rem) clamp(1.2rem,4vw,3rem) clamp(2rem,5vw,3.5rem)}
+  .rosette{width:92px;margin:0 auto 1.2rem}
+  .hero h1{font-size:clamp(2.4rem,6.5vw,4.6rem);color:var(--cherry)}
+  .hero h1 span{color:var(--ink)}
+  .hero p{max-width:54ch;margin:1.2rem auto 0;font-size:1.12rem;color:var(--soft)}
+  .hero .btns{display:flex;justify-content:center;flex-wrap:wrap;gap:.9rem;margin-top:1.8rem}
+  .btn{
+    font-weight:700;text-decoration:none;padding:.75rem 1.8rem;border-radius:999px;
+    transition:transform .2s cubic-bezier(.16,1,.3,1),background .2s;display:inline-block;
+  }
+  .btn:hover{transform:translateY(-3px)}
+  .btn-cherry{background:var(--cherry);color:var(--milk)}
+  .btn-cherry:hover{background:var(--cherry-deep)}
+  .btn-sky{background:var(--sky);color:var(--ink)}
+
+  /* ---------- the table: three tilted plates ---------- */
+  .plates{
+    max-width:70rem;margin:0 auto;padding:0 clamp(1.2rem,4vw,3rem) clamp(3rem,7vw,5rem);
+    display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,3vw,2rem);align-items:start;
+  }
+  .plate{background:var(--milk);border:3px solid var(--ink);padding:.6rem .6rem 1rem;box-shadow:6px 6px 0 var(--sky);
+    transition:transform .25s cubic-bezier(.16,1,.3,1)}
+  .plate:nth-child(1){transform:rotate(-2deg)}
+  .plate:nth-child(2){transform:rotate(1deg) translateY(14px)}
+  .plate:nth-child(3){transform:rotate(2.2deg)}
+  .plate:hover{transform:rotate(0) translateY(0) scale(1.03);z-index:2;position:relative}
+  .plate img{width:100%;aspect-ratio:4/3;object-fit:cover}
+  .plate figcaption{font-weight:700;text-align:center;margin-top:.6rem;font-size:.98rem}
+  @media(max-width:700px){
+    .plates{grid-template-columns:1fr 1fr}
+    .plate:nth-child(3){display:none}
+  }
+
+  /* ---------- today's stand: recipe cards ---------- */
+  .stand{background:var(--sky);padding:clamp(3rem,7vw,5.5rem) clamp(1.2rem,4vw,3rem)}
+  .stand-head{max-width:64rem;margin:0 auto 2.6rem;text-align:center}
+  .stand-head h2{font-size:clamp(2rem,5vw,3.4rem)}
+  .stand-head p{color:var(--ink);font-weight:700;margin-top:.6rem}
+  .cards{max-width:70rem;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:clamp(1.2rem,3vw,2rem)}
+  .card{
+    background:var(--milk);border:3px solid var(--ink);
+    clip-path:polygon(0 8px,8px 0,calc(100% - 8px) 0,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0 calc(100% - 8px));
+    padding-bottom:1.3rem;
+  }
+  .card img{width:100%;aspect-ratio:5/4;object-fit:cover;border-bottom:3px solid var(--ink)}
+  .card .in{padding:1.1rem 1.3rem 0}
+  .card h3{font-size:1.35rem;color:var(--cherry-deep)}
+  .card p{color:var(--soft);margin-top:.4rem;font-size:.98rem}
+  .card .prize{
+    display:inline-block;margin-top:.8rem;background:var(--sky);border:2px solid var(--ink);
+    font-weight:700;font-size:.85rem;border-radius:999px;padding:.15rem .9rem;
+  }
+  .card.wide{grid-column:span 2}
+  .card.wide img{aspect-ratio:21/9}
+  @media(max-width:640px){.card.wide{grid-column:span 1}.card.wide img{aspect-ratio:5/4}}
+
+  /* ---------- judge's note ---------- */
+  .note{max-width:44rem;margin:0 auto;padding:clamp(3rem,7vw,5rem) clamp(1.2rem,4vw,3rem);text-align:center}
+  .note h2{font-size:clamp(1.8rem,4.4vw,2.9rem)}
+  .note blockquote{font-size:1.25rem;font-style:italic;color:var(--soft);margin-top:1.2rem}
+  .note cite{display:block;font-style:normal;font-weight:700;color:var(--cherry-deep);margin-top:.8rem;font-size:1rem}
+
+  /* ---------- ring the bell ---------- */
+  .ring{background:var(--gingham);padding:clamp(3rem,7vw,5.5rem) clamp(1.2rem,4vw,3rem);border-top:3px solid var(--cherry)}
+  .ring-card{
+    max-width:33rem;margin:0 auto;background:var(--milk);border:3px solid var(--ink);
+    box-shadow:8px 8px 0 var(--cherry);padding:clamp(1.8rem,5vw,2.8rem);text-align:center;
+  }
+  .ring-card h2{font-size:clamp(1.9rem,4.6vw,2.7rem);color:var(--cherry)}
+  .ring-card>p{color:var(--soft);margin:.6rem 0 1.4rem;font-weight:700}
+  .ring-card form{display:grid;gap:.85rem;text-align:left}
+  .ring-card label{font-weight:700;font-size:.95rem}
+  .ring-card input,.ring-card textarea{
+    width:100%;font:inherit;color:var(--ink);background:var(--milk);
+    border:3px solid var(--ink);padding:.6rem .85rem;margin-top:.25rem;
+  }
+  .ring-card input:focus,.ring-card textarea:focus{outline:3px solid var(--sky-deep);outline-offset:2px}
+  .ring-card button{
+    font:inherit;font-weight:700;font-size:1.08rem;cursor:pointer;
+    background:var(--cherry);color:var(--milk);border:3px solid var(--ink);
+    padding:.8rem 1.4rem;margin-top:.3rem;box-shadow:4px 4px 0 var(--ink);
+    transition:transform .15s cubic-bezier(.16,1,.3,1),box-shadow .15s cubic-bezier(.16,1,.3,1);
+  }
+  .ring-card button:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+
+  footer{text-align:center;padding:2rem 1rem;font-weight:700;color:var(--soft)}
+
+  .anim .reveal{opacity:0;translate:0 24px;transition:opacity .65s cubic-bezier(.16,1,.3,1),translate .65s cubic-bezier(.16,1,.3,1)}
+  .anim .reveal.in{opacity:1;translate:0 0}
+
+  @media(prefers-reduced-motion:reduce){
+    *{transition:none !important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="cloth"><span>SATURDAY BAKE SALE · TABLE №1 · ONE BAKER, MANY RIBBONS</span></div>
+
+<nav>
+  <a class="logo" href="#">Cheeky Bite</a>
+  <a class="bell" href="#ring">Ring the bell to order</a>
+</nav>
+
+<section class="hero">
+  <svg class="rosette" viewBox="0 0 100 120" aria-hidden="true">
+    <g fill="oklch(0.55 0.12 250)">
+      <path d="M42 70 L34 118 L50 104 L66 118 L58 70 Z"/>
+    </g>
+    <g fill="oklch(0.55 0.20 25)">
+      <circle cx="50" cy="46" r="34"/>
+      <path d="M50 4 l8 12 14-4 -2 15 14 6 -11 10 8 13 -15 2 -2 15 -14-7 -14 7 -2-15 -15-2 8-13 -11-10 14-6 -2-15 14 4 z" opacity=".45"/>
+    </g>
+    <circle cx="50" cy="46" r="24" fill="oklch(0.99 0.005 25)"/>
+    <text x="50" y="53" text-anchor="middle" font-family="'Alfa Slab One',serif" font-size="20" fill="oklch(0.44 0.17 25)">1st</text>
+  </svg>
+  <h1>Best in show, <span>every single Saturday.</span></h1>
+  <p>Character macarons with hand-piped faces, Thai look choup shined like little jewels, and buttercream bouquets that win arguments at weddings. All from one kitchen, all gone by afternoon.</p>
+  <div class="btns">
+    <a class="btn btn-cherry" href="#goods">See the goods</a>
+    <a class="btn btn-sky" href="#ring">Ring the bell</a>
+  </div>
+</section>
+
+<div class="plates">
+  <figure class="plate"><img src="images/1780894899980.jpg" alt="Bear and lemon macarons on a plate by the window"><figcaption>the regulars</figcaption></figure>
+  <figure class="plate"><img src="images/1782399389340.jpg" alt="Blueberry roulade sliced to show cream and berries"><figcaption>the summer entry</figcaption></figure>
+  <figure class="plate"><img src="images/229617.jpg" alt="Blush pink and cream buttercream peonies"><figcaption>the prize peonies</figcaption></figure>
+</div>
+
+<section class="stand" id="goods">
+  <div class="stand-head reveal">
+    <h2>Today's stand</h2>
+    <p>Four categories entered. Four ribbons expected.</p>
+  </div>
+  <div class="cards">
+    <article class="card wide reveal">
+      <img src="images/1782399389268.jpg" alt="A long plate of Christmas character macarons — santas, snowmen, sprinkle trees" loading="lazy">
+      <div class="in">
+        <h3>Character macarons</h3>
+        <p>Freehand faces on almond shells — bears, lemons, and a December parade of santas. Custom characters for parties, favours, and bribing children (or adults).</p>
+        <span class="prize">🏆 crowd favourite, 3 years running</span>
+      </div>
+    </article>
+    <article class="card reveal">
+      <img src="images/1782399389414.jpg" alt="Look choup — tiny glossy fruit-shaped sweets made of mung bean" loading="lazy">
+      <div class="in">
+        <h3>Look choup</h3>
+        <p>Tiny fruit that's secretly marzipan's Thai cousin — sweet mung bean, painted and glazed by hand.</p>
+        <span class="prize">🏆 most likely to be mistaken for fruit</span>
+      </div>
+    </article>
+    <article class="card reveal">
+      <img src="images/1782399389465.jpg" alt="Rose pia cake crowned with sculpted pink roses" loading="lazy">
+      <div class="in">
+        <h3>Rose pia</h3>
+        <p>Flaky pastry under a crown of rose-scented petals. Smells like a garden, eats like a hug.</p>
+        <span class="prize">🏆 best smelling table, unanimous</span>
+      </div>
+    </article>
+    <article class="card wide reveal">
+      <img src="images/229625.jpg" alt="Square bouquet-box cake bursting with pink, gold and blue buttercream flowers" loading="lazy">
+      <div class="in">
+        <h3>Bouquet cakes</h3>
+        <p>Peonies, dahlias and roses piped petal-by-petal, chilled, then arranged like a florist's box. A full day of piping before assembly even starts — and worth every flick of the wrist.</p>
+        <span class="prize">🏆 grand champion, wedding division</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="note">
+  <h2 class="reveal">A word from the judges</h2>
+  <blockquote class="reveal">"We asked if the flowers were real. She said yes — real buttercream. We have no further questions, only crumbs."
+    <cite>— everyone, eventually</cite>
+  </blockquote>
+</section>
+
+<section class="ring" id="ring">
+  <div class="ring-card reveal">
+    <h2>Ring the bell</h2>
+    <p>Leave your name and a number. I'll call you back before the table's bare.</p>
+    <form onsubmit="event.preventDefault();const f=this;location.href='mailto:hello@cheekybite.example?subject=Bake sale order — '+encodeURIComponent(f.name.value||'anonymous sweet tooth')+'&body='+encodeURIComponent('Contact: '+f.contact.value+'\n\n'+f.msg.value)">
+      <label>Name
+        <input name="name" type="text" placeholder="who's this ribbon for?" autocomplete="name">
+      </label>
+      <label>Email or phone *
+        <input name="contact" type="text" placeholder="how do I reach you?" required>
+      </label>
+      <label>The order (optional)
+        <textarea name="msg" rows="3" placeholder="two dozen bear macarons, one peony cake, all the roulade…"></textarea>
+      </label>
+      <button type="submit">🔔 Ding — call me back</button>
+    </form>
+  </div>
+</section>
+
+<footer>Cheeky Bite · county-fair quality, kitchen-table quantities · no robots on the judging panel</footer>
+
+<script>
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  document.body.classList.add('anim');
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
+  }),{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>

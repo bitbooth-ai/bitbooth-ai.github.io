@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheeky Bite — Handled Like Something Precious</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,600;1,300&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  /* design-14 — The Ribbon Box. Powder-pink pastry box tied with a blue ribbon.
+     Ref: Mendl's box (Grand Budapest Hotel) × a 1920s confectionery counter.
+     Elegant-whimsical, never cold: pink is the room, blue is the ribbon. */
+  :root{
+    --powder: oklch(0.93 0.045 350);
+    --powder-deep: oklch(0.86 0.07 350);
+    --card: oklch(0.995 0.004 350);
+    --ribbon: oklch(0.50 0.10 250);
+    --ribbon-soft: oklch(0.80 0.06 250);
+    --plum: oklch(0.32 0.06 340);
+    --plum-soft: oklch(0.45 0.06 340);
+    --z-nav: 40; --z-dialog: 60;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--powder);color:var(--plum);
+    font-family:'Josefin Sans',sans-serif;font-weight:400;line-height:1.75;
+    border:10px solid var(--card);outline:2px solid var(--ribbon);outline-offset:-16px;
+    min-height:100vh;
+  }
+  h1,h2,h3{font-weight:300;line-height:1.15;text-wrap:balance;letter-spacing:.01em}
+  img{display:block;max-width:100%}
+  .script{font-family:'Pinyon Script',cursive;font-weight:400}
+
+  nav{
+    position:sticky;top:10px;z-index:var(--z-nav);
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    background:var(--powder);border-bottom:1px solid var(--plum);
+    padding:1rem clamp(1.2rem,4vw,3rem) .8rem;
+  }
+  .logo{text-decoration:none;color:var(--plum);display:flex;align-items:baseline;gap:.5rem}
+  .logo .script{font-size:1.7rem;color:var(--ribbon)}
+  .logo span:last-child{font-weight:600;letter-spacing:.18em;font-size:.8rem}
+  nav button{
+    font:inherit;font-weight:600;font-size:.85rem;letter-spacing:.14em;cursor:pointer;
+    background:var(--ribbon);color:var(--card);border:none;border-radius:999px;
+    padding:.6rem 1.6rem;transition:background .25s,transform .25s cubic-bezier(.16,1,.3,1);
+  }
+  nav button:hover{background:var(--plum);transform:scale(1.04)}
+
+  /* ---------- hero: the box, opened ---------- */
+  .hero{text-align:center;padding:clamp(2.5rem,7vw,5rem) clamp(1.2rem,4vw,3rem) clamp(2rem,5vw,3.5rem);max-width:56rem;margin:0 auto}
+  .hero .script{font-size:clamp(1.8rem,4vw,2.8rem);color:var(--ribbon)}
+  .hero h1{font-size:clamp(2.3rem,5.6vw,4.2rem);margin-top:.3rem}
+  .hero p{max-width:52ch;margin:1.3rem auto 0;color:var(--plum-soft);font-size:1.08rem}
+  .boxfig{position:relative;max-width:30rem;margin:clamp(2rem,5vw,3rem) auto 0}
+  .boxfig .frame{
+    background:var(--card);padding:1.1rem;border:1px solid var(--plum);
+    box-shadow:0 18px 44px oklch(0.32 0.06 340/.22);position:relative;
+  }
+  .boxfig img{width:100%;aspect-ratio:4/5;object-fit:cover}
+  .boxfig .band-v,.boxfig .band-h{position:absolute;background:var(--ribbon);opacity:.92}
+  .boxfig .band-v{top:-14px;bottom:-14px;left:50%;width:34px;translate:-50% 0}
+  .boxfig .band-h{left:-14px;right:-14px;top:46%;height:34px}
+  .boxfig .bow{position:absolute;left:50%;top:46%;translate:-50% -38%;width:96px}
+  .boxfig figcaption{
+    margin-top:2rem;font-weight:600;font-size:.8rem;letter-spacing:.22em;color:var(--plum-soft);
+  }
+
+  /* ---------- contents label ---------- */
+  .contents{max-width:40rem;margin:0 auto;padding:clamp(2.5rem,6vw,4rem) clamp(1.2rem,4vw,3rem);text-align:center}
+  .contents .rule{display:flex;align-items:center;gap:1rem;color:var(--ribbon)}
+  .contents .rule::before,.contents .rule::after{content:"";flex:1;border-top:1px solid var(--plum)}
+  .contents .rule .script{font-size:1.9rem}
+  .contents ul{list-style:none;margin-top:1.6rem;font-size:1.05rem}
+  .contents li{padding:.7rem 0;border-bottom:1px dotted var(--plum-soft)}
+  .contents li:last-child{border-bottom:none}
+  .contents li b{font-weight:600}
+
+  /* ---------- the three parcels ---------- */
+  .parcels{max-width:72rem;margin:0 auto;padding:0 clamp(1.2rem,4vw,3rem) clamp(3rem,7vw,5rem)}
+  .parcel{
+    background:var(--card);border:1px solid var(--plum);
+    display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);
+    margin-bottom:clamp(2rem,5vw,3.5rem);
+    box-shadow:0 14px 36px oklch(0.32 0.06 340/.14);
+  }
+  .parcel:nth-of-type(even){grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+  .parcel:nth-of-type(even) .pic{order:2}
+  .parcel .pic{position:relative}
+  .parcel .pic img{width:100%;height:100%;object-fit:cover;min-height:300px}
+  .parcel .txt{padding:clamp(1.8rem,4.5vw,3.2rem);align-self:center}
+  .parcel .no{font-family:'Pinyon Script',cursive;font-size:2.1rem;color:var(--ribbon)}
+  .parcel h3{font-size:clamp(1.6rem,3.2vw,2.3rem);margin-top:.2rem}
+  .parcel p{color:var(--plum-soft);margin-top:.8rem;max-width:50ch}
+  .parcel .keep{
+    margin-top:1.3rem;display:inline-block;
+    font-weight:600;font-size:.78rem;letter-spacing:.2em;
+    border:1px solid var(--ribbon);color:var(--ribbon);border-radius:999px;padding:.45rem 1.2rem;
+  }
+  @media(max-width:780px){
+    .parcel,.parcel:nth-of-type(even){grid-template-columns:1fr}
+    .parcel:nth-of-type(even) .pic{order:0}
+    .parcel .pic img{min-height:0;aspect-ratio:16/10}
+  }
+
+  /* ---------- ribbon interlude ---------- */
+  .interlude{
+    background:var(--ribbon-soft);border-block:1px solid var(--plum);
+    text-align:center;padding:clamp(3rem,7vw,5rem) clamp(1.2rem,4vw,3rem);
+  }
+  .interlude .script{font-size:clamp(2rem,5vw,3.2rem);color:var(--plum)}
+  .interlude p{max-width:52ch;margin:1rem auto 0;color:var(--plum);font-size:1.05rem}
+
+  /* ---------- flower counter ---------- */
+  .counter{max-width:72rem;margin:0 auto;padding:clamp(3rem,7vw,5rem) clamp(1.2rem,4vw,3rem);text-align:center}
+  .counter h2{font-size:clamp(1.9rem,4.4vw,3rem)}
+  .counter>p{color:var(--plum-soft);max-width:52ch;margin:.8rem auto 2.4rem}
+  .sweets{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.4rem}
+  .sweets figure{background:var(--card);border:1px solid var(--plum);padding:.8rem .8rem 1rem}
+  .sweets img{width:100%;aspect-ratio:1;object-fit:cover}
+  .sweets figcaption{font-family:'Pinyon Script',cursive;font-size:1.4rem;color:var(--ribbon);margin-top:.6rem}
+
+  /* ---------- closing ---------- */
+  .closing{text-align:center;padding:clamp(3rem,7vw,5rem) clamp(1.2rem,4vw,3rem) clamp(4rem,8vw,6rem)}
+  .closing .script{font-size:clamp(2.2rem,5.5vw,3.6rem);color:var(--ribbon)}
+  .closing p{max-width:48ch;margin:1rem auto 0;color:var(--plum-soft)}
+  .closing button{
+    font:inherit;font-weight:600;font-size:.9rem;letter-spacing:.16em;cursor:pointer;
+    background:var(--plum);color:var(--card);border:none;border-radius:999px;
+    padding:.9rem 2.4rem;margin-top:1.8rem;
+    transition:background .25s,transform .25s cubic-bezier(.16,1,.3,1);
+  }
+  .closing button:hover{background:var(--ribbon);transform:translateY(-3px)}
+
+  footer{text-align:center;padding:0 1rem 2.5rem;color:var(--plum-soft);font-size:.9rem;letter-spacing:.08em}
+
+  /* ---------- order dialog: the gift note ---------- */
+  dialog{
+    border:1px solid var(--plum);background:var(--card);color:var(--plum);
+    max-width:26rem;width:calc(100vw - 2.5rem);margin:auto;padding:0;
+    box-shadow:0 24px 60px oklch(0.32 0.06 340/.35);z-index:var(--z-dialog);
+  }
+  dialog::backdrop{background:oklch(0.32 0.06 340/.45)}
+  .note-head{background:var(--ribbon);color:var(--card);text-align:center;padding:1rem}
+  .note-head .script{font-size:1.9rem}
+  dialog form{display:grid;gap:.9rem;padding:1.6rem 1.6rem 1.8rem;text-align:left}
+  dialog p{font-size:.95rem;color:var(--plum-soft)}
+  dialog label{font-weight:600;font-size:.85rem;letter-spacing:.06em}
+  dialog input,dialog textarea{
+    width:100%;font:inherit;color:var(--plum);background:var(--card);
+    border:1px solid var(--plum);padding:.6rem .8rem;margin-top:.3rem;
+  }
+  dialog input:focus,dialog textarea:focus{outline:2px solid var(--ribbon);outline-offset:2px}
+  dialog .row{display:flex;gap:.8rem;justify-content:flex-end;margin-top:.4rem}
+  dialog .row button{font:inherit;font-weight:600;font-size:.85rem;letter-spacing:.1em;cursor:pointer;border-radius:999px;padding:.6rem 1.4rem;border:1px solid var(--plum);background:var(--card);color:var(--plum)}
+  dialog .row button[type=submit]{background:var(--ribbon);color:var(--card);border-color:var(--ribbon)}
+  dialog .row button:hover{background:var(--plum);color:var(--card);border-color:var(--plum)}
+
+  .anim .reveal{opacity:0;translate:0 22px;transition:opacity .8s cubic-bezier(.16,1,.3,1),translate .8s cubic-bezier(.16,1,.3,1)}
+  .anim .reveal.in{opacity:1;translate:0 0}
+
+  @media(prefers-reduced-motion:reduce){
+    *{transition:none !important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#"><span class="script">Cb</span><span>CHEEKY BITE · CONFECTIONER</span></a>
+  <button onclick="document.getElementById('order').showModal()">COMMISSION A BOX</button>
+</nav>
+
+<section class="hero">
+  <p class="script">boxed &amp; ribboned since breakfast</p>
+  <h1>Handled like something precious. Eaten like something irresistible.</h1>
+  <p>Character macarons, Thai look choup and buttercream bouquets — each piece piped, painted and parcelled by one confectioner, then tied shut so it survives the journey to your table. Barely.</p>
+  <figure class="boxfig reveal">
+    <div class="frame">
+      <img src="images/1782399388868.jpg" alt="Cheeky Bite character macarons styled on a blush background">
+      <span class="band-v" aria-hidden="true"></span>
+      <span class="band-h" aria-hidden="true"></span>
+      <svg class="bow" viewBox="0 0 96 60" aria-hidden="true">
+        <path d="M48 30 C 30 6, 6 10, 10 26 C 13 40, 34 38, 48 30 C 62 38, 83 40, 86 26 C 90 10, 66 6, 48 30 Z" fill="oklch(0.50 0.10 250)"/>
+        <path d="M40 32 L28 56 L38 52 L44 58 Z M56 32 L68 56 L58 52 L52 58 Z" fill="oklch(0.50 0.10 250)"/>
+        <circle cx="48" cy="30" r="7" fill="oklch(0.80 0.06 250)"/>
+      </svg>
+    </div>
+    <figcaption>BOX №1 · CONTENTS: ONE SMALL MARVEL</figcaption>
+  </figure>
+</section>
+
+<section class="contents">
+  <div class="rule" aria-hidden="true"><span class="script">contents</span></div>
+  <ul>
+    <li><b>Character macarons</b> — piped faces, resting overnight, smiling by morning</li>
+    <li><b>Look choup</b> — Thai fruit miniatures, brush-painted, jelly-glazed</li>
+    <li><b>Buttercream bouquets</b> — peonies &amp; dahlias, forty petals apiece</li>
+    <li><b>Rose pia</b> — flaky pastry beneath a crown of rose cream</li>
+  </ul>
+</section>
+
+<section class="parcels">
+  <article class="parcel reveal">
+    <div class="pic"><img src="images/1780894899980.jpg" alt="Bear and lemon character macarons in soft window light" loading="lazy"></div>
+    <div class="txt">
+      <span class="no">No. 1</span>
+      <h3>The macaron parade</h3>
+      <p>Shells rested overnight, faces piped freehand at dawn — bears with sleepy eyes, lemons mid-laugh, Decembers full of santas. Commission a cast of characters for a birthday, a favour table, or a very good Tuesday.</p>
+      <span class="keep">TRAVELS BEAUTIFULLY</span>
+    </div>
+  </article>
+  <article class="parcel reveal">
+    <div class="pic"><img src="images/1782399389465.jpg" alt="Rose pia cake crowned with sculpted pink roses" loading="lazy"></div>
+    <div class="txt">
+      <span class="no">No. 2</span>
+      <h3>The Thai collection</h3>
+      <p>Look choup from the old royal kitchens — mung bean fruit painted with a single brush — and rose pia, pastry wearing a perfume of petals. Both made in small batches and boxed while the glaze still shines.</p>
+      <span class="keep">GONE BY SUNDAY</span>
+    </div>
+  </article>
+  <article class="parcel reveal">
+    <div class="pic"><img src="images/229626.jpg" alt="Pastel bouquet cake with buttercream lilies and roses" loading="lazy"></div>
+    <div class="txt">
+      <span class="no">No. 3</span>
+      <h3>The bouquet cake</h3>
+      <p>A florist's box you can slice: peonies, dahlias and lilies piped petal by petal on a spinning nail, chilled firm, and lifted into place with warm scissors. A full day of piping before assembly begins.</p>
+      <span class="keep">WEDDINGS · SHOWERS · GRAND GESTURES</span>
+    </div>
+  </article>
+</section>
+
+<section class="interlude">
+  <p class="script">"one baker, one piping bag,<br>an unreasonable amount of patience"</p>
+  <p>There is no factory, no printer, no fondant pretending to be something it isn't. Every box that leaves this kitchen was decorated by the same two hands that tied the ribbon.</p>
+</section>
+
+<section class="counter">
+  <h2>The flower counter</h2>
+  <p>Buttercream blooms, ready to crown a cake or fill a box of their own.</p>
+  <div class="sweets">
+    <figure class="reveal"><img src="images/229617.jpg" alt="Blush and cream buttercream peonies" loading="lazy"><figcaption>peonies, blushing</figcaption></figure>
+    <figure class="reveal"><img src="images/229618.jpg" alt="Lilac buttercream roses" loading="lazy"><figcaption>roses, lilac</figcaption></figure>
+    <figure class="reveal"><img src="images/229619.jpg" alt="White buttercream dahlias" loading="lazy"><figcaption>dahlias, white</figcaption></figure>
+    <figure class="reveal"><img src="images/229501.jpg" alt="Pink blossoms still on their piping nails" loading="lazy"><figcaption>still on their nails</figcaption></figure>
+  </div>
+</section>
+
+<section class="closing">
+  <p class="script">shall I tie one shut for you?</p>
+  <p>Tell me the occasion and leave a number — I'll call you back, we'll trade a few notes, and then I'll spend a very happy day piping your box into existence.</p>
+  <button onclick="document.getElementById('order').showModal()">COMMISSION A BOX</button>
+</section>
+
+<footer>CHEEKY BITE · EVERY PETAL PIPED BY HAND · BOX №1 OF A VERY SMALL BATCH</footer>
+
+<dialog id="order" aria-labelledby="order-title">
+  <div class="note-head"><span class="script" id="order-title">the gift note</span></div>
+  <form method="dialog" onsubmit="if(this.contact.value){location.href='mailto:hello@cheekybite.example?subject=Commission — '+encodeURIComponent(this.name.value||'a mysterious admirer')+'&body='+encodeURIComponent('Contact: '+this.contact.value+'\n\n'+this.msg.value)}">
+    <p>"Call me" is enough. Leave a number or an email; the rest is optional.</p>
+    <label>Your name
+      <input name="name" type="text" autocomplete="name">
+    </label>
+    <label>Email or phone *
+      <input name="contact" type="text" required>
+    </label>
+    <label>The occasion (optional)
+      <textarea name="msg" rows="3" placeholder="a wedding in May… a box of bears… a Tuesday"></textarea>
+    </label>
+    <div class="row">
+      <button type="button" onclick="this.closest('dialog').close()">Not yet</button>
+      <button type="submit">Send the note</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  document.body.classList.add('anim');
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
+  }),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>

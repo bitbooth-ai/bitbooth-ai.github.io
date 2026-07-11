@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sunday Bite — Funnies Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  /* design-15 — The Funny Pages. The macarons have faces; let them talk.
+     Ref: Sunday-newspaper comics section × Peanuts. Halftone dots, speech
+     bubbles, a clip-out coupon. Light, loud, and in on its own joke. */
+  :root{
+    --paper: oklch(0.98 0.004 90);
+    --ink: oklch(0.21 0.02 270);
+    --soft: oklch(0.40 0.03 270);
+    --red: oklch(0.53 0.19 25);
+    --yellow: oklch(0.88 0.15 95);
+    --blue: oklch(0.68 0.11 250);
+    --pink: oklch(0.82 0.10 350);
+    --halftone: radial-gradient(oklch(0.68 0.11 250/.35) 1.2px, transparent 1.6px);
+    --z-nav: 40;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:'Patrick Hand',cursive;font-size:1.12rem;line-height:1.6;
+  }
+  h1,h2,h3{font-family:'Bangers',cursive;font-weight:400;line-height:1;letter-spacing:.02em;text-wrap:balance}
+  img{display:block;max-width:100%}
+
+  /* ---------- masthead ---------- */
+  .masthead{border-bottom:4px solid var(--ink);text-align:center;padding:1.4rem 1rem .9rem}
+  .masthead .date{display:flex;justify-content:space-between;max-width:64rem;margin:0 auto .4rem;font-size:.95rem;color:var(--soft)}
+  .masthead h1{font-size:clamp(2.6rem,8vw,5.5rem);color:var(--red)}
+  .masthead h1 span{color:var(--ink)}
+  .masthead p{color:var(--soft);font-size:1.05rem}
+  nav{
+    position:sticky;top:0;z-index:var(--z-nav);
+    display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;align-items:center;
+    background:var(--yellow);border-bottom:4px solid var(--ink);padding:.55rem 1rem;
+  }
+  nav a{font-family:'Bangers',cursive;font-size:1.15rem;color:var(--ink);text-decoration:none;letter-spacing:.04em}
+  nav a:hover{color:var(--red)}
+  nav .coupon-link{background:var(--red);color:var(--paper);border-radius:999px;padding:.2rem 1.1rem;border:2px solid var(--ink)}
+  nav .coupon-link:hover{color:var(--yellow)}
+
+  /* ---------- strips ---------- */
+  .funnies{max-width:64rem;margin:0 auto;padding:clamp(1.8rem,5vw,3.5rem) clamp(1rem,4vw,2.5rem)}
+  .strip{margin-bottom:clamp(2.6rem,6vw,4.2rem)}
+  .strip-title{display:flex;align-items:baseline;gap:.9rem;flex-wrap:wrap;margin-bottom:.9rem}
+  .strip-title h2{font-size:clamp(1.7rem,4vw,2.6rem)}
+  .strip-title small{color:var(--soft);font-size:1rem}
+  .panels{display:grid;gap:.9rem}
+  .p3{grid-template-columns:repeat(3,1fr)}
+  .p2{grid-template-columns:2fr 1fr}
+  @media(max-width:700px){.p3,.p2{grid-template-columns:1fr}}
+  .panel{
+    border:4px solid var(--ink);background:var(--paper);position:relative;
+    display:flex;flex-direction:column;
+  }
+  .panel.dots{background-image:var(--halftone);background-size:14px 14px}
+  .panel .art{position:relative;flex:1}
+  .panel .art img{width:100%;height:100%;object-fit:cover;min-height:220px}
+  .panel .caption{
+    border-top:4px solid var(--ink);background:var(--yellow);
+    padding:.45rem .8rem;font-size:1.02rem;
+  }
+  .panel .caption.blue{background:var(--blue);color:var(--ink)}
+  .panel .caption.pink{background:var(--pink);color:var(--ink)}
+
+  /* speech bubbles */
+  .bubble{
+    position:absolute;background:var(--paper);border:3px solid var(--ink);border-radius:18px;
+    padding:.35rem .9rem;font-size:1rem;line-height:1.35;max-width:24ch;
+    filter:drop-shadow(2px 2px 0 oklch(0.21 0.02 270/.25));
+  }
+  .bubble::after{
+    content:"";position:absolute;bottom:-14px;left:26px;
+    border:8px solid transparent;border-top:10px solid var(--ink);
+  }
+  .bubble::before{
+    content:"";position:absolute;bottom:-9px;left:28px;z-index:1;
+    border:6px solid transparent;border-top:8px solid var(--paper);
+  }
+  .bubble.tl{top:.8rem;left:.8rem}
+  .bubble.tr{top:.8rem;right:.8rem}
+  .bubble.tr::after{left:auto;right:26px}
+  .bubble.tr::before{left:auto;right:28px}
+
+  /* burst sticker */
+  .burst{
+    position:absolute;z-index:2;display:grid;place-items:center;text-align:center;
+    font-family:'Bangers',cursive;letter-spacing:.03em;color:var(--ink);
+    background:var(--yellow);border:3px solid var(--ink);
+    width:92px;height:92px;font-size:1.05rem;line-height:1.05;
+    clip-path:polygon(50% 0,61% 12%,76% 6%,79% 22%,95% 22%,90% 37%,100% 50%,90% 63%,95% 78%,79% 78%,76% 94%,61% 88%,50% 100%,39% 88%,24% 94%,21% 78%,5% 78%,10% 63%,0 50%,10% 37%,5% 22%,21% 22%,24% 6%,39% 12%);
+    rotate:-8deg;
+  }
+  .burst.b1{top:-18px;right:-10px}
+
+  /* ---------- interstitial ad ---------- */
+  .advert{
+    max-width:64rem;margin:0 auto clamp(2.6rem,6vw,4.2rem);
+    border:4px solid var(--ink);background:var(--pink);
+    text-align:center;padding:clamp(1.6rem,4vw,2.6rem) 1.2rem;position:relative;
+  }
+  .advert h2{font-size:clamp(1.9rem,4.6vw,3rem);color:var(--red)}
+  .advert p{max-width:50ch;margin:.5rem auto 0;color:var(--ink)}
+  .advert small{display:block;margin-top:.7rem;color:var(--soft);font-size:.9rem}
+
+  /* ---------- coupon ---------- */
+  .coupon-wrap{max-width:64rem;margin:0 auto;padding:0 clamp(1rem,4vw,2.5rem) clamp(3rem,7vw,5rem)}
+  .coupon{
+    border:4px dashed var(--ink);background:var(--paper);
+    max-width:36rem;margin:0 auto;padding:clamp(1.6rem,4.5vw,2.6rem);position:relative;
+  }
+  .coupon .scissors{position:absolute;top:-1.05rem;left:2rem;background:var(--paper);padding:0 .5rem;font-size:1.3rem}
+  .coupon h2{font-size:clamp(1.9rem,4.6vw,2.8rem);color:var(--red);text-align:center}
+  .coupon>p{text-align:center;color:var(--soft);margin:.5rem 0 1.3rem}
+  .coupon form{display:grid;gap:.85rem}
+  .coupon label{font-size:1.05rem}
+  .coupon input,.coupon textarea{
+    width:100%;font:inherit;color:var(--ink);background:var(--paper);
+    border:3px solid var(--ink);padding:.55rem .8rem;margin-top:.2rem;border-radius:8px;
+  }
+  .coupon input:focus,.coupon textarea:focus{outline:3px solid var(--blue);outline-offset:2px}
+  .coupon button{
+    font-family:'Bangers',cursive;font-size:1.35rem;letter-spacing:.04em;cursor:pointer;
+    background:var(--red);color:var(--paper);border:3px solid var(--ink);border-radius:12px;
+    padding:.7rem 1.4rem;margin-top:.3rem;box-shadow:4px 4px 0 var(--ink);
+    transition:transform .15s cubic-bezier(.16,1,.3,1),box-shadow .15s cubic-bezier(.16,1,.3,1);
+  }
+  .coupon button:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+  .coupon small{display:block;text-align:center;color:var(--soft);margin-top:.8rem}
+
+  footer{
+    border-top:4px solid var(--ink);text-align:center;
+    padding:1.6rem 1rem;color:var(--soft);font-size:1rem;
+  }
+  footer b{color:var(--ink)}
+
+  .anim .reveal{opacity:0;translate:0 20px;transition:opacity .55s cubic-bezier(.16,1,.3,1),translate .55s cubic-bezier(.16,1,.3,1)}
+  .anim .reveal.in{opacity:1;translate:0 0}
+
+  @media(prefers-reduced-motion:reduce){
+    *{transition:none !important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="date"><span>SUNDAY EDITION</span><span>PRICE: ONE SMILE</span></div>
+  <h1>THE SUNDAY <span>BITE</span></h1>
+  <p>The only newspaper where every character is edible. · funnies section, page 1 of 1</p>
+</header>
+
+<nav>
+  <a href="#strip1">The Macaron Gang</a>
+  <a href="#strip2">Meanwhile…</a>
+  <a href="#strip3">The Flower Heist</a>
+  <a class="coupon-link" href="#coupon">✂ Clip the coupon</a>
+</nav>
+
+<main class="funnies">
+
+  <section class="strip" id="strip1">
+    <div class="strip-title reveal">
+      <h2>THE MACARON GANG</h2>
+      <small>by the baker at Cheeky Bite · appears weekly, disappears faster</small>
+    </div>
+    <div class="panels p3">
+      <div class="panel reveal">
+        <div class="art">
+          <span class="bubble tl">We're too cute to eat, right?</span>
+          <img src="images/1780894899980.jpg" alt="Bear and lemon character macarons looking up from a plate">
+        </div>
+        <p class="caption">Panel 1: The gang makes its case.</p>
+      </div>
+      <div class="panel reveal">
+        <div class="art">
+          <span class="bubble tr">…right?</span>
+          <img src="images/1782399388868.jpg" alt="Styled shot of the character macarons on a blush background" loading="lazy">
+        </div>
+        <p class="caption pink">Panel 2: Silence. Suspicious crumbs.</p>
+      </div>
+      <div class="panel dots reveal">
+        <div class="art">
+          <span class="burst b1">FRESH<br>BATCH!</span>
+          <img src="images/1782399389268.jpg" alt="A December parade of santa and snowman macarons" loading="lazy">
+        </div>
+        <p class="caption blue">Panel 3: Reinforcements arrive every Friday.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="strip" id="strip2">
+    <div class="strip-title reveal">
+      <h2>MEANWHILE, AT HEADQUARTERS…</h2>
+      <small>an origin story in two panels</small>
+    </div>
+    <div class="panels p2">
+      <div class="panel reveal">
+        <div class="art">
+          <img src="images/1783770350417.jpg" alt="Hands piping tiny faces onto rows of macaron shells" loading="lazy">
+        </div>
+        <p class="caption">Every face in this newspaper is piped freehand by one baker. No printers. No moulds. No fondant lies.</p>
+      </div>
+      <div class="panel dots reveal">
+        <div class="art">
+          <span class="bubble tl">One of us gets a moustache today.</span>
+          <img src="images/1782399389414.jpg" alt="Look choup — tiny glossy fruit-shaped sweets" loading="lazy">
+        </div>
+        <p class="caption pink">The Thai cousins drop in: look choup, fruit on the outside, mung bean mischief inside.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="advert reveal">
+    <h2>★ ADVERTISEMENT ★</h2>
+    <p>ROSE PIA CAKE — pastry that smells like a garden and vanishes like a rumour. Also available: blueberry roulade, summer's official dessert.</p>
+    <small>paid for by the committee to eat more flowers</small>
+  </div>
+
+  <section class="strip" id="strip3">
+    <div class="strip-title reveal">
+      <h2>THE GREAT FLOWER HEIST</h2>
+      <small>in which nobody believes the flowers are frosting</small>
+    </div>
+    <div class="panels p3">
+      <div class="panel reveal">
+        <div class="art">
+          <img src="images/229617.jpg" alt="Blush pink and cream buttercream peonies" loading="lazy">
+        </div>
+        <p class="caption">Exhibit A: peonies. Buttercream. All of them.</p>
+      </div>
+      <div class="panel reveal">
+        <div class="art">
+          <img src="images/229619.jpg" alt="White buttercream dahlias" loading="lazy">
+        </div>
+        <p class="caption blue">Exhibit B: forty petals per dahlia. Piped. By hand.</p>
+      </div>
+      <div class="panel reveal">
+        <div class="art">
+          <span class="bubble tr">Cut me. I dare you.</span>
+          <img src="images/229625.jpg" alt="Square bouquet-box cake bursting with buttercream flowers" loading="lazy">
+        </div>
+        <p class="caption pink">Final panel: the bouquet cake wins the standoff. It always does.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="coupon-wrap" id="coupon">
+  <div class="coupon reveal">
+    <span class="scissors" aria-hidden="true">✂</span>
+    <h2>CLIP THIS COUPON</h2>
+    <p>Redeemable for one phone call from an actual baker. Leave a number; the funny pages handle the rest.</p>
+    <form onsubmit="event.preventDefault();const f=this;location.href='mailto:hello@cheekybite.example?subject=Coupon redeemed — '+encodeURIComponent(f.name.value||'loyal reader')+'&body='+encodeURIComponent('Contact: '+f.contact.value+'\n\n'+f.msg.value)">
+      <label>Name
+        <input name="name" type="text" placeholder="loyal reader" autocomplete="name">
+      </label>
+      <label>Email or phone *
+        <input name="contact" type="text" placeholder="where the call goes" required>
+      </label>
+      <label>Your order (optional)
+        <textarea name="msg" rows="3" placeholder="the macaron gang, one flower heist cake, extra santas…"></textarea>
+      </label>
+      <button type="submit">REDEEM! →</button>
+    </form>
+    <small>offer valid while batches last · one baker · zero robots</small>
+  </div>
+</div>
+
+<footer><b>THE SUNDAY BITE</b> · published from a kitchen in a good mood · all characters were eaten shortly after printing</footer>
+
+<script>
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  document.body.classList.add('anim');
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
+  }),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>

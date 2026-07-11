@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheeky Bite — Baked While You Slept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  /* design-11 — Butter & Sun. Lemonade-stand yellow drench.
+     Ref: Mailchimp-yellow commitment × a kid's lemonade stand on a June morning. */
+  :root{
+    --sun: oklch(0.90 0.15 95);
+    --sun-deep: oklch(0.82 0.16 88);
+    --cocoa: oklch(0.30 0.06 60);
+    --cocoa-soft: oklch(0.42 0.06 60);
+    --milk: oklch(0.99 0.005 95);
+    --peach: oklch(0.88 0.08 55);
+    --berry: oklch(0.58 0.19 10);
+    --z-nav: 40;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--sun);color:var(--cocoa);
+    font-family:'Baloo 2',sans-serif;font-weight:400;line-height:1.65;
+  }
+  h1,h2,h3{font-weight:800;line-height:1.05;text-wrap:balance}
+  img{display:block;max-width:100%}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky;top:0;z-index:var(--z-nav);
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    background:var(--milk);border-bottom:3px solid var(--cocoa);
+    padding:.7rem clamp(1rem,4vw,2.5rem);
+  }
+  .logo{font-weight:800;font-size:1.35rem;color:var(--cocoa);text-decoration:none}
+  .logo .dot{color:var(--berry)}
+  nav .order{
+    background:var(--cocoa);color:var(--sun);text-decoration:none;
+    font-weight:800;padding:.5rem 1.5rem;border-radius:999px;font-size:1rem;
+    transition:background .2s cubic-bezier(.16,1,.3,1),transform .2s cubic-bezier(.16,1,.3,1);
+  }
+  nav .order:hover{background:var(--berry);color:var(--milk);transform:scale(1.05)}
+
+  /* ---------- hero ---------- */
+  .hero{
+    max-width:74rem;margin:0 auto;
+    display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,4rem);align-items:center;
+    padding:clamp(2.5rem,7vw,5.5rem) clamp(1.2rem,4vw,3rem);
+  }
+  .hero h1{font-size:clamp(2.7rem,7vw,5.2rem)}
+  .hero h1 em{font-style:normal;color:var(--berry)}
+  .hero p{font-size:clamp(1.05rem,1.5vw,1.25rem);font-weight:600;max-width:42ch;margin-top:1.3rem;color:var(--cocoa-soft)}
+  .hero-btns{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2rem}
+  .btn{
+    font-weight:800;text-decoration:none;font-size:1.05rem;
+    padding:.8rem 1.9rem;border-radius:999px;display:inline-block;
+    transition:transform .2s cubic-bezier(.16,1,.3,1),background .2s;
+  }
+  .btn:hover{transform:translateY(-3px)}
+  .btn-dark{background:var(--cocoa);color:var(--sun)}
+  .btn-dark:hover{background:var(--berry);color:var(--milk)}
+  .btn-line{border:3px solid var(--cocoa);color:var(--cocoa)}
+  .btn-line:hover{background:var(--milk)}
+  .sunwrap{position:relative;display:grid;place-items:center}
+  .rays{position:absolute;inset:-14%;animation:spin 70s linear infinite}
+  .hero-img{
+    position:relative;width:min(100%,26rem);
+    border:4px solid var(--cocoa);border-radius:999px 999px 24px 24px;
+    overflow:hidden;background:var(--milk);
+  }
+  .hero-img img{width:100%;aspect-ratio:4/5;object-fit:cover}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media(max-width:840px){
+    .hero{grid-template-columns:1fr}
+    .sunwrap{order:-1}
+    .hero-img{width:min(100%,20rem)}
+    .rays{inset:-8%}
+  }
+
+  /* ---------- scallop divider (piped frosting edge) ---------- */
+  .scallop{display:block;width:100%;height:34px}
+
+  /* ---------- today's table: alternating rows ---------- */
+  .table{background:var(--milk);padding:clamp(2.5rem,6vw,5rem) clamp(1.2rem,4vw,3rem) clamp(3rem,7vw,6rem)}
+  .table-head{max-width:70rem;margin:0 auto 3rem;text-align:center}
+  .table-head h2{font-size:clamp(2rem,5vw,3.4rem)}
+  .table-head p{font-weight:600;color:var(--cocoa-soft);max-width:50ch;margin:.6rem auto 0}
+  .row{
+    max-width:66rem;margin:0 auto clamp(2.5rem,6vw,4.5rem);
+    display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:clamp(1.5rem,4vw,3.5rem);
+    align-items:center;
+  }
+  .row:nth-of-type(even) .pic{order:2}
+  .row .pic img{
+    width:100%;aspect-ratio:5/4;object-fit:cover;
+    border:4px solid var(--cocoa);border-radius:999px 24px 999px 24px;
+  }
+  .row:nth-of-type(even) .pic img{border-radius:24px 999px 24px 999px}
+  .row h3{font-size:clamp(1.6rem,3.2vw,2.3rem)}
+  .row .price{
+    display:inline-block;background:var(--sun);border-radius:999px;
+    font-weight:800;font-size:.95rem;padding:.25rem 1rem;margin-bottom:.8rem;
+    transform:rotate(-2deg);
+  }
+  .row p{font-weight:600;color:var(--cocoa-soft);max-width:48ch;margin-top:.6rem}
+  @media(max-width:760px){
+    .row{grid-template-columns:1fr}
+    .row:nth-of-type(even) .pic{order:0}
+    .row .pic img{aspect-ratio:16/10}
+  }
+
+  /* ---------- squeeze quote band ---------- */
+  .squeeze{background:var(--peach);text-align:center;padding:clamp(3rem,8vw,5.5rem) clamp(1.2rem,4vw,3rem)}
+  .squeeze h2{font-size:clamp(1.9rem,4.6vw,3.4rem);max-width:24ch;margin:0 auto}
+  .squeeze h2 em{font-style:normal;color:var(--berry)}
+  .squeeze p{font-weight:600;color:var(--cocoa-soft);max-width:52ch;margin:1rem auto 0}
+
+  /* ---------- workshop ---------- */
+  .stand{
+    max-width:74rem;margin:0 auto;
+    display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center;
+    padding:clamp(3rem,7vw,5.5rem) clamp(1.2rem,4vw,3rem);
+  }
+  .stand img{width:100%;aspect-ratio:4/3;object-fit:cover;border:4px solid var(--cocoa);border-radius:24px}
+  .stand h2{font-size:clamp(1.9rem,4.2vw,3rem)}
+  .stand p{font-weight:600;color:var(--cocoa-soft);margin-top:.9rem;max-width:46ch}
+  @media(max-width:760px){.stand{grid-template-columns:1fr}}
+
+  /* ---------- order form ---------- */
+  .order-sec{background:var(--milk);padding:clamp(3rem,7vw,5.5rem) clamp(1.2rem,4vw,3rem)}
+  .order-card{
+    max-width:34rem;margin:0 auto;text-align:center;
+    border:4px solid var(--cocoa);border-radius:28px;background:var(--sun);
+    padding:clamp(1.8rem,5vw,3rem);
+  }
+  .order-card h2{font-size:clamp(1.9rem,4.5vw,2.8rem)}
+  .order-card>p{font-weight:600;color:var(--cocoa-soft);margin:.6rem 0 1.5rem}
+  .order-card form{display:grid;gap:.9rem;text-align:left}
+  .order-card label{font-weight:800;font-size:.95rem}
+  .order-card input,.order-card textarea{
+    width:100%;font:inherit;font-weight:600;color:var(--cocoa);
+    background:var(--milk);border:3px solid var(--cocoa);border-radius:14px;
+    padding:.65rem .9rem;margin-top:.25rem;
+  }
+  .order-card input::placeholder,.order-card textarea::placeholder{color:var(--cocoa-soft)}
+  .order-card input:focus,.order-card textarea:focus{outline:3px solid var(--berry);outline-offset:2px}
+  .order-card button{
+    font:inherit;font-weight:800;font-size:1.1rem;cursor:pointer;
+    background:var(--cocoa);color:var(--sun);border:none;border-radius:999px;
+    padding:.85rem 1.5rem;margin-top:.3rem;
+    transition:background .2s,transform .2s cubic-bezier(.16,1,.3,1);
+  }
+  .order-card button:hover{background:var(--berry);color:var(--milk);transform:translateY(-2px)}
+  .order-card small{display:block;font-weight:600;color:var(--cocoa-soft);margin-top:.9rem}
+
+  footer{
+    text-align:center;padding:2.2rem 1rem;font-weight:600;color:var(--cocoa);
+  }
+
+  /* ---------- reveal (enhances an already-visible default) ---------- */
+  .anim .reveal{opacity:0;translate:0 26px;transition:opacity .7s cubic-bezier(.16,1,.3,1),translate .7s cubic-bezier(.16,1,.3,1)}
+  .anim .reveal.in{opacity:1;translate:0 0}
+
+  @media(prefers-reduced-motion:reduce){
+    .rays{animation:none}
+    *{transition:none !important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#">Cheeky Bite<span class="dot"> ●</span></a>
+  <a class="order" href="#order">Order — I'll call you</a>
+</nav>
+
+<section class="hero">
+  <div>
+    <h1>Baked while you slept. <em>Gone by noon.</em></h1>
+    <p>Character macarons, Thai look choup, and buttercream flowers — small batches from one very sunny kitchen. Set your alarm.</p>
+    <div class="hero-btns">
+      <a class="btn btn-dark" href="#table">Today's table</a>
+      <a class="btn btn-line" href="#order">Reserve a box</a>
+    </div>
+  </div>
+  <div class="sunwrap">
+    <svg class="rays" viewBox="0 0 200 200" aria-hidden="true">
+      <g fill="oklch(0.82 0.16 88)">
+        <path d="M100 0 l7 34 -14 0 z"/><path d="M100 200 l7 -34 -14 0 z"/>
+        <path d="M0 100 l34 7 0 -14 z"/><path d="M200 100 l-34 7 0 -14 z"/>
+        <path d="M29 29 l29 20 -10 10 z"/><path d="M171 171 l-29 -20 10 -10 z"/>
+        <path d="M171 29 l-20 29 -10 -10 z"/><path d="M29 171 l20 -29 10 10 z"/>
+        <path d="M63 8 l17 30 -13 5 z"/><path d="M137 192 l-17 -30 13 -5 z"/>
+        <path d="M8 63 l30 17 -5 13 z"/><path d="M192 137 l-30 -17 5 -13 z"/>
+        <path d="M137 8 l-4 34 -13 -5 z"/><path d="M63 192 l4 -34 13 5 z"/>
+        <path d="M8 137 l34 -4 -5 13 z"/><path d="M192 63 l-34 4 5 -13 z"/>
+      </g>
+    </svg>
+    <figure class="hero-img">
+      <img src="images/1780894899980.jpg" alt="Bear and lemon character macarons catching the morning window light">
+    </figure>
+  </div>
+</section>
+
+<svg class="scallop" viewBox="0 0 1200 34" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M0,34 L0,17 Q30,0 60,17 Q90,34 120,17 Q150,0 180,17 Q210,34 240,17 Q270,0 300,17 Q330,34 360,17 Q390,0 420,17 Q450,34 480,17 Q510,0 540,17 Q570,34 600,17 Q630,0 660,17 Q690,34 720,17 Q750,0 780,17 Q810,34 840,17 Q870,0 900,17 Q930,34 960,17 Q990,0 1020,17 Q1050,34 1080,17 Q1110,0 1140,17 Q1170,34 1200,17 L1200,34 Z" fill="oklch(0.99 0.005 95)"/>
+</svg>
+
+<section class="table" id="table">
+  <div class="table-head reveal">
+    <h2>What's on the table today</h2>
+    <p>Everything below is real, recent, and made by the same two hands. Prices are "ask me" prices — every batch is a little different.</p>
+  </div>
+
+  <div class="row reveal">
+    <div class="pic"><img src="images/1782399389268.jpg" alt="A parade of Christmas character macarons — santas, snowmen, sprinkle trees" loading="lazy"></div>
+    <div>
+      <span class="price">the crowd-pleaser</span>
+      <h3>Character macarons</h3>
+      <p>Bears, lemons, santas, or whoever your birthday kid loves this month. Faces piped freehand, no two alike, all of them slightly too cute to bite. Bite anyway.</p>
+    </div>
+  </div>
+
+  <div class="row reveal">
+    <div class="pic"><img src="images/1782399389414.jpg" alt="Look choup — glossy fruit-shaped mung bean sweets piled on a plate" loading="lazy"></div>
+    <div>
+      <span class="price">the thai classic</span>
+      <h3>Look choup</h3>
+      <p>Miniature fruit sculpted from sweet mung bean and dipped in shine — a royal Thai craft made the slow way. A fruit stall you can finish in one sitting.</p>
+    </div>
+  </div>
+
+  <div class="row reveal">
+    <div class="pic"><img src="images/229626.jpg" alt="Bouquet cake overflowing with pastel buttercream lilies and roses" loading="lazy"></div>
+    <div>
+      <span class="price">the showstopper</span>
+      <h3>Bouquet cakes</h3>
+      <p>A florist's armful of peonies, dahlias and lilies — every petal is buttercream, piped one flick at a time. Guests will argue about cutting it. Let them.</p>
+    </div>
+  </div>
+
+  <div class="row reveal">
+    <div class="pic"><img src="images/1782399389340.jpg" alt="Blueberry roulade — soft meringue rolled around cream and tart berries" loading="lazy"></div>
+    <div>
+      <span class="price">the summer one</span>
+      <h3>Blueberry roulade</h3>
+      <p>Cloud-soft meringue, tart berries, cold cream. The dessert equivalent of sitting in the shade with your shoes off.</p>
+    </div>
+  </div>
+</section>
+
+<section class="squeeze">
+  <h2 class="reveal">One baker. One piping bag. <em>Zero shortcuts.</em></h2>
+  <p class="reveal">No moulds, no printers, no factory anything. If it has a face, a petal, or a shine — it was done by hand, that morning, probably before you woke up.</p>
+</section>
+
+<section class="stand">
+  <img class="reveal" src="images/1783770350417.jpg" alt="Hands piping tiny faces onto rows of macaron shells" loading="lazy">
+  <div class="reveal">
+    <h2>Come see the stand</h2>
+    <p>Baking days are open days. Watch a blob of buttercream become a dahlia in forty flicks, or book a seat at a piping workshop and leave with frosting on your sleeves and flowers in a box.</p>
+    <a class="btn btn-dark" href="#order" style="margin-top:1.5rem">Ask about workshops</a>
+  </div>
+</section>
+
+<svg class="scallop" viewBox="0 0 1200 34" preserveAspectRatio="none" style="transform:scaleY(-1)" aria-hidden="true">
+  <path d="M0,34 L0,17 Q30,0 60,17 Q90,34 120,17 Q150,0 180,17 Q210,34 240,17 Q270,0 300,17 Q330,34 360,17 Q390,0 420,17 Q450,34 480,17 Q510,0 540,17 Q570,34 600,17 Q630,0 660,17 Q690,34 720,17 Q750,0 780,17 Q810,34 840,17 Q870,0 900,17 Q930,34 960,17 Q990,0 1020,17 Q1050,34 1080,17 Q1110,0 1140,17 Q1170,34 1200,17 L1200,34 Z" fill="oklch(0.99 0.005 95)"/>
+</svg>
+
+<section class="order-sec" id="order">
+  <div class="order-card reveal">
+    <h2>Reserve a box</h2>
+    <p>Leave a number and I'll call you back — usually the same day, always before the batch sells out.</p>
+    <form onsubmit="event.preventDefault();const f=this;location.href='mailto:hello@cheekybite.example?subject=Order from '+encodeURIComponent(f.name.value||'a hungry person')+'&body='+encodeURIComponent('Contact: '+f.contact.value+'\n\n'+f.msg.value)">
+      <label>Your name
+        <input name="name" type="text" placeholder="Somchai / Sophie / Sam" autocomplete="name">
+      </label>
+      <label>Email or phone <span aria-hidden="true">*</span>
+        <input name="contact" type="text" placeholder="so I can reach you" required autocomplete="tel">
+      </label>
+      <label>What are you dreaming of? <span style="font-weight:600">(optional)</span>
+        <textarea name="msg" rows="3" placeholder="a bear macaron army? a peony cake? surprise me?"></textarea>
+      </label>
+      <button type="submit">Call me back ☀</button>
+    </form>
+    <small>No forms-of-doom here — "call me" is genuinely enough.</small>
+  </div>
+</section>
+
+<footer>Cheeky Bite · baked at sunrise, gone by noon · every face piped by hand</footer>
+
+<script>
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  document.body.classList.add('anim');
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
+  }),{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>
