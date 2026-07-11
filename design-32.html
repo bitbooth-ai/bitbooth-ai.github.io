@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheeky Bite — The Flying Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{--mist:#FAF3F0;--ink:#4B3A40;--rose:#DE8CA1;--gold:#C19B56}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--mist);color:var(--ink);font-family:'Cormorant Garamond',serif;overflow-x:hidden}
+  #sky{position:fixed;inset:0}
+  .spacer{height:640vh;pointer-events:none}
+  .mark{position:fixed;top:1.5rem;left:0;right:0;text-align:center;z-index:5;pointer-events:none;
+    font-size:clamp(1.4rem,4vw,2rem);font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+  .mark em{font-style:italic;color:var(--rose);text-transform:none;letter-spacing:.02em}
+  .hint{position:fixed;bottom:1.6rem;left:0;right:0;text-align:center;z-index:5;pointer-events:none;
+    font-style:italic;font-size:1.05rem;opacity:.6;transition:opacity .6s}
+  .hint.hide{opacity:0}
+  .cta{position:fixed;inset:0;display:grid;place-items:center;z-index:6;opacity:0;pointer-events:none;
+    transition:opacity 1s ease}
+  .cta.show{opacity:1;pointer-events:auto}
+  .cta .inner{text-align:center}
+  .cta p{font-style:italic;font-size:clamp(1.3rem,4vw,1.9rem);margin-bottom:1.4rem}
+  .cta button{border:1px solid var(--gold);cursor:pointer;background:rgba(255,253,248,.9);color:var(--ink);
+    font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;
+    padding:1rem 2.8rem;border-radius:999px;box-shadow:0 20px 46px -20px rgba(75,58,64,.5);
+    transition:transform .35s cubic-bezier(.34,1.56,.64,1),background .3s,color .3s}
+  .cta button:hover{transform:scale(1.05);background:var(--ink);color:var(--mist)}
+  dialog{border:none;border-radius:1.2rem;padding:2.2rem 2rem;max-width:22rem;width:calc(100vw - 2.4rem);
+    background:#FFFDF8;color:var(--ink);box-shadow:0 30px 80px -30px rgba(75,58,64,.6)}
+  dialog::backdrop{background:rgba(75,58,64,.35);backdrop-filter:blur(3px)}
+  dialog h2{font-weight:500;font-size:1.5rem;margin-bottom:.2rem}
+  dialog p{font-style:italic;font-size:1rem;opacity:.75;margin-bottom:1.2rem}
+  .f{margin-bottom:1.1rem}
+  .f label{display:block;font-family:system-ui,sans-serif;font-size:.62rem;letter-spacing:.28em;
+    text-transform:uppercase;opacity:.6;margin-bottom:.3rem}
+  .f label .req{color:var(--rose)}
+  .f input,.f textarea{width:100%;border:none;border-bottom:1px solid rgba(75,58,64,.3);background:transparent;
+    font-family:'Cormorant Garamond',serif;font-size:1.15rem;padding:.3rem 0;color:var(--ink);border-radius:0}
+  .f input:focus,.f textarea:focus{outline:none;border-bottom-color:var(--rose)}
+  .row{display:flex;gap:.7rem;margin-top:1.4rem}
+  .row button{flex:1;border:none;cursor:pointer;border-radius:999px;padding:.85rem;
+    font-family:'Cormorant Garamond',serif;font-size:1.05rem}
+  .row .ok{background:var(--ink);color:var(--mist)}
+  .row .ok:hover{background:var(--rose)}
+  .row .no{background:transparent;color:var(--ink);border:1px solid rgba(75,58,64,.3)}
+  .thanks{display:none;text-align:center;font-style:italic;font-size:1.2rem;padding:.6rem 0;color:var(--rose)}
+  .thanks.show{display:block}
+  .fallback{position:fixed;inset:0;display:none;place-items:center;text-align:center;padding:2rem;z-index:4;font-style:italic}
+  .fallback.show{display:grid}
+</style>
+</head>
+<body>
+
+<canvas id="sky" aria-label="A slow flight through floating framed photographs of handmade sweets"></canvas>
+<div class="spacer" aria-hidden="true"></div>
+
+<p class="mark">Cheeky <em>Bite</em></p>
+<p class="hint" id="hint">scroll to drift ↓</p>
+
+<div class="cta" id="cta">
+  <div class="inner">
+    <p>every piece, by one pair of hands</p>
+    <button id="openOrder">call me back</button>
+  </div>
+</div>
+
+<div class="fallback" id="fallback"><p>This piece needs WebGL — please try a newer browser.</p></div>
+
+<dialog id="orderDlg">
+  <form id="orderForm" method="dialog" novalidate>
+    <h2>Land softly.</h2>
+    <p>Leave your details; the baker calls you back.</p>
+    <div class="f"><label for="c-name">Name</label><input id="c-name" type="text" autocomplete="name"></div>
+    <div class="f"><label for="c-email">Email <span class="req">*</span></label><input id="c-email" type="email" autocomplete="email"></div>
+    <div class="f"><label for="c-phone">Phone <span class="req">*</span></label><input id="c-phone" type="tel" autocomplete="tel"></div>
+    <div class="f"><label for="c-msg">Occasion (optional)</label><textarea id="c-msg" rows="2"></textarea></div>
+    <p class="thanks" id="thanks">Received — expect a very sweet phone call.</p>
+    <div class="row" id="btnRow">
+      <button type="button" class="no" id="closeDlg">keep flying</button>
+      <button type="submit" class="ok">call me</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  'use strict';
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canvas = document.getElementById('sky');
+  if(!window.THREE){ document.getElementById('fallback').classList.add('show'); return; }
+  var renderer;
+  try{ renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true}); }
+  catch(e){ document.getElementById('fallback').classList.add('show'); return; }
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xFAF3F0);
+  scene.fog = new THREE.Fog(0xFAF3F0, 4, 17);
+
+  var camera = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, .1, 100);
+  camera.position.set(0, 0, 5);
+  scene.add(new THREE.AmbientLight(0xffffff, 1));
+
+  var IMGS = [
+    'images/1782399388868.jpg','images/1780894899980.jpg','images/229617.jpg',
+    'images/1782399389414.jpg','images/229618.jpg','images/1782399389465.jpg',
+    'images/1783770350417.jpg','images/229626.jpg','images/1782399389340.jpg',
+    'images/229619.jpg','images/229625.jpg','images/229500.jpg'
+  ];
+  var GAP = 5.2, loader = new THREE.TextureLoader();
+  var floaters = [];
+
+  IMGS.forEach(function(url, i){
+    var group = new THREE.Group();
+    var side = (i % 2 === 0) ? -1 : 1;
+    var bx = side * (1.7 + (i*37 % 10)/10 * 1.1);
+    var by = ((i*53 % 9)/9 - .5) * 2.2;
+    group.position.set(bx, by, -6 - i*GAP);
+    group.rotation.z = ((i*29 % 7)/7 - .5) * .16;
+    group.rotation.y = side * .28;
+
+    var frame = new THREE.Mesh(
+      new THREE.PlaneGeometry(1,1),
+      new THREE.MeshBasicMaterial({color:0xFFFDF8, side:THREE.DoubleSide}));
+    frame.scale.set(2.6, 2.6, 1);
+    group.add(frame);
+    var photo = new THREE.Mesh(
+      new THREE.PlaneGeometry(1,1),
+      new THREE.MeshBasicMaterial({color:0xffffff, side:THREE.DoubleSide}));
+    photo.position.z = .012;
+    photo.scale.set(2.38, 2.38, 1);
+    group.add(photo);
+    loader.load(url, function(tex){
+      tex.encoding = THREE.sRGBEncoding;
+      var asp = tex.image.width / tex.image.height;
+      if(asp >= 1){ photo.scale.set(2.38, 2.38/asp, 1); frame.scale.set(2.6, 2.6/asp + .1, 1); }
+      else        { photo.scale.set(2.38*asp, 2.38, 1); frame.scale.set(2.6*asp + .1, 2.6, 1); }
+      photo.material.map = tex; photo.material.needsUpdate = true;
+    });
+    group.userData = { baseY: by, phase: i * 1.7, spinZ: group.rotation.z };
+    scene.add(group); floaters.push(group);
+  });
+
+  // pastel drifting orbs for atmosphere
+  var ORBS = [0xF7C8D8, 0xF7E1A8, 0xCFE8D8, 0xDCCBEE, 0xC9DCEF];
+  var orbs = [];
+  for(var o = 0; o < 26; o++){
+    var orb = new THREE.Mesh(
+      new THREE.SphereGeometry(.1 + (o*31 % 10)/10 * .22, 16, 12),
+      new THREE.MeshBasicMaterial({color:ORBS[o % ORBS.length], transparent:true, opacity:.55}));
+    orb.position.set(((o*17 % 12)/12 - .5)*9, ((o*23 % 11)/11 - .5)*5, -3 - (o*41 % 60));
+    orb.userData = { phase: o * .9, amp: .3 + (o*13 % 5)/10 };
+    scene.add(orb); orbs.push(orb);
+  }
+
+  var depth = 6 + (IMGS.length - 1) * GAP + 4;
+  var scrollP = 0;
+  function readScroll(){
+    var max = document.documentElement.scrollHeight - innerHeight;
+    scrollP = max > 0 ? Math.min(1, Math.max(0, scrollY/max)) : 0;
+  }
+  addEventListener('scroll', readScroll, {passive:true});
+  readScroll();
+
+  // pointer parallax
+  var px = 0, py = 0;
+  addEventListener('pointermove', function(e){
+    px = (e.clientX/innerWidth - .5);
+    py = (e.clientY/innerHeight - .5);
+  }, {passive:true});
+
+  var cta = document.getElementById('cta'), hint = document.getElementById('hint');
+  var t = 0, clock = new THREE.Clock();
+
+  function frame(){
+    requestAnimationFrame(frame);
+    var dt = Math.min(clock.getDelta(), .05);
+    t += dt;
+
+    var targetZ = 5 - scrollP * depth;
+    var k = reduced ? 1 : .07;
+    camera.position.z += (targetZ - camera.position.z) * k;
+    camera.position.x += (px * .9 - camera.position.x) * (reduced ? 1 : .05);
+    camera.position.y += (-py * .6 - camera.position.y) * (reduced ? 1 : .05);
+    camera.lookAt(camera.position.x * .3, camera.position.y * .3, camera.position.z - 6);
+
+    if(!reduced){
+      floaters.forEach(function(g){
+        g.position.y = g.userData.baseY + Math.sin(t * .7 + g.userData.phase) * .14;
+        g.rotation.z = g.userData.spinZ + Math.sin(t * .5 + g.userData.phase) * .03;
+      });
+      orbs.forEach(function(orb){
+        orb.position.y += Math.sin(t * .6 + orb.userData.phase) * .002 * orb.userData.amp * 10;
+        orb.position.x += Math.cos(t * .4 + orb.userData.phase) * .001;
+      });
+    }
+
+    if(scrollP > .93){ cta.classList.add('show'); } else { cta.classList.remove('show'); }
+    if(scrollP > .03){ hint.classList.add('hide'); }
+
+    renderer.setSize(innerWidth, innerHeight, false);
+    camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+    renderer.render(scene, camera);
+  }
+  frame();
+
+  var dlg = document.getElementById('orderDlg');
+  document.getElementById('openOrder').addEventListener('click', function(){ dlg.showModal(); });
+  document.getElementById('closeDlg').addEventListener('click', function(){ dlg.close(); });
+  document.getElementById('orderForm').addEventListener('submit', function(e){
+    var em = document.getElementById('c-email'), ph = document.getElementById('c-phone');
+    if(!em.value.trim() || !ph.value.trim()){ e.preventDefault(); (em.value?ph:em).focus(); return; }
+    e.preventDefault();
+    document.getElementById('btnRow').style.display = 'none';
+    document.getElementById('thanks').classList.add('show');
+    setTimeout(function(){ dlg.close(); }, 2200);
+  });
+})();
+</script>
+</body>
+</html>

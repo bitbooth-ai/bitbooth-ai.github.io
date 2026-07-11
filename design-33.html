@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheeky Bite — Sugar Drift</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--air:#FFF6F0;--ink:#4C3A3E;--pink:#EE8AA6;--butter:#F6C95C}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:
+      radial-gradient(60vw 60vw at 15% 10%, #FFEDF3 0%, transparent 60%),
+      radial-gradient(50vw 50vw at 85% 85%, #FFF3DC 0%, transparent 60%),
+      var(--air);
+    color:var(--ink);font-family:'Quicksand',sans-serif;overflow-x:hidden}
+  .spacer{pointer-events:none}
+  .stage{position:fixed;inset:0;overflow:hidden}
+  .card{position:absolute;left:0;top:0;width:min(36vw,300px);border-radius:1rem;
+    background:#fff;padding:.55rem .55rem 1rem;box-shadow:0 18px 44px -20px rgba(76,58,62,.45);
+    cursor:grab;touch-action:none;will-change:transform;user-select:none;-webkit-user-select:none}
+  .card:active{cursor:grabbing}
+  .card .bob{border-radius:.6rem;overflow:hidden}
+  .card img{display:block;width:100%;pointer-events:none;-webkit-user-drag:none}
+  @media(max-width:560px){.card{width:52vw}}
+  .mark{position:fixed;top:1.4rem;left:0;right:0;text-align:center;z-index:40;pointer-events:none;
+    font-weight:600;font-size:clamp(1.25rem,4vw,1.7rem);letter-spacing:.02em}
+  .mark em{font-style:normal;color:var(--pink)}
+  .hint{position:fixed;bottom:1.5rem;left:0;right:0;text-align:center;z-index:40;pointer-events:none;
+    font-size:.9rem;opacity:.6;transition:opacity .6s}
+  .hint.hide{opacity:0}
+  .cta{position:fixed;inset:0;display:grid;place-items:center;z-index:45;opacity:0;pointer-events:none;
+    transition:opacity .8s ease}
+  .cta.show{opacity:1;pointer-events:auto}
+  .cta button{border:none;cursor:pointer;background:var(--ink);color:#FFF6F0;
+    font-family:'Quicksand',sans-serif;font-weight:600;font-size:clamp(1rem,3.4vw,1.3rem);
+    padding:1.1rem 2.6rem;border-radius:999px;box-shadow:0 20px 46px -18px rgba(76,58,62,.55);
+    transition:transform .35s cubic-bezier(.34,1.56,.64,1),background .3s}
+  .cta button:hover{transform:scale(1.06);background:var(--pink)}
+  dialog{border:none;border-radius:1.2rem;padding:2.2rem 2rem;max-width:22rem;width:calc(100vw - 2.4rem);
+    background:#FFFDF8;color:var(--ink);box-shadow:0 30px 80px -30px rgba(76,58,62,.6);
+    font-family:'Quicksand',sans-serif}
+  dialog::backdrop{background:rgba(76,58,62,.35);backdrop-filter:blur(3px)}
+  dialog h2{font-weight:600;font-size:1.3rem;margin-bottom:.25rem}
+  dialog p{font-size:.9rem;opacity:.75;margin-bottom:1.2rem}
+  .f{margin-bottom:1.1rem}
+  .f label{display:block;font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;opacity:.6;margin-bottom:.3rem}
+  .f label .req{color:var(--pink)}
+  .f input,.f textarea{width:100%;border:none;border-bottom:1.5px solid rgba(76,58,62,.3);background:transparent;
+    font-family:'Quicksand',sans-serif;font-size:1.02rem;padding:.3rem 0;color:var(--ink);border-radius:0}
+  .f input:focus,.f textarea:focus{outline:none;border-bottom-color:var(--pink)}
+  .row{display:flex;gap:.7rem;margin-top:1.4rem}
+  .row button{flex:1;border:none;cursor:pointer;border-radius:999px;padding:.85rem;
+    font-family:'Quicksand',sans-serif;font-weight:600;font-size:.9rem}
+  .row .ok{background:var(--ink);color:#FFF6F0}
+  .row .ok:hover{background:var(--pink)}
+  .row .no{background:transparent;color:var(--ink);border:1.5px solid rgba(76,58,62,.3)}
+  .thanks{display:none;text-align:center;font-size:1.05rem;padding:.6rem 0;color:var(--pink);font-weight:600}
+  .thanks.show{display:block}
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage" aria-label="Floating photographs of handmade sweets — scroll to bring each one forward"></div>
+<div class="spacer" id="spacer" aria-hidden="true"></div>
+
+<p class="mark">cheeky<em>bite</em></p>
+<p class="hint" id="hint">scroll — or grab a photo and toss it</p>
+
+<div class="cta" id="cta"><button id="openOrder">call me back ♥</button></div>
+
+<dialog id="orderDlg">
+  <form id="orderForm" method="dialog" novalidate>
+    <h2>Caught one?</h2>
+    <p>Leave your details; the baker calls you back.</p>
+    <div class="f"><label for="c-name">Name</label><input id="c-name" type="text" autocomplete="name"></div>
+    <div class="f"><label for="c-email">Email <span class="req">*</span></label><input id="c-email" type="email" autocomplete="email"></div>
+    <div class="f"><label for="c-phone">Phone <span class="req">*</span></label><input id="c-phone" type="tel" autocomplete="tel"></div>
+    <div class="f"><label for="c-msg">Occasion (optional)</label><textarea id="c-msg" rows="2"></textarea></div>
+    <p class="thanks" id="thanks">Got it — keep an eye on your phone. ♥</p>
+    <div class="row" id="btnRow">
+      <button type="button" class="no" id="closeDlg">keep drifting</button>
+      <button type="submit" class="ok">call me</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/motion@10.18.0/dist/motion.min.js"></script>
+<script>
+(function(){
+  'use strict';
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var M = window.Motion || null;
+
+  var IMGS = [
+    'images/1782399388868.jpg','images/1780894899980.jpg','images/229617.jpg',
+    'images/1782399389414.jpg','images/229618.jpg','images/1782399389465.jpg',
+    'images/229626.jpg','images/1782399389340.jpg','images/1783770350417.jpg',
+    'images/229625.jpg'
+  ];
+  var N = IMGS.length;
+  var stage = document.getElementById('stage');
+  document.getElementById('spacer').style.height = (N + 2) * 100 + 'vh';
+
+  // scattered home spots (viewport fractions) + rotation
+  var SPOTS = [
+    [.16,.30,-7],[.78,.22, 6],[.30,.68, 4],[.84,.62,-5],[.10,.80, 8],
+    [.55,.14,-4],[.62,.82, 7],[.42,.42,-6],[.88,.42, 3],[.24,.12, 5]
+  ];
+
+  var cards = IMGS.map(function(url, i){
+    var el = document.createElement('div');
+    el.className = 'card';
+    el.innerHTML = '<div class="bob"><img alt="Handmade sweets by Cheeky Bite" src="' + url + '"></div>';
+    stage.appendChild(el);
+    return { el: el, bob: el.firstChild, i: i, state: {x:0, y:0, r: SPOTS[i][2], s:.8},
+             dragging:false, sx:0, sy:0, ox:0, oy:0 };
+  });
+
+  function apply(c, target, springy){
+    c.state = target;
+    var vals = { x: target.x + 'px', y: target.y + 'px', rotate: target.r + 'deg', scale: target.s };
+    if(reduced){
+      if(M){ M.animate(c.el, vals, {duration: 0}); }
+      else { c.el.style.transform = 'translate(' + target.x + 'px,' + target.y + 'px) rotate(' + target.r + 'deg) scale(' + target.s + ')'; }
+      return;
+    }
+    if(M){
+      M.animate(c.el, vals, springy
+        ? { easing: M.spring({ stiffness: 110, damping: 15, mass: 1 }) }
+        : { duration: 0 });
+    }else{
+      c.el.style.transition = springy ? 'transform .8s cubic-bezier(.22,1,.36,1)' : 'none';
+      c.el.style.transform = 'translate(' + target.x + 'px,' + target.y + 'px) rotate(' + target.r + 'deg) scale(' + target.s + ')';
+    }
+  }
+
+  function homeT(c){
+    var vw = innerWidth, vh = innerHeight;
+    var w = c.el.offsetWidth, h = c.el.offsetHeight;
+    return { x: SPOTS[c.i][0] * vw - w/2, y: SPOTS[c.i][1] * vh - h/2, r: SPOTS[c.i][2], s: .8 };
+  }
+  function centerT(c){
+    var vw = innerWidth, vh = innerHeight;
+    var w = c.el.offsetWidth, h = c.el.offsetHeight;
+    var target = Math.min(vw * .84, vh * .7 * (w/h), 560);
+    return { x: vw/2 - w/2, y: vh/2 - h/2, r: 0, s: target / w };
+  }
+
+  var active = -2;
+  function layout(springy){
+    cards.forEach(function(c){
+      if(c.dragging) return;
+      c.el.style.zIndex = (c.i === active) ? 30 : 10 + c.i;
+      apply(c, (c.i === active) ? centerT(c) : homeT(c), springy);
+    });
+  }
+
+  // gentle bobbing on inner wrapper
+  if(!reduced){
+    cards.forEach(function(c, i){
+      var dur = 3.4 + (i % 5) * .6;
+      if(M){
+        M.animate(c.bob, { y: [0, -9, 0] }, { duration: dur, repeat: Infinity, easing: 'ease-in-out', delay: i * .35 });
+      }else if(c.bob.animate){
+        c.bob.animate([{transform:'translateY(0)'},{transform:'translateY(-9px)'},{transform:'translateY(0)'}],
+          {duration: dur*1000, iterations: Infinity, easing:'ease-in-out', delay: i*350});
+      }
+    });
+  }
+
+  // scroll → active card
+  var cta = document.getElementById('cta'), hint = document.getElementById('hint');
+  function onScroll(){
+    var max = document.documentElement.scrollHeight - innerHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+    var idx = Math.floor(p * (N + 2)) - 1;      // -1 intro · 0..N-1 cards · N+ outro
+    var next = (idx < 0 || idx >= N) ? -1 : idx;
+    if(next !== active){ active = next; layout(true); }
+    cta.classList.toggle('show', idx >= N);
+    hint.classList.toggle('hide', p > .02);
+  }
+  addEventListener('scroll', onScroll, {passive:true});
+  addEventListener('resize', function(){ layout(false); onScroll(); });
+
+  // drag & toss
+  cards.forEach(function(c){
+    c.el.addEventListener('pointerdown', function(e){
+      c.dragging = true; c.el.setPointerCapture(e.pointerId);
+      c.sx = e.clientX; c.sy = e.clientY; c.ox = c.state.x; c.oy = c.state.y;
+      c.el.style.zIndex = 35;
+    });
+    c.el.addEventListener('pointermove', function(e){
+      if(!c.dragging) return;
+      var t = { x: c.ox + (e.clientX - c.sx), y: c.oy + (e.clientY - c.sy), r: c.state.r, s: c.state.s };
+      c.state = t; apply(c, t, false);
+    });
+    function drop(){
+      if(!c.dragging) return;
+      c.dragging = false;
+      apply(c, (c.i === active) ? centerT(c) : homeT(c), true);
+      c.el.style.zIndex = (c.i === active) ? 30 : 10 + c.i;
+    }
+    c.el.addEventListener('pointerup', drop);
+    c.el.addEventListener('pointercancel', drop);
+  });
+
+  // initial placement once images have sized the cards
+  var pending = N;
+  cards.forEach(function(c){
+    var img = c.el.querySelector('img');
+    var done = function(){ if(--pending === 0){ layout(false); onScroll(); } };
+    if(img.complete) done(); else { img.addEventListener('load', done); img.addEventListener('error', done); }
+  });
+
+  // order dialog
+  var dlg = document.getElementById('orderDlg');
+  document.getElementById('openOrder').addEventListener('click', function(){ dlg.showModal(); });
+  document.getElementById('closeDlg').addEventListener('click', function(){ dlg.close(); });
+  document.getElementById('orderForm').addEventListener('submit', function(e){
+    var em = document.getElementById('c-email'), ph = document.getElementById('c-phone');
+    if(!em.value.trim() || !ph.value.trim()){ e.preventDefault(); (em.value?ph:em).focus(); return; }
+    e.preventDefault();
+    document.getElementById('btnRow').style.display = 'none';
+    document.getElementById('thanks').classList.add('show');
+    setTimeout(function(){ dlg.close(); }, 2200);
+  });
+})();
+</script>
+</body>
+</html>
