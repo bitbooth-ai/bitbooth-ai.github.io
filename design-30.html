@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Grand Hôtel Cheeky — Afternoon Tea, Served Always</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Nunito+Sans:ital,opsz,wght@0,6..12,300;0,6..12,400;0,6..12,700;1,6..12,300&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --lobby:#FAF6ED;
+    --ink:#41372C;
+    --ink-soft:#877A66;
+    --brass:#B08D3F;
+    --brass-light:#D9BC7A;
+    --sage:#A7B79A;
+    --rose:#E0A3AF;
+    --card:#FFFDF7;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--lobby);color:var(--ink);font-family:'Nunito Sans',sans-serif;font-weight:300;
+    font-size:1.04rem;line-height:1.68;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  .dm{font-family:'DM Serif Display',serif}
+
+  /* lobby / hero */
+  .lobby{min-height:94vh;display:grid;place-items:center;text-align:center;padding:3rem 1.2rem 4rem;position:relative}
+  .crest{width:6rem;margin:0 auto 1.2rem}
+  .pre{font-size:.7rem;letter-spacing:.5em;text-transform:uppercase;color:var(--brass);font-weight:700}
+  .lobby h1{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,8.5vw,4.8rem);line-height:1.08;margin:.8rem 0 .4rem}
+  .lobby h1 em{font-style:italic;color:var(--brass)}
+  .lobby .sub{font-style:italic;color:var(--ink-soft);max-width:29rem;margin:0 auto}
+  .amen{margin-top:1.8rem;display:flex;gap:.55rem;flex-wrap:wrap;justify-content:center}
+  .amen span{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);
+    border:1px solid rgba(65,55,44,.22);padding:.4rem .9rem;border-radius:999px;background:var(--card)}
+
+  /* THE TEA STAND */
+  .stand{max-width:44rem;margin:2.6rem auto 0;padding:0 1rem;position:relative}
+  .tier{position:relative;display:flex;justify-content:center;gap:clamp(.7rem,2.5vw,1.4rem);
+    padding:0 0 1.1rem}
+  .tier .dish{width:clamp(5.2rem,17vw,8.2rem);aspect-ratio:1;border-radius:50%;overflow:hidden;
+    border:3px solid var(--card);box-shadow:0 10px 22px -10px rgba(65,55,44,.45);position:relative;z-index:2;
+    background:var(--card)}
+  .tier .dish img{width:100%;height:100%;object-fit:cover}
+  /* the plate under each tier */
+  .tier::after{content:"";position:absolute;left:8%;right:8%;bottom:0;height:1.1rem;border-radius:50%;
+    background:linear-gradient(#FFFEFA,#EDE5D2);box-shadow:0 8px 16px -8px rgba(65,55,44,.4),inset 0 -3px 5px rgba(65,55,44,.12)}
+  .tier.t2::after{left:14%;right:14%}
+  .tier.t3::after{left:20%;right:20%}
+  /* central rod */
+  .stand::before{content:"";position:absolute;left:50%;top:-1.4rem;bottom:.4rem;width:4px;margin-left:-2px;
+    background:linear-gradient(var(--brass-light),var(--brass));border-radius:4px;z-index:1}
+  .stand .finial{position:absolute;left:50%;top:-2.4rem;transform:translateX(-50%);width:1.15rem;height:1.15rem;
+    border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--brass-light),var(--brass));z-index:3;
+    box-shadow:0 3px 6px rgba(65,55,44,.3)}
+  .gap{height:1.6rem}
+  .tierlabel{text-align:center;font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--ink-soft);padding:.5rem 0 .9rem;position:relative;z-index:2}
+  .tierlabel b{color:var(--brass);font-weight:700}
+  /* assemble animation */
+  @media (prefers-reduced-motion: no-preference){
+    .tier{opacity:0;transform:translateY(-26px)}
+    .loaded .tier{opacity:1;transform:none;transition:opacity .8s ease,transform .8s cubic-bezier(.34,1.4,.5,1)}
+    .loaded .tier.t1{transition-delay:.15s}
+    .loaded .tier.t2{transition-delay:.4s}
+    .loaded .tier.t3{transition-delay:.65s}
+  }
+
+  /* floors (sections) */
+  .floor{max-width:46rem;margin:0 auto;padding:4.5rem 1.2rem 0}
+  .floorno{display:flex;align-items:center;gap:1rem;margin-bottom:1.4rem}
+  .floorno .btn-circle{width:2.6rem;height:2.6rem;border-radius:50%;border:1px solid var(--brass);
+    display:grid;place-items:center;font-family:'DM Serif Display',serif;color:var(--brass);font-size:1.05rem;flex:none}
+  .floorno .ln{flex:1;height:1px;background:rgba(65,55,44,.2)}
+  .floorno .lbl{font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;color:var(--ink-soft)}
+  .floor h2{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,5.5vw,2.6rem);margin-bottom:.6rem}
+  .floor h2 em{font-style:italic;color:var(--brass)}
+  .floor .lead{color:var(--ink-soft);max-width:32rem}
+  .suite{margin-top:1.8rem;background:var(--card);box-shadow:0 22px 48px -26px rgba(65,55,44,.4);
+    display:grid;grid-template-columns:1fr;overflow:hidden}
+  @media(min-width:700px){.suite{grid-template-columns:1.15fr 1fr;align-items:stretch}}
+  .suite .ph{overflow:hidden}
+  .suite img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.22,1,.36,1)}
+  .suite:hover img{transform:scale(1.035)}
+  .suite .txt{padding:1.7rem 1.6rem;display:flex;flex-direction:column;justify-content:center}
+  .suite h3{font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:.4rem}
+  .suite p{font-size:.95rem;color:var(--ink-soft)}
+  .suite .svc{margin-top:1rem;font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;color:var(--brass);font-weight:700}
+
+  /* guest book quote */
+  .guestbook{max-width:38rem;margin:0 auto;padding:4.5rem 1.2rem 0;text-align:center}
+  .guestbook .dm{font-size:clamp(1.35rem,4.2vw,1.9rem);font-style:italic;line-height:1.5}
+  .guestbook .who{margin-top:1rem;font-size:.68rem;letter-spacing:.36em;text-transform:uppercase;color:var(--ink-soft)}
+
+  /* door hanger order card */
+  .service{max-width:30rem;margin:0 auto;padding:4.5rem 1.2rem 4rem;text-align:center}
+  .hanger{background:var(--card);border:1px solid rgba(65,55,44,.15);border-radius:1.2rem;
+    padding:3.6rem 1.8rem 2.2rem;position:relative;box-shadow:0 26px 55px -30px rgba(65,55,44,.5);
+    /* door-hanger hole */
+    -webkit-mask:radial-gradient(circle 1.15rem at 50% 2.1rem, transparent 98%, #000) ;
+    mask:radial-gradient(circle 1.15rem at 50% 2.1rem, transparent 98%, #000)}
+  .hanger .ring{position:absolute;left:50%;top:2.1rem;transform:translate(-50%,-50%);width:2.3rem;height:2.3rem;
+    border-radius:50%;border:2px solid var(--brass);pointer-events:none}
+  .hanger .k{font-size:.66rem;letter-spacing:.4em;text-transform:uppercase;color:var(--brass);font-weight:700}
+  .hanger h2{font-family:'DM Serif Display',serif;font-size:clamp(1.7rem,5.5vw,2.3rem);margin:.5rem 0 .3rem}
+  .hanger p.lead{font-style:italic;color:var(--ink-soft);font-size:.95rem}
+  form{margin-top:1.6rem;text-align:left}
+  .f{margin-bottom:1.3rem}
+  .f label{display:block;font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--ink-soft);font-weight:700;margin-bottom:.3rem}
+  .f label .req{color:var(--rose)}
+  .f input,.f textarea{width:100%;border:none;border-bottom:1px solid rgba(65,55,44,.3);background:transparent;
+    font-family:'DM Serif Display',serif;font-size:1.12rem;padding:.3rem 0;color:var(--ink);border-radius:0}
+  .f input:focus,.f textarea:focus{outline:none;border-bottom-color:var(--brass)}
+  .f textarea{resize:vertical;min-height:3rem}
+  .ringbtn{display:block;width:100%;border:none;cursor:pointer;background:var(--brass);color:var(--card);
+    font-family:'Nunito Sans',sans-serif;font-weight:700;font-size:.74rem;letter-spacing:.34em;text-transform:uppercase;
+    padding:1.05rem;border-radius:999px;transition:background .3s,transform .3s cubic-bezier(.34,1.56,.64,1)}
+  .ringbtn:hover{background:#9A7A32;transform:scale(1.02)}
+  .rung{display:none;margin-top:1.5rem;font-family:'DM Serif Display',serif;font-style:italic;
+    font-size:1.2rem;color:var(--brass)}
+  .rung.show{display:block}
+
+  /* concierge bell */
+  .bell{position:fixed;right:1.1rem;bottom:1.1rem;z-index:50;width:3.6rem;height:3.6rem;border-radius:50%;
+    border:none;cursor:pointer;background:radial-gradient(circle at 35% 30%,var(--brass-light),var(--brass));
+    color:#FFF9EA;font-size:1.35rem;box-shadow:0 10px 24px -8px rgba(65,55,44,.55);
+    display:grid;place-items:center;transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+  .bell:hover{transform:scale(1.08)}
+  @media (prefers-reduced-motion: no-preference){
+    .bell.ding{animation:dingding .6s ease}
+    @keyframes dingding{0%,100%{transform:rotate(0)}20%{transform:rotate(-14deg)}40%{transform:rotate(11deg)}60%{transform:rotate(-7deg)}80%{transform:rotate(4deg)}}
+  }
+  .toast{position:fixed;right:1.1rem;bottom:5.4rem;z-index:50;background:var(--ink);color:var(--lobby);
+    padding:.8rem 1.2rem;border-radius:.7rem;font-size:.86rem;max-width:16rem;opacity:0;pointer-events:none;
+    transform:translateY(8px);transition:opacity .35s,transform .35s}
+  .toast.show{opacity:1;transform:none}
+
+  footer{text-align:center;padding:0 1rem 3rem;font-size:.68rem;letter-spacing:.36em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  footer .dm{display:block;font-size:1.2rem;letter-spacing:.06em;text-transform:none;
+    font-style:italic;margin-bottom:.5rem;color:var(--ink)}
+
+  .rv{opacity:1}
+  @media (prefers-reduced-motion: no-preference){
+    .rv{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1)}
+    .rv.in{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="lobby rv in">
+  <div>
+    <svg class="crest" viewBox="0 0 96 96" aria-hidden="true">
+      <circle cx="48" cy="48" r="45" fill="none" stroke="#B08D3F" stroke-width="1.5"/>
+      <circle cx="48" cy="48" r="39" fill="none" stroke="#B08D3F" stroke-width=".75" opacity=".5"/>
+      <path d="M20 48 Q34 30 48 48 Q62 66 76 48" fill="none" stroke="#B08D3F" stroke-width="1.5"/>
+      <text x="48" y="44" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#B08D3F">CB</text>
+      <text x="48" y="64" text-anchor="middle" font-family="Georgia,serif" font-size="7" letter-spacing="3" fill="#B08D3F">GRAND HÔTEL</text>
+    </svg>
+    <p class="pre">Le Grand Hôtel Cheeky</p>
+    <h1 class="dm">Afternoon tea,<br><em>served always</em></h1>
+    <p class="sub">A one-woman grand hotel where every room is the kitchen and
+      every guest gets the good china.</p>
+    <div class="amen">
+      <span>★★★★★ · self-rated</span><span>staff of one</span><span>checkout: never</span>
+    </div>
+
+    <!-- tea stand -->
+    <div class="stand" id="stand" aria-label="Three-tier tea stand of the house specialities">
+      <span class="finial"></span>
+      <div class="tier t1">
+        <div class="dish"><img src="images/1780894899980.jpg" alt="Character macarons"></div>
+        <div class="dish"><img src="images/1782399389268.jpg" alt="Christmas macarons"></div>
+        <div class="dish"><img src="images/1783770350417.jpg" alt="Macarons being piped"></div>
+      </div>
+      <p class="tierlabel"><b>Tier One</b> · the characters</p>
+      <div class="tier t2">
+        <div class="dish"><img src="images/1782399389414.jpg" alt="Look choup fruit sweets"></div>
+        <div class="dish"><img src="images/1782399389465.jpg" alt="Rose pia cakes"></div>
+      </div>
+      <p class="tierlabel"><b>Tier Two</b> · the treasures</p>
+      <div class="tier t3">
+        <div class="dish"><img src="images/229617.jpg" alt="Buttercream peonies"></div>
+        <div class="dish"><img src="images/229626.jpg" alt="Bouquet cake"></div>
+      </div>
+      <p class="tierlabel"><b>Tier Three</b> · the garden</p>
+    </div>
+  </div>
+</header>
+
+<section class="floor rv" id="floor1">
+  <div class="floorno"><span class="btn-circle">1</span><span class="ln"></span><span class="lbl">First floor · the character suite</span></div>
+  <h2 class="dm">Guests with <em>faces</em></h2>
+  <p class="lead">The hotel's most requested residents: macarons piped with bear, lemon and
+    seasonal personalities. Each face is drawn by hand at the front desk, which is also the
+    kitchen, which is also the ballroom.</p>
+  <div class="suite">
+    <div class="ph"><img src="images/1782399388868.jpg" alt="Styled character macaron advertisement" loading="lazy"></div>
+    <div class="txt">
+      <h3>The Signature Set</h3>
+      <p>Bears and lemons on the good pillowcases. Known to disappear from minibars.</p>
+      <p class="svc">Room service · available by commission</p>
+    </div>
+  </div>
+</section>
+
+<section class="floor rv" id="floor2">
+  <div class="floorno"><span class="btn-circle">2</span><span class="ln"></span><span class="lbl">Second floor · the treasure suite</span></div>
+  <h2 class="dm">Small <em>treasures</em></h2>
+  <p class="lead">Look choup — fruits sculpted in mung-bean marzipan and glazed to a shine —
+    and rose pia, pastry pleated into petals. Housekeeping refuses to tidy them away.</p>
+  <div class="suite">
+    <div class="ph"><img src="images/1782399389414.jpg" alt="Look choup fruit sweets" loading="lazy"></div>
+    <div class="txt">
+      <h3>The Fruit That Isn't</h3>
+      <p>Guests are advised these mangoes are a beautiful lie. The gasp is included in the rate.</p>
+      <p class="svc">Turndown gift · highly recommended</p>
+    </div>
+  </div>
+</section>
+
+<section class="floor rv" id="floor3">
+  <div class="floorno"><span class="btn-circle">3</span><span class="ln"></span><span class="lbl">Third floor · the garden suite</span></div>
+  <h2 class="dm">The rooftop <em>garden</em></h2>
+  <p class="lead">Buttercream peonies, dahlias and roses, piped petal by petal. The only hotel
+    garden that doubles as dessert and triples as a centrepiece.</p>
+  <div class="suite">
+    <div class="ph"><img src="images/229626.jpg" alt="Pastel bouquet cake with lilies" loading="lazy"></div>
+    <div class="txt">
+      <h3>The Bouquet Cake</h3>
+      <p>Arrives like a florist's window; leaves like a very good party. Vase not required.</p>
+      <p class="svc">Banquets &amp; celebrations · reserve ahead</p>
+    </div>
+  </div>
+</section>
+
+<section class="guestbook rv">
+  <p class="dm">"I came for one macaron. I stayed for the peonies.
+    I have been a guest for three years."</p>
+  <p class="who">— entry from the guest book, smudged with buttercream</p>
+</section>
+
+<section class="service rv" id="order">
+  <div class="hanger">
+    <span class="ring"></span>
+    <p class="k">Room service</p>
+    <h2>Please call me</h2>
+    <p class="lead">Hang your details below and the entire hotel staff (one baker,
+      excellent at her job) will call you back to arrange your order.</p>
+    <form id="svcForm" novalidate>
+      <div class="f"><label for="g-name">Guest name</label><input id="g-name" type="text" autocomplete="name"></div>
+      <div class="f"><label for="g-email">Email <span class="req">*</span></label><input id="g-email" type="email" required autocomplete="email"></div>
+      <div class="f"><label for="g-phone">Phone <span class="req">*</span></label><input id="g-phone" type="tel" required autocomplete="tel"></div>
+      <div class="f"><label for="g-msg">Your request <small>(optional)</small></label><textarea id="g-msg" rows="2"></textarea></div>
+      <button class="ringbtn" type="submit">Ring the desk</button>
+    </form>
+    <p class="rung" id="rung">The desk has been rung. The baker will call your room shortly.</p>
+  </div>
+</section>
+
+<footer class="rv">
+  <span class="dm">Le Grand Hôtel Cheeky</span>
+  est. one kitchen ago · sweet as art · do disturb
+</footer>
+
+<button class="bell" id="bell" aria-label="Ring the concierge bell">🛎</button>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // tea stand assemble
+  addEventListener('load',()=>document.getElementById('stand').classList.add('loaded'));
+  if(!reduced){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    }),{threshold:.15});
+    document.querySelectorAll('.rv').forEach(el=>el.classList.contains('in')||io.observe(el));
+  }else{
+    document.querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
+    document.getElementById('stand').classList.add('loaded');
+  }
+  // concierge bell
+  const bell=document.getElementById('bell'),toast=document.getElementById('toast');
+  const lines=[
+    "Ding! The concierge is piping an eyebrow — one moment.",
+    "Ding! Your happiness has been escalated to the kitchen.",
+    "Ding! The baker says hello and also: try the roulade.",
+    "Ding! Concierge tip: the order card is at the bottom of the page."
+  ];
+  let li=0,tt;
+  bell.addEventListener('click',()=>{
+    bell.classList.remove('ding');void bell.offsetWidth;bell.classList.add('ding');
+    toast.textContent=lines[li++ % lines.length];
+    toast.classList.add('show');
+    clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('show'),3200);
+  });
+  document.getElementById('svcForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const em=document.getElementById('g-email'),ph=document.getElementById('g-phone');
+    if(!em.value.trim()||!ph.value.trim()){(em.value?ph:em).focus();return;}
+    e.target.style.display='none';
+    document.getElementById('rung').classList.add('show');
+  });
+</script>
+</body>
+</html>

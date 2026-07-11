@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheeky Bite — Looks Like / Tastes Like</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,500&family=Karla:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFBF4;
+    --ink:#3E2F33;
+    --ink-soft:#84707A;
+    --coral:#EE7B67;
+    --butter:#F5C64F;
+    --rose:#E9A0B7;
+    --pistachio:#A8C99A;
+    --lilac:#C3A9DB;
+    --sky:#9CC1DB;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Karla',sans-serif;font-weight:300;
+    font-size:1.04rem;line-height:1.65;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  .fr{font-family:'Fraunces',serif}
+
+  /* hero */
+  .hero{min-height:88vh;display:grid;place-items:center;text-align:center;padding:3rem 1.2rem}
+  .hero .tag{font-size:.72rem;letter-spacing:.4em;text-transform:uppercase;color:var(--coral);font-weight:600}
+  .hero h1{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(2.6rem,8.5vw,5.2rem);line-height:1.08;margin:1rem 0}
+  .hero h1 .word{display:inline-block;position:relative;font-weight:600}
+  .hero h1 .word em{font-style:italic}
+  .hero h1 .looks{color:var(--rose)}
+  .hero h1 .tastes{color:var(--coral)}
+  .hero p{max-width:30rem;margin:0 auto;color:var(--ink-soft)}
+  .hero .hint{margin-top:2.4rem;font-size:.78rem;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-soft)}
+  .hero .hint b{color:var(--coral)}
+
+  /* flip cards */
+  .gallery{max-width:64rem;margin:0 auto;padding:0 1.1rem 4rem;display:grid;gap:clamp(2rem,5vw,3.5rem)}
+  .flip{perspective:1400px;-webkit-tap-highlight-color:transparent}
+  .inner{position:relative;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.22,1,.36,1);
+    min-height:min(34rem,120vw)}
+  .flip.flipped .inner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border-radius:1.4rem;overflow:hidden;display:flex;flex-direction:column}
+  /* SIGHT face */
+  .sight{background:#fff;box-shadow:0 22px 50px -26px rgba(62,47,51,.4)}
+  .sight img{width:100%;flex:1;object-fit:cover;min-height:0}
+  .sight .strip{padding:1.3rem 1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+  .sight .lbl{font-size:.64rem;letter-spacing:.32em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  .sight h2{font-family:'Fraunces',serif;font-weight:500;font-style:italic;font-size:1.5rem;flex:1 1 100%}
+  .swatches{display:flex;gap:.45rem}
+  .sw{width:1.15rem;height:1.15rem;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(62,47,51,.12)}
+  /* TASTE face */
+  .taste{transform:rotateY(180deg);color:var(--ink);padding:clamp(1.8rem,5vw,3rem);
+    justify-content:center;box-shadow:0 22px 50px -26px rgba(62,47,51,.4)}
+  .taste .lbl{font-size:.64rem;letter-spacing:.32em;text-transform:uppercase;font-weight:600;opacity:.75}
+  .taste h2{font-family:'Fraunces',serif;font-weight:500;font-style:italic;font-size:1.5rem;margin:.3rem 0 1.4rem}
+  .notes{list-style:none}
+  .notes li{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(1.5rem,4.5vw,2.2rem);line-height:1.35;
+    opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1)}
+  .notes li em{font-style:italic;font-weight:500}
+  .flipped .notes li{opacity:1;transform:none}
+  .flipped .notes li:nth-child(1){transition-delay:.45s}
+  .flipped .notes li:nth-child(2){transition-delay:.6s}
+  .flipped .notes li:nth-child(3){transition-delay:.75s}
+  .flipped .notes li:nth-child(4){transition-delay:.9s}
+  .taste .after{margin-top:1.6rem;font-size:.92rem;opacity:.8;font-style:italic}
+  /* flip button */
+  .flipbtn{position:absolute;right:1.2rem;bottom:1.2rem;z-index:3;border:none;cursor:pointer;
+    background:var(--ink);color:var(--paper);font-family:'Karla',sans-serif;font-weight:600;
+    font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;padding:.75rem 1.3rem;border-radius:999px;
+    transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+  .flipbtn:hover{transform:scale(1.06)}
+  .flip .taste .flipbtn{background:rgba(255,251,244,.92);color:var(--ink)}
+
+  /* per-product taste backgrounds */
+  .t-rose{background:linear-gradient(160deg,#FBE9EF,#F6D3DF)}
+  .t-butter{background:linear-gradient(160deg,#FDF3D7,#F9E4AC)}
+  .t-pistachio{background:linear-gradient(160deg,#EAF3E4,#D8E9CE)}
+  .t-lilac{background:linear-gradient(160deg,#F1EAF8,#E3D5F1)}
+  .t-sky{background:linear-gradient(160deg,#E8F1F8,#D4E5F2)}
+  .t-coral{background:linear-gradient(160deg,#FDEAE5,#FAD5CB)}
+
+  /* interstitial line */
+  .between{text-align:center;padding:1rem 1.2rem;font-family:'Fraunces',serif;font-style:italic;
+    font-size:1.3rem;color:var(--ink-soft)}
+
+  /* order */
+  .order{max-width:34rem;margin:0 auto;padding:2rem 1.2rem 5rem;text-align:center}
+  .order .tag{font-size:.72rem;letter-spacing:.4em;text-transform:uppercase;color:var(--coral);font-weight:600}
+  .order h2{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(2rem,6vw,3rem);margin:.8rem 0}
+  .order h2 em{font-style:italic;font-weight:500;color:var(--coral)}
+  .order p{color:var(--ink-soft)}
+  form{margin-top:2rem;text-align:left}
+  .f{margin-bottom:1.4rem}
+  .f label{display:block;font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);
+    font-weight:600;margin-bottom:.35rem}
+  .f label .req{color:var(--coral)}
+  .f input,.f textarea{width:100%;border:1.5px solid rgba(62,47,51,.18);border-radius:.8rem;background:#fff;
+    font-family:'Fraunces',serif;font-size:1.15rem;padding:.7rem .95rem;color:var(--ink)}
+  .f input:focus,.f textarea:focus{outline:none;border-color:var(--coral)}
+  .f textarea{resize:vertical;min-height:3.4rem}
+  .go{display:block;width:100%;border:none;cursor:pointer;background:var(--ink);color:var(--paper);
+    font-family:'Karla',sans-serif;font-weight:600;font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;
+    padding:1.1rem;border-radius:999px;transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .3s}
+  .go:hover{transform:scale(1.02);background:var(--coral)}
+  .done{display:none;margin-top:1.6rem;font-family:'Fraunces',serif;font-style:italic;font-size:1.4rem;color:var(--coral)}
+  .done.show{display:block}
+
+  footer{text-align:center;padding:0 1rem 2.6rem;font-size:.7rem;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-soft)}
+
+  .rv{opacity:1}
+  @media (prefers-reduced-motion: no-preference){
+    .rv{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+    .rv.in{opacity:1;transform:none}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .inner{transition:none}
+    .notes li{opacity:1;transform:none;transition:none}
+    .flipbtn,.go{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div>
+    <p class="tag">Cheeky Bite · a bakery for two senses</p>
+    <h1 class="fr"><span class="word looks">Looks like</span> <em>art.</em><br>
+      <span class="word tastes">Tastes like</span> <em>a good day.</em></h1>
+    <p>Every piece is made twice — once for your eyes, once for your mouth.
+      Flip each one to taste it with words first.</p>
+    <p class="hint">tap <b>taste it</b> on any piece ↓</p>
+  </div>
+</header>
+
+<main class="gallery">
+
+  <article class="flip rv" aria-label="Peony bouquet — flip to read tasting notes">
+    <div class="inner">
+      <div class="face sight">
+        <img src="images/229617.jpg" alt="Pink and cream buttercream peonies" loading="lazy">
+        <div class="strip">
+          <h2>The Peony Cake</h2>
+          <span class="lbl">Looks like</span>
+          <div class="swatches"><span class="sw" style="background:#EDB6C4"></span><span class="sw" style="background:#F7E3DC"></span><span class="sw" style="background:#FAF4E8"></span></div>
+          <span style="font-style:italic;color:var(--ink-soft)">a peony in June, caught mid-bloom</span>
+        </div>
+        <button class="flipbtn" type="button">Taste it →</button>
+      </div>
+      <div class="face taste t-rose">
+        <span class="lbl">Tastes like</span>
+        <h2>The Peony Cake</h2>
+        <ul class="notes">
+          <li>cool <em>vanilla-bean</em> silk,</li>
+          <li>a whisper of <em>rosewater</em>,</li>
+          <li>soft sponge underneath,</li>
+          <li>and a <em>birthday afternoon</em>.</li>
+        </ul>
+        <p class="after">finish: long, floral, faintly smug about it</p>
+        <button class="flipbtn" type="button">← Look again</button>
+      </div>
+    </div>
+  </article>
+
+  <p class="between rv">"you eat with your eyes first — here, you get seconds."</p>
+
+  <article class="flip rv" aria-label="Character macarons — flip to read tasting notes">
+    <div class="inner">
+      <div class="face sight">
+        <img src="images/1780894899980.jpg" alt="Character macarons, bear and lemon" loading="lazy">
+        <div class="strip">
+          <h2>The Characters</h2>
+          <span class="lbl">Looks like</span>
+          <div class="swatches"><span class="sw" style="background:#C98F5F"></span><span class="sw" style="background:#F4D35E"></span><span class="sw" style="background:#FBF0E1"></span></div>
+          <span style="font-style:italic;color:var(--ink-soft)">a bear who knows something you don't</span>
+        </div>
+        <button class="flipbtn" type="button">Taste it →</button>
+      </div>
+      <div class="face taste t-butter">
+        <span class="lbl">Tastes like</span>
+        <h2>The Characters</h2>
+        <ul class="notes">
+          <li>crisp <em>almond</em> shell,</li>
+          <li>a chewy middle,</li>
+          <li>bright <em>lemon curd</em> or warm caramel,</li>
+          <li>and mild <em>guilt</em> — it had a face.</li>
+        </ul>
+        <p class="after">finish: short. they always go first.</p>
+        <button class="flipbtn" type="button">← Look again</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="flip rv" aria-label="Look choup — flip to read tasting notes">
+    <div class="inner">
+      <div class="face sight">
+        <img src="images/1782399389414.jpg" alt="Look choup fruit-shaped sweets" loading="lazy">
+        <div class="strip">
+          <h2>Look Choup</h2>
+          <span class="lbl">Looks like</span>
+          <div class="swatches"><span class="sw" style="background:#F2A93B"></span><span class="sw" style="background:#D9534F"></span><span class="sw" style="background:#8BB174"></span></div>
+          <span style="font-style:italic;color:var(--ink-soft)">a fruit bowl painted by an optimist</span>
+        </div>
+        <button class="flipbtn" type="button">Taste it →</button>
+      </div>
+      <div class="face taste t-pistachio">
+        <span class="lbl">Tastes like</span>
+        <h2>Look Choup</h2>
+        <ul class="notes">
+          <li>sweet <em>mung-bean</em> marzipan,</li>
+          <li>a cool <em>jelly</em> glaze,</li>
+          <li>a hint of <em>jasmine</em>,</li>
+          <li>and the joy of a <em>beautiful trick</em>.</li>
+        </ul>
+        <p class="after">finish: delicate, floral, definitely not a real mango</p>
+        <button class="flipbtn" type="button">← Look again</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="flip rv" aria-label="Lilac roses cake — flip to read tasting notes">
+    <div class="inner">
+      <div class="face sight">
+        <img src="images/229618.jpg" alt="Lilac buttercream roses" loading="lazy">
+        <div class="strip">
+          <h2>The Rose Garden</h2>
+          <span class="lbl">Looks like</span>
+          <div class="swatches"><span class="sw" style="background:#C3A9DB"></span><span class="sw" style="background:#E7DBF2"></span><span class="sw" style="background:#FAF6EE"></span></div>
+          <span style="font-style:italic;color:var(--ink-soft)">dusk in a rose garden, edible edition</span>
+        </div>
+        <button class="flipbtn" type="button">Taste it →</button>
+      </div>
+      <div class="face taste t-lilac">
+        <span class="lbl">Tastes like</span>
+        <h2>The Rose Garden</h2>
+        <ul class="notes">
+          <li>whipped <em>butter and sugar</em>, airy as it looks,</li>
+          <li>a violet-candy lift,</li>
+          <li>tender <em>vanilla crumb</em>,</li>
+          <li>and the last hour of a <em>slow evening</em>.</li>
+        </ul>
+        <p class="after">finish: velvety, a little theatrical</p>
+        <button class="flipbtn" type="button">← Look again</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="flip rv" aria-label="Blueberry roulade — flip to read tasting notes">
+    <div class="inner">
+      <div class="face sight">
+        <img src="images/1782399389340.jpg" alt="Blueberry roulade" loading="lazy">
+        <div class="strip">
+          <h2>The Roulade</h2>
+          <span class="lbl">Looks like</span>
+          <div class="swatches"><span class="sw" style="background:#6E7FB2"></span><span class="sw" style="background:#F4EFE6"></span><span class="sw" style="background:#C9B79A"></span></div>
+          <span style="font-style:italic;color:var(--ink-soft)">a soft spiral of clouds and berries</span>
+        </div>
+        <button class="flipbtn" type="button">Taste it →</button>
+      </div>
+      <div class="face taste t-sky">
+        <span class="lbl">Tastes like</span>
+        <h2>The Roulade</h2>
+        <ul class="notes">
+          <li>cold <em>cream</em>, barely sweet,</li>
+          <li>bursting <em>blueberries</em>,</li>
+          <li>pillowy sponge,</li>
+          <li>and a <em>nap in the garden</em>.</li>
+        </ul>
+        <p class="after">finish: gone. someone took the last slice.</p>
+        <button class="flipbtn" type="button">← Look again</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="flip rv" aria-label="Bouquet box cake — flip to read tasting notes">
+    <div class="inner">
+      <div class="face sight">
+        <img src="images/229625.jpg" alt="Square bouquet-box cake in pink, gold and blue" loading="lazy">
+        <div class="strip">
+          <h2>The Bouquet Box</h2>
+          <span class="lbl">Looks like</span>
+          <div class="swatches"><span class="sw" style="background:#E58FA6"></span><span class="sw" style="background:#D9A93B"></span><span class="sw" style="background:#8FA8C8"></span></div>
+          <span style="font-style:italic;color:var(--ink-soft)">a florist's window you're allowed to eat</span>
+        </div>
+        <button class="flipbtn" type="button">Taste it →</button>
+      </div>
+      <div class="face taste t-coral">
+        <span class="lbl">Tastes like</span>
+        <h2>The Bouquet Box</h2>
+        <ul class="notes">
+          <li>every petal a different <em>pipe of buttercream</em>,</li>
+          <li>honeyed <em>gold-dust</em> edges,</li>
+          <li>rich cake beneath the garden,</li>
+          <li>and <em>applause</em> when the box opens.</li>
+        </ul>
+        <p class="after">finish: standing ovation, minor crumbs</p>
+        <button class="flipbtn" type="button">← Look again</button>
+      </div>
+    </div>
+  </article>
+
+</main>
+
+<section class="order rv" id="order">
+  <p class="tag">Sense № 3 — anticipation</p>
+  <h2 class="fr">Taste it <em>for real</em></h2>
+  <p>Leave your details and the baker will call you back to plan something
+    that looks like art and tastes like a very good day.</p>
+  <form id="orderForm" novalidate>
+    <div class="f"><label for="o-name">Name</label><input id="o-name" type="text" autocomplete="name"></div>
+    <div class="f"><label for="o-email">Email <span class="req">*</span></label><input id="o-email" type="email" required autocomplete="email"></div>
+    <div class="f"><label for="o-phone">Phone <span class="req">*</span></label><input id="o-phone" type="tel" required autocomplete="tel"></div>
+    <div class="f"><label for="o-msg">What should it look/taste like? <small>(optional)</small></label><textarea id="o-msg" rows="2"></textarea></div>
+    <button class="go" type="submit">Call me back</button>
+  </form>
+  <p class="done" id="done">Noted. Your taste buds will hear from us shortly.</p>
+</section>
+
+<footer>Cheeky Bite · handmade · looks 10/10 · tastes 11/10</footer>
+
+<script>
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.flip').forEach(card=>{
+    card.querySelectorAll('.flipbtn').forEach(btn=>
+      btn.addEventListener('click',()=>card.classList.toggle('flipped')));
+  });
+  if(!reduced){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    }),{threshold:.15});
+    document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+  }else{
+    document.querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
+  }
+  document.getElementById('orderForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const em=document.getElementById('o-email'),ph=document.getElementById('o-phone');
+    if(!em.value.trim()||!ph.value.trim()){(em.value?ph:em).focus();return;}
+    e.target.style.display='none';
+    document.getElementById('done').classList.add('show');
+  });
+</script>
+</body>
+</html>

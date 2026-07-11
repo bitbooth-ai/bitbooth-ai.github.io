@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheeky Bite — Sale 001: Sweetness &amp; Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF7EF;
+    --ink:#33291F;
+    --ink-soft:#7C6E5C;
+    --red:#C4483A;         /* auction red, warm */
+    --gold:#AD8A3B;
+    --rule:rgba(51,41,31,.28);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Libre Caslon Text',serif;
+    font-size:1.02rem;line-height:1.68}
+  img{display:block;max-width:100%}
+  .mono{font-family:'IBM Plex Mono',monospace}
+
+  .catalogue{max-width:44rem;margin:0 auto;padding:clamp(2rem,6vw,4rem) 1.2rem 3rem}
+
+  /* masthead */
+  .masthead{text-align:center;border-bottom:3px double var(--rule);padding-bottom:2.2rem}
+  .masthead .house{font-size:.72rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);
+    font-family:'IBM Plex Mono',monospace}
+  .masthead h1{font-size:clamp(2.1rem,7vw,3.6rem);font-weight:700;line-height:1.1;margin:.9rem 0 .5rem;
+    letter-spacing:.01em}
+  .masthead h1 em{font-style:italic;font-weight:400}
+  .saleline{font-family:'IBM Plex Mono',monospace;font-size:.8rem;letter-spacing:.14em;color:var(--ink-soft)}
+  .saleline b{color:var(--red);font-weight:500}
+
+  /* notice */
+  .notice{border:1px solid var(--rule);margin:2.4rem 0;padding:1.4rem 1.6rem;font-size:.95rem}
+  .notice h2{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--red);margin-bottom:.7rem}
+  .notice p{color:var(--ink-soft);font-style:italic}
+
+  /* lots */
+  .lot{padding:3rem 0 2.6rem;border-bottom:1px solid var(--rule)}
+  .lotno{font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.3em;color:var(--red);
+    display:flex;align-items:baseline;gap:1rem}
+  .lotno::after{content:"";flex:1;border-bottom:1px dotted var(--rule)}
+  .lot figure{margin:1.3rem 0;position:relative;overflow:hidden}
+  .lot figure img{width:100%;transition:transform 1.2s cubic-bezier(.22,1,.36,1)}
+  .lot figure:hover img{transform:scale(1.025)}
+  /* the SOLD-style stamp on hover */
+  .stamp{position:absolute;top:1rem;right:1rem;border:3px solid var(--red);color:var(--red);
+    font-family:'IBM Plex Mono',monospace;font-size:.8rem;letter-spacing:.24em;text-transform:uppercase;
+    padding:.4rem .8rem;transform:rotate(8deg) scale(1.6);opacity:0;transition:opacity .3s,transform .3s cubic-bezier(.34,1.56,.64,1);
+    background:rgba(251,247,239,.85);pointer-events:none}
+  .lot figure:hover .stamp{opacity:1;transform:rotate(-6deg) scale(1)}
+  .lot h3{font-size:clamp(1.45rem,4.5vw,1.9rem);font-weight:400;font-style:italic;margin-bottom:1.1rem}
+  .spec{display:grid;grid-template-columns:9.5rem 1fr;row-gap:.42rem;column-gap:1rem;font-size:.92rem}
+  .spec dt{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--ink-soft);padding-top:.28em}
+  .spec dd{color:var(--ink)}
+  .spec dd em{font-style:italic}
+  .est-line{margin-top:1.2rem;padding-top:1rem;border-top:1px dotted var(--rule);
+    display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.4rem}
+  .est-line .lbl{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  .est-line .val{font-style:italic;color:var(--red);font-size:1.08rem}
+  @media(max-width:480px){.spec{grid-template-columns:1fr}.spec dt{padding-top:.6em}}
+
+  /* registration */
+  .register{padding:3.4rem 0 1rem;text-align:center}
+  .register h2{font-size:clamp(1.8rem,6vw,2.6rem);font-weight:700;margin:.5rem 0 .8rem}
+  .register .k{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.4em;
+    text-transform:uppercase;color:var(--gold)}
+  .register p.lead{max-width:28rem;margin:0 auto;color:var(--ink-soft);font-style:italic}
+  form{max-width:26rem;margin:2rem auto 0;text-align:left}
+  .f{margin-bottom:1.4rem}
+  .f label{display:block;font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--ink-soft);margin-bottom:.35rem}
+  .f label .req{color:var(--red)}
+  .f input,.f textarea{width:100%;border:1px solid var(--rule);background:#fff;padding:.75rem .9rem;
+    font-family:'Libre Caslon Text',serif;font-size:1.05rem;color:var(--ink);border-radius:0}
+  .f input:focus,.f textarea:focus{outline:none;border-color:var(--red)}
+  .f textarea{resize:vertical;min-height:3.4rem}
+  .bid{display:block;width:100%;border:none;cursor:pointer;background:var(--red);color:var(--paper);
+    font-family:'IBM Plex Mono',monospace;font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;
+    padding:1.05rem;transition:background .3s,letter-spacing .3s}
+  .bid:hover{background:#A93A2E;letter-spacing:.38em}
+  .paddle{display:none;margin-top:2rem;text-align:center}
+  .paddle.show{display:block}
+  .paddle .disc{width:7rem;height:8.4rem;margin:0 auto 1rem;background:#fff;border:2px solid var(--ink);
+    border-radius:50% 50% 46% 46%/58% 58% 40% 40%;display:grid;place-items:center;position:relative;
+    box-shadow:0 10px 24px -12px rgba(51,41,31,.4)}
+  .paddle .disc::after{content:"";position:absolute;bottom:-2.1rem;left:50%;transform:translateX(-50%);
+    width:.85rem;height:2.2rem;background:var(--ink);border-radius:0 0 .3rem .3rem}
+  .paddle .disc b{font-family:'IBM Plex Mono',monospace;font-size:1.9rem;letter-spacing:.05em}
+  .paddle p{margin-top:2.4rem;font-style:italic;color:var(--ink-soft)}
+  @media (prefers-reduced-motion: no-preference){
+    .paddle.show .disc{animation:raise .7s cubic-bezier(.34,1.56,.64,1)}
+    @keyframes raise{0%{transform:translateY(2.5rem) rotate(-8deg);opacity:0}100%{transform:none;opacity:1}}
+  }
+
+  /* conditions footer */
+  .conditions{margin-top:3rem;border-top:3px double var(--rule);padding-top:1.6rem;
+    font-size:.82rem;color:var(--ink-soft)}
+  .conditions h2{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.3em;
+    text-transform:uppercase;margin-bottom:.6rem;color:var(--ink)}
+  .conditions ol{margin-left:1.2rem}
+  .conditions li{margin-bottom:.3rem}
+  footer{text-align:center;padding:2.2rem 0 .4rem;font-family:'IBM Plex Mono',monospace;
+    font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft)}
+
+  .rv{opacity:1}
+  @media (prefers-reduced-motion: no-preference){
+    .rv{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+    .rv.in{opacity:1;transform:none}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .lot figure img,.stamp,.bid{transition:none}
+  }
+</style>
+</head>
+<body>
+<div class="catalogue">
+
+  <header class="masthead rv in">
+    <p class="house">Cheeky Bite Auction House · Est. This Morning</p>
+    <h1>Sweetness <em>&amp;</em> Light</h1>
+    <p class="saleline">SALE № <b>001</b> · SATURDAY, IN THE KITCHEN · VIEWING: RIGHT NOW</p>
+  </header>
+
+  <aside class="notice rv">
+    <h2>Notice to bidders</h2>
+    <p>All lots were created by a single artist working alone, in buttercream, almond and
+      mung bean. Provenance is impeccable: she made them this morning. Condition reports
+      are accurate at time of writing but all lots are, by design, temporary.</p>
+  </aside>
+
+  <article class="lot rv">
+    <p class="lotno">LOT 1</p>
+    <figure><img src="images/229626.jpg" alt="Pastel bouquet cake with lilies" loading="lazy"><span class="stamp">Reserved · for someone lucky</span></figure>
+    <h3>Bouquet with Lilies, Spring Morning</h3>
+    <dl class="spec">
+      <dt>Medium</dt><dd>Buttercream on genoise</dd>
+      <dt>Dimensions</dt><dd>One armful (approx.)</dd>
+      <dt>Provenance</dt><dd>Piped this morning, one pair of hands, no assistants</dd>
+      <dt>Literature</dt><dd><em>Instagram, passim;</em> three group chats, enthusiastically</dd>
+      <dt>Condition</dt><dd>Flawless. Briefly.</dd>
+    </dl>
+    <div class="est-line"><span class="lbl">Estimate</span><span class="val">priceless — enquire</span></div>
+  </article>
+
+  <article class="lot rv">
+    <p class="lotno">LOT 2</p>
+    <figure><img src="images/1780894899980.jpg" alt="Character macarons, bear and lemon" loading="lazy"><span class="stamp">Highly contested</span></figure>
+    <h3>Bear and Lemon, Seated</h3>
+    <dl class="spec">
+      <dt>Medium</dt><dd>Royal icing on almond shell</dd>
+      <dt>Dimensions</dt><dd>4 cm diameter, each; personalities larger</dd>
+      <dt>Provenance</dt><dd>The artist's steadiest hand and finest piping tip</dd>
+      <dt>Literature</dt><dd>Compared favourably to the Old Masters by the artist's mother</dd>
+      <dt>Condition</dt><dd>Excellent. The bear appears to know something.</dd>
+    </dl>
+    <div class="est-line"><span class="lbl">Estimate</span><span class="val">two smiles minimum — enquire</span></div>
+  </article>
+
+  <article class="lot rv">
+    <p class="lotno">LOT 3</p>
+    <figure><img src="images/1782399389414.jpg" alt="Look choup, fruit-shaped sweets" loading="lazy"><span class="stamp">Not actual fruit</span></figure>
+    <h3>Still Life with Fruit (Fraudulent)</h3>
+    <dl class="spec">
+      <dt>Medium</dt><dd>Mung-bean marzipan, food-safe pigment, agar glaze</dd>
+      <dt>Dimensions</dt><dd>Bite-sized, dangerously so</dd>
+      <dt>Provenance</dt><dd>A centuries-old Thai craft, one very patient afternoon</dd>
+      <dt>Literature</dt><dd>"Wait, that's not a real mango?" — every viewer, eventually</dd>
+      <dt>Condition</dt><dd>Museum quality. Edible anyway.</dd>
+    </dl>
+    <div class="est-line"><span class="lbl">Estimate</span><span class="val">priceless — enquire</span></div>
+  </article>
+
+  <article class="lot rv">
+    <p class="lotno">LOT 4</p>
+    <figure><img src="images/229618.jpg" alt="Lilac buttercream roses" loading="lazy"><span class="stamp">The critics wept</span></figure>
+    <h3>Roses, Lilac Period</h3>
+    <dl class="spec">
+      <dt>Medium</dt><dd>Buttercream, piped petal by petal</dd>
+      <dt>Dimensions</dt><dd>54 petals; the artist counted</dd>
+      <dt>Provenance</dt><dd>Direct from the flower nail to you</dd>
+      <dt>Literature</dt><dd>Unpublished. The roses speak for themselves.</dd>
+      <dt>Condition</dt><dd>Bloom permanent until dessert is served</dd>
+    </dl>
+    <div class="est-line"><span class="lbl">Estimate</span><span class="val">one gasp, minimum — enquire</span></div>
+  </article>
+
+  <article class="lot rv">
+    <p class="lotno">LOT 5</p>
+    <figure><img src="images/1783770350417.jpg" alt="Hands piping faces onto macarons" loading="lazy"><span class="stamp">Not for sale</span></figure>
+    <h3>The Artist at Work (Documentation)</h3>
+    <dl class="spec">
+      <dt>Medium</dt><dd>Photograph; subject is two hands and a piping bag</dd>
+      <dt>Provenance</dt><dd>The kitchen, mid-morning, fourth attempt at an eyebrow</dd>
+      <dt>Condition</dt><dd>The hands are fine. Thank you for asking.</dd>
+    </dl>
+    <div class="est-line"><span class="lbl">Estimate</span><span class="val">withdrawn — the artist is busy</span></div>
+  </article>
+
+  <article class="lot rv">
+    <p class="lotno">LOT 6</p>
+    <figure><img src="images/1782399389340.jpg" alt="Blueberry roulade" loading="lazy"><span class="stamp">Going… going…</span></figure>
+    <h3>Study in Blueberry, Rolled</h3>
+    <dl class="spec">
+      <dt>Medium</dt><dd>Sponge, cream, fruit; rolled under supervision</dd>
+      <dt>Dimensions</dt><dd>Serves eight, or two determined people</dd>
+      <dt>Provenance</dt><dd>The oven, then the cooling rack, then fame</dd>
+      <dt>Condition</dt><dd>Structurally sound. Emotionally irresistible.</dd>
+    </dl>
+    <div class="est-line"><span class="lbl">Estimate</span><span class="val">gone by four o'clock — enquire</span></div>
+  </article>
+
+  <section class="register rv" id="order">
+    <p class="k">Bidder registration</p>
+    <h2>Raise your paddle</h2>
+    <p class="lead">Register below and the auctioneer (also the baker — small house) will
+      call you back to discuss your commission. All bids of enthusiasm accepted.</p>
+    <form id="bidForm" novalidate>
+      <div class="f"><label for="b-name">Bidder name</label><input id="b-name" type="text" autocomplete="name"></div>
+      <div class="f"><label for="b-email">Email <span class="req">*</span></label><input id="b-email" type="email" required autocomplete="email"></div>
+      <div class="f"><label for="b-phone">Phone <span class="req">*</span></label><input id="b-phone" type="tel" required autocomplete="tel"></div>
+      <div class="f"><label for="b-msg">Lot of interest / occasion (optional)</label><textarea id="b-msg" rows="2"></textarea></div>
+      <button class="bid" type="submit">Register to bid</button>
+    </form>
+    <div class="paddle" id="paddle">
+      <div class="disc"><b id="paddleNo">№ 001</b></div>
+      <p>Your paddle is registered.<br>The auctioneer will call you before the hammer falls.</p>
+    </div>
+  </section>
+
+  <aside class="conditions rv">
+    <h2>Conditions of sale</h2>
+    <ol>
+      <li>All lots are handmade and therefore one of a kind; duplicates are impossible, sequels negotiable.</li>
+      <li>The house guarantees every work is authentic buttercream. No forgeries have ever been detected, or survived long enough to be.</li>
+      <li>Buyer's premium: you must promise to enjoy it.</li>
+    </ol>
+  </aside>
+
+  <footer>Cheeky Bite · Sale 001 · the hammer is a whisk</footer>
+</div>
+
+<script>
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduced){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    }),{threshold:.12});
+    document.querySelectorAll('.rv').forEach(el=>el.classList.contains('in')||io.observe(el));
+  }else{
+    document.querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
+  }
+  document.getElementById('bidForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const em=document.getElementById('b-email'),ph=document.getElementById('b-phone');
+    if(!em.value.trim()||!ph.value.trim()){(em.value?ph:em).focus();return;}
+    document.getElementById('paddleNo').textContent='№ '+String(Math.floor(Math.random()*899)+100);
+    e.target.style.display='none';
+    document.getElementById('paddle').classList.add('show');
+  });
+</script>
+</body>
+</html>

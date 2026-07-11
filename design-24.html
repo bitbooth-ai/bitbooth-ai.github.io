@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheeky Bite — The Invitation Suite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Great+Vibes&family=Caveat:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --linen:#F6E8E4;         /* blush linen table */
+    --card:#FFFDF8;          /* cotton card stock */
+    --ink:#4A3B36;
+    --ink-soft:#8A756C;
+    --gold:#B9903B;
+    --blue:#8FA8C8;          /* dusty blue ribbon */
+    --blush:#E4A3AE;
+    --shadow:0 18px 40px -22px rgba(74,59,54,.45), 0 2px 5px rgba(74,59,54,.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--linen);
+    background-image:radial-gradient(rgba(74,59,54,.035) 1px,transparent 1px);
+    background-size:22px 22px;
+    color:var(--ink);font-family:'EB Garamond',serif;font-size:1.08rem;line-height:1.65}
+  img{display:block;max-width:100%}
+  .script{font-family:'Great Vibes',cursive;font-weight:400}
+  .caps{font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;font-family:'EB Garamond',serif}
+
+  .flatlay{max-width:52rem;margin:0 auto;padding:clamp(2rem,6vw,4.5rem) 1.1rem 3rem;
+    display:flex;flex-direction:column;align-items:center;gap:clamp(2.4rem,6vw,4rem)}
+
+  /* every section is a physical card */
+  .card{background:var(--card);box-shadow:var(--shadow);padding:clamp(1.8rem,5vw,3.2rem);
+    width:min(34rem,100%);position:relative;text-align:center}
+  .card.deckle{clip-path:polygon(0% 1.2%,3% 0%,7% .9%,12% .1%,18% 1%,25% .2%,33% 1.1%,41% .1%,50% .9%,59% 0%,67% 1%,75% .2%,82% 1.1%,88% .1%,93% .9%,97% 0%,100% 1.2%,99.1% 8%,100% 16%,99% 25%,100% 34%,99.1% 43%,100% 52%,99% 61%,100% 70%,99.1% 79%,100% 88%,99% 94%,100% 98.8%,97% 100%,93% 99.1%,88% 99.9%,82% 99%,75% 99.8%,67% 99%,59% 100%,50% 99.1%,41% 99.9%,33% 99%,25% 99.8%,18% 99%,12% 99.9%,7% 99.1%,3% 100%,0% 98.8%,.9% 94%,0% 88%,1% 79%,.1% 70%,1% 61%,0% 52%,.9% 43%,0% 34%,1% 25%,.1% 16%,.9% 8%)}
+  .tilt-l{transform:rotate(-1.6deg)}.tilt-r{transform:rotate(1.4deg)}
+  @media(hover:hover){
+    .tilt-l,.tilt-r{transition:transform .5s cubic-bezier(.22,1,.36,1)}
+    .tilt-l:hover,.tilt-r:hover{transform:rotate(0)}
+  }
+  .frame{position:absolute;inset:12px;border:1px solid rgba(185,144,59,.5);pointer-events:none}
+  .frame::after{content:"";position:absolute;inset:4px;border:1px solid rgba(185,144,59,.22)}
+
+  /* blind emboss */
+  .emboss{color:transparent;background:none;
+    text-shadow:0 1px 1px rgba(255,255,255,.9),0 -1px 1px rgba(74,59,54,.32);
+    letter-spacing:.4em;text-transform:uppercase;font-size:.72rem}
+
+  /* envelope hero */
+  .env-wrap{width:min(34rem,100%);perspective:900px}
+  .envelope{background:#FBF3EA;box-shadow:var(--shadow);position:relative;padding:5.2rem 1.6rem 3rem;text-align:center}
+  .flap{position:absolute;left:0;right:0;top:0;height:0;border-left:calc(min(34rem,100vw - 2.2rem)/2) solid transparent;
+    border-right:calc(min(34rem,100vw - 2.2rem)/2) solid transparent;border-top:5.4rem solid #F3E6D8;
+    transform-origin:top;filter:drop-shadow(0 3px 3px rgba(74,59,54,.12))}
+  .seal{position:absolute;left:50%;top:4rem;transform:translate(-50%,-50%);width:3.4rem;height:3.4rem;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#F0A9B8,#D66E85 60%,#C25873);color:#FFF6F0;display:grid;place-items:center;
+    font-family:'Great Vibes',cursive;font-size:1.7rem;box-shadow:0 3px 8px rgba(74,59,54,.3);z-index:2}
+  .env-to{font-family:'Great Vibes',cursive;font-size:clamp(2.4rem,7vw,3.4rem);color:var(--ink);line-height:1.15}
+  .env-sub{margin-top:.6rem;color:var(--ink-soft);font-style:italic}
+  @media (prefers-reduced-motion: no-preference){
+    .flap{animation:openflap 1.4s cubic-bezier(.22,1,.36,1) .5s forwards}
+    @keyframes openflap{to{transform:rotateX(168deg)}}
+    .seal{animation:sealup .8s ease .5s forwards}
+    @keyframes sealup{to{top:0;transform:translate(-50%,-50%) scale(.85)}}
+  }
+
+  /* ribbon banding a card */
+  .ribbon{position:absolute;top:0;bottom:0;left:12%;width:2.1rem;background:var(--blue);opacity:.9;
+    box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
+  .ribbon::after{content:"";position:absolute;left:50%;top:2.2rem;transform:translateX(-50%);
+    width:2.6rem;height:1.5rem;background:var(--blue);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+    box-shadow:-0.7rem .2rem 0 -.2rem var(--blue),.7rem .2rem 0 -.2rem var(--blue)}
+
+  h2.script{font-size:clamp(2.2rem,6vw,3rem);color:var(--ink);line-height:1.2;margin:.6rem 0 .9rem}
+  .card p.body{max-width:26rem;margin:0 auto;color:var(--ink-soft)}
+
+  /* menu card listing */
+  .menu-list{margin-top:1.6rem;text-align:center}
+  .menu-item{padding:1.1rem 0;border-top:1px dotted rgba(74,59,54,.3)}
+  .menu-item:last-child{border-bottom:1px dotted rgba(74,59,54,.3)}
+  .menu-item h3{font-weight:500;font-size:1.3rem;font-style:italic}
+  .menu-item p{font-size:.95rem;color:var(--ink-soft)}
+
+  /* photo prints */
+  .prints{width:min(40rem,100%);display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));
+    gap:1.6rem;justify-items:center}
+  .print{background:#fff;padding:.7rem .7rem 2.6rem;box-shadow:var(--shadow);position:relative;width:100%}
+  .print img{width:100%;aspect-ratio:4/3.4;object-fit:cover}
+  .print .cap{font-family:'Caveat',cursive;font-size:1.25rem;color:var(--ink-soft);
+    position:absolute;bottom:.5rem;left:0;right:0;text-align:center}
+  .print .tape{position:absolute;top:-.75rem;left:50%;transform:translateX(-50%) rotate(-3deg);
+    width:5.5rem;height:1.5rem;background:rgba(228,163,174,.5);box-shadow:0 1px 2px rgba(74,59,54,.1)}
+  .print:nth-child(1){transform:rotate(-2.2deg)}
+  .print:nth-child(2){transform:rotate(1.6deg)}
+  .print:nth-child(3){transform:rotate(-1.2deg)}
+  .print:nth-child(4){transform:rotate(2.1deg)}
+
+  /* RSVP */
+  .rsvp form{max-width:24rem;margin:1.6rem auto 0;text-align:left}
+  .f{margin-bottom:1.4rem}
+  .f label{display:block;font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.3rem}
+  .f label .req{color:var(--blush)}
+  .f input,.f textarea{width:100%;border:none;border-bottom:1px dotted rgba(74,59,54,.45);background:transparent;
+    font-family:'Caveat',cursive;font-size:1.5rem;color:var(--ink);padding:.15rem 0;border-radius:0}
+  .f input:focus,.f textarea:focus{outline:none;border-bottom-color:var(--gold)}
+  .f textarea{resize:vertical;min-height:3rem}
+  .accepts{display:flex;gap:.7rem;align-items:flex-start;margin:1.4rem 0;font-style:italic;color:var(--ink-soft)}
+  .accepts input{width:auto;accent-color:#C25873;margin-top:.35rem}
+  .send{display:block;margin:1.4rem auto 0;background:none;border:1px solid var(--gold);
+    font-family:'EB Garamond',serif;font-size:.78rem;letter-spacing:.32em;text-transform:uppercase;color:var(--ink);
+    padding:.9rem 2.4rem .9rem 2.7rem;cursor:pointer;position:relative;overflow:hidden;transition:color .3s}
+  .send::before{content:"";position:absolute;inset:0;background:#F3DFC9;transform:scaleY(0);transform-origin:bottom;
+    transition:transform .4s cubic-bezier(.22,1,.36,1);z-index:-1}
+  .send:hover::before{transform:scaleY(1)}
+  .sealed{display:none;margin-top:1.6rem}
+  .sealed.show{display:block}
+  .sealed .wax{width:4.4rem;height:4.4rem;border-radius:50%;margin:0 auto .8rem;
+    background:radial-gradient(circle at 35% 30%,#F0A9B8,#D66E85 60%,#C25873);color:#FFF6F0;
+    display:grid;place-items:center;font-family:'Great Vibes',cursive;font-size:2.1rem;box-shadow:0 4px 10px rgba(74,59,54,.3)}
+  @media (prefers-reduced-motion: no-preference){
+    .sealed.show .wax{animation:stampdown .5s cubic-bezier(.34,1.56,.64,1)}
+    @keyframes stampdown{0%{transform:scale(2.2);opacity:0}60%{transform:scale(.92);opacity:1}100%{transform:scale(1)}}
+  }
+  .sealed p{font-style:italic;color:var(--ink-soft)}
+
+  footer{text-align:center;padding:0 1rem 3rem;color:var(--ink-soft)}
+  footer .script{font-size:2rem;color:var(--ink)}
+  footer small{display:block;margin-top:.4rem;letter-spacing:.28em;text-transform:uppercase;font-size:.66rem}
+
+  .rv{opacity:1}
+  @media (prefers-reduced-motion: no-preference){
+    .rv{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+    .rv.in{opacity:1;transform:none}
+    .rv.tilt-l.in{transform:rotate(-1.6deg)}
+    .rv.tilt-r.in{transform:rotate(1.4deg)}
+  }
+</style>
+</head>
+<body>
+<div class="flatlay">
+
+  <!-- envelope -->
+  <div class="env-wrap">
+    <div class="envelope">
+      <div class="flap"></div>
+      <div class="seal">cb</div>
+      <p class="caps" style="color:var(--gold)">By hand · With care</p>
+      <p class="env-to script">You're invited<br>to something sweet</p>
+      <p class="env-sub">the pleasure of your appetite is requested</p>
+    </div>
+  </div>
+
+  <!-- save the date -->
+  <section class="card deckle tilt-l rv">
+    <span class="frame"></span>
+    <p class="emboss">Save the date</p>
+    <h2 class="script">Any date, actually</h2>
+    <p class="body">Cheeky Bite is a one-woman bakery where everything — every petal, every painted
+      cheek, every tiny mango — is made by hand, by the same pair of hands. Celebrations are
+      accepted year-round. Tuesdays welcome.</p>
+  </section>
+
+  <!-- the menu card -->
+  <section class="card tilt-r rv" style="padding-left:22%">
+    <span class="ribbon" aria-hidden="true"></span>
+    <p class="emboss">The menu</p>
+    <h2 class="script">What may be arranged</h2>
+    <div class="menu-list">
+      <div class="menu-item"><h3>Character Macarons</h3><p>bears, lemons & seasonal friends — each face piped by hand</p></div>
+      <div class="menu-item"><h3>Buttercream Flower Cakes</h3><p>peonies, dahlias & roses; full bouquets on request</p></div>
+      <div class="menu-item"><h3>Look Choup</h3><p>fruit-shaped marzipan treasures, painted and glazed</p></div>
+      <div class="menu-item"><h3>Rose Pia & Pastries</h3><p>petal-folded cakes and the occasional blueberry roulade</p></div>
+    </div>
+  </section>
+
+  <!-- photo prints -->
+  <section class="prints rv" aria-label="Photographs">
+    <figure class="print"><span class="tape"></span><img src="images/1780894899980.jpg" alt="Character macarons" loading="lazy"><figcaption class="cap">the guests of honour</figcaption></figure>
+    <figure class="print"><span class="tape"></span><img src="images/229617.jpg" alt="Pink and cream buttercream peonies" loading="lazy"><figcaption class="cap">flowers you can eat</figcaption></figure>
+    <figure class="print"><span class="tape"></span><img src="images/1782399389414.jpg" alt="Look choup fruit sweets" loading="lazy"><figcaption class="cap">tiny fruit, big lie ♡</figcaption></figure>
+    <figure class="print"><span class="tape"></span><img src="images/229626.jpg" alt="Pastel bouquet cake" loading="lazy"><figcaption class="cap">the centrepiece</figcaption></figure>
+  </section>
+
+  <!-- the particulars -->
+  <section class="card deckle tilt-r rv">
+    <span class="frame"></span>
+    <p class="emboss">The particulars</p>
+    <h2 class="script">How it works</h2>
+    <p class="body">You tell us the occasion; the baker dreams up the sweets. Every commission is
+      made to order — piped, painted and boxed like a gift, because it is one.
+      Dress code: comfortable. Cutlery: optional.</p>
+  </section>
+
+  <!-- RSVP / order -->
+  <section class="card tilt-l rv rsvp" id="order">
+    <span class="frame"></span>
+    <p class="emboss">R.S.V.P.</p>
+    <h2 class="script">Kindly reply</h2>
+    <p class="body">Leave your details and the baker will call you back to plan the sweetness.</p>
+    <form id="rsvpForm" novalidate>
+      <div class="f"><label for="r-name">Name</label><input id="r-name" type="text" autocomplete="name"></div>
+      <div class="f"><label for="r-email">Email <span class="req">*</span></label><input id="r-email" type="email" required autocomplete="email"></div>
+      <div class="f"><label for="r-phone">Phone <span class="req">*</span></label><input id="r-phone" type="tel" required autocomplete="tel"></div>
+      <div class="f"><label for="r-msg">The occasion <small>(optional)</small></label><textarea id="r-msg" rows="2"></textarea></div>
+      <label class="accepts"><input type="checkbox" checked> joyfully accepts a call back from the baker</label>
+      <button class="send" type="submit">Send reply</button>
+    </form>
+    <div class="sealed" id="sealed">
+      <div class="wax">cb</div>
+      <p>Your reply is sealed and sent.<br>The baker will call you very soon.</p>
+    </div>
+  </section>
+
+  <footer class="rv">
+    <p class="script">Cheeky Bite</p>
+    <small>sweet as art · handmade · est. one kitchen ago</small>
+  </footer>
+
+</div>
+<script>
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduced){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    }),{threshold:.18});
+    document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+  }else{
+    document.querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
+  }
+  document.getElementById('rsvpForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const em=document.getElementById('r-email'),ph=document.getElementById('r-phone');
+    if(!em.value.trim()||!ph.value.trim()){(em.value?ph:em).focus();return;}
+    e.target.style.display='none';
+    document.getElementById('sealed').classList.add('show');
+  });
+</script>
+</body>
+</html>

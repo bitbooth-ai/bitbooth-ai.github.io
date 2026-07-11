@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SWEET — The Happiness Issue | Cheeky Bite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --page:#FFFCF6;
+    --ink:#33272B;
+    --ink-soft:#816B72;
+    --blush:#E58FA6;
+    --gold:#BE9540;
+    --butter:#F4CD6A;
+    --rule:rgba(51,39,43,.22);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--page);color:var(--ink);font-family:'Source Sans 3',sans-serif;
+    font-weight:300;font-size:1.05rem;line-height:1.7}
+  img{display:block;max-width:100%}
+  .pf{font-family:'Playfair Display',serif}
+  .mag{max-width:58rem;margin:0 auto;padding:0 1.15rem}
+
+  /* folio (page corners) */
+  .folio{display:flex;justify-content:space-between;align-items:baseline;
+    font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);
+    border-top:1px solid var(--rule);padding:.8rem 0 0;margin-top:4rem}
+
+  /* COVER */
+  .cover{min-height:96vh;display:flex;flex-direction:column;padding-top:clamp(1.4rem,4vw,3rem);position:relative}
+  .masthead{text-align:center}
+  .masthead .issueline{font-size:.7rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+  .masthead h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(4.2rem,17vw,10rem);
+    line-height:.95;letter-spacing:.04em}
+  .masthead h1 span{color:var(--blush)}
+  .coverbody{flex:1;display:grid;grid-template-columns:1fr;gap:1.2rem;align-items:center;
+    padding:1.6rem 0 2rem;position:relative}
+  .coverphoto{position:relative;max-width:30rem;margin:0 auto;width:100%}
+  .coverphoto img{width:100%;box-shadow:0 30px 70px -35px rgba(51,39,43,.5)}
+  .coverlines{position:absolute;inset:0;pointer-events:none}
+  .cl{position:absolute;background:var(--page);padding:.55rem .95rem;font-family:'Playfair Display',serif;
+    font-style:italic;font-size:clamp(.95rem,2.6vw,1.2rem);box-shadow:0 8px 22px -12px rgba(51,39,43,.35);max-width:14rem}
+  .cl b{display:block;font-family:'Source Sans 3',sans-serif;font-style:normal;font-weight:600;
+    font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--blush);margin-bottom:.15rem}
+  .cl1{top:6%;left:-1.5rem;transform:rotate(-2deg)}
+  .cl2{top:38%;right:-1.5rem;transform:rotate(1.5deg)}
+  .cl3{bottom:8%;left:-1rem;transform:rotate(1deg)}
+  @media(max-width:640px){.cl1{left:-.4rem}.cl2{right:-.4rem}.cl3{left:-.2rem}}
+  .coverfoot{text-align:center;font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--ink-soft);padding-bottom:1.4rem}
+
+  /* CONTENTS */
+  .contents{max-width:36rem;margin:0 auto;padding:4rem 0 1rem}
+  .contents h2{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;
+    font-size:2rem;text-align:center;margin-bottom:2rem}
+  .toc{list-style:none}
+  .toc li{display:flex;align-items:baseline;gap:.7rem;padding:.75rem 0;border-bottom:1px solid var(--rule)}
+  .toc .no{font-family:'Playfair Display',serif;font-weight:800;color:var(--blush);font-size:1.25rem;min-width:2.2rem}
+  .toc .t{font-family:'Playfair Display',serif;font-size:1.15rem}
+  .toc .dots{flex:1;border-bottom:1px dotted var(--rule);transform:translateY(-.25em)}
+  .toc .pg{font-size:.8rem;letter-spacing:.14em;color:var(--ink-soft)}
+  .toc a{color:inherit;text-decoration:none;display:contents}
+
+  /* FEATURE spreads */
+  .feature{padding:4.5rem 0 0}
+  .kick{font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .feature h2{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(2.1rem,7vw,3.6rem);
+    line-height:1.06;margin:.6rem 0 1.4rem;max-width:34rem}
+  .feature h2 em{font-style:italic;font-weight:400;color:var(--blush)}
+  .spread{display:grid;grid-template-columns:1fr;gap:2rem}
+  @media(min-width:760px){.spread{grid-template-columns:1.1fr .9fr;align-items:start}
+    .spread.rev{grid-template-columns:.9fr 1.1fr}
+    .spread.rev .txt{order:2}.spread.rev .pho{order:1}}
+  .pho{position:relative}
+  .pho img{width:100%;box-shadow:0 24px 55px -30px rgba(51,39,43,.45)}
+  .pho figcaption{margin-top:.6rem;font-size:.8rem;font-style:italic;color:var(--ink-soft)}
+  .pho .credit{display:block;font-style:normal;font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;margin-top:.2rem}
+  .txt p{margin-bottom:1.1rem;max-width:34rem}
+  .txt p:first-of-type::first-letter{font-family:'Playfair Display',serif;font-weight:800;
+    font-size:3.6em;float:left;line-height:.82;padding:.06em .12em 0 0;color:var(--blush)}
+  .txt .cont{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft)}
+
+  /* pull quote band */
+  .pull{padding:4.5rem 0 0;text-align:center}
+  .pull blockquote{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;
+    font-size:clamp(1.7rem,5.5vw,2.8rem);line-height:1.25;max-width:38rem;margin:0 auto;position:relative}
+  .pull blockquote::before{content:"“";font-size:2.2em;color:var(--butter);position:absolute;
+    top:-.35em;left:50%;transform:translateX(-50%);line-height:1}
+  .pull cite{display:block;margin-top:1.2rem;font-family:'Source Sans 3',sans-serif;font-style:normal;
+    font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;color:var(--ink-soft)}
+  .pull .bar{width:3.2rem;height:4px;background:var(--blush);margin:1.6rem auto 0}
+
+  /* INTERVIEW */
+  .qa{max-width:36rem;margin:0 auto}
+  .qa .q{font-family:'Playfair Display',serif;font-weight:600;font-style:italic;margin:1.5rem 0 .4rem}
+  .qa .q::before{content:"SWEET: ";font-family:'Source Sans 3',sans-serif;font-style:normal;
+    font-weight:600;font-size:.72rem;letter-spacing:.24em;color:var(--blush)}
+  .qa .a::before{content:"CB: ";font-weight:600;font-size:.72rem;letter-spacing:.24em;color:var(--gold)}
+
+  /* photo essay strip */
+  .essay{padding:4.5rem 0 0}
+  .essay .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1rem;margin-top:1.6rem}
+  .essay figure{position:relative;overflow:hidden}
+  .essay img{width:100%;aspect-ratio:3/4;object-fit:cover;transition:transform 1s cubic-bezier(.22,1,.36,1)}
+  .essay figure:hover img{transform:scale(1.04)}
+  .essay figcaption{font-size:.78rem;font-style:italic;color:var(--ink-soft);margin-top:.5rem}
+
+  /* CLASSIFIEDS back page */
+  .classifieds{padding:4.5rem 0 0}
+  .classifieds h2{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(1.9rem,6vw,2.8rem);
+    text-align:center;border-top:3px double var(--rule);border-bottom:3px double var(--rule);
+    padding:.7rem 0;margin-bottom:2rem}
+  .ads{columns:2;column-gap:1.6rem;max-width:44rem;margin:0 auto}
+  @media(max-width:620px){.ads{columns:1}}
+  .ad{break-inside:avoid;border:1px solid var(--rule);padding:1.1rem 1.2rem;margin-bottom:1.6rem;font-size:.92rem}
+  .ad h3{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--blush);margin-bottom:.5rem}
+  .ad p{color:var(--ink-soft)}
+  .ad.form-ad{border:2px solid var(--ink);background:#fff}
+  .ad.form-ad h3{color:var(--gold)}
+  .ad.form-ad p{color:var(--ink)}
+  .f{margin:1rem 0}
+  .f label{display:block;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--ink-soft);font-weight:600;margin-bottom:.3rem}
+  .f label .req{color:var(--blush)}
+  .f input,.f textarea{width:100%;border:1px solid var(--rule);background:var(--page);padding:.6rem .7rem;
+    font-family:'Source Sans 3',sans-serif;font-size:.98rem;color:var(--ink);border-radius:0}
+  .f input:focus,.f textarea:focus{outline:none;border-color:var(--blush)}
+  .f textarea{resize:vertical;min-height:3rem}
+  .place{width:100%;border:none;cursor:pointer;background:var(--ink);color:var(--page);
+    font-weight:600;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;padding:.95rem;
+    transition:background .3s}
+  .place:hover{background:var(--blush)}
+  .placed{display:none;font-style:italic;color:var(--gold);margin-top:.8rem}
+  .placed.show{display:block}
+
+  .backfoot{text-align:center;padding:3rem 0 2.4rem;font-size:.7rem;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--ink-soft)}
+  .backfoot .pf{display:block;font-size:1.3rem;letter-spacing:.08em;text-transform:none;
+    font-style:italic;color:var(--ink);margin-bottom:.4rem}
+
+  .rv{opacity:1}
+  @media (prefers-reduced-motion: no-preference){
+    .rv{opacity:0;transform:translateY(22px);transition:opacity .85s ease,transform .85s cubic-bezier(.22,1,.36,1)}
+    .rv.in{opacity:1;transform:none}
+    .cl{opacity:0;transform:translateY(10px);transition:opacity .7s ease,transform .7s ease}
+    .in .cl{opacity:1}
+    .in .cl1{transform:rotate(-2deg);transition-delay:.35s}
+    .in .cl2{transform:rotate(1.5deg);transition-delay:.55s}
+    .in .cl3{transform:rotate(1deg);transition-delay:.75s}
+  }
+</style>
+</head>
+<body>
+<div class="mag">
+
+  <!-- COVER -->
+  <section class="cover rv in" id="cover">
+    <header class="masthead">
+      <p class="issueline">№ 1 · The Happiness Issue · Priceless</p>
+      <h1>SWEE<span>T</span></h1>
+    </header>
+    <div class="coverbody">
+      <div class="coverphoto">
+        <img src="images/1782399388868.jpg" alt="Styled character macaron shot on blush background" >
+        <div class="coverlines">
+          <p class="cl cl1"><b>Exclusive</b>The macarons with faces — and feelings?</p>
+          <p class="cl cl2"><b>Inside</b>Buttercream gardening for the ambitious</p>
+          <p class="cl cl3"><b>p. 12</b>Fruit that isn't fruit: a beautiful scandal</p>
+        </div>
+      </div>
+    </div>
+    <p class="coverfoot">A Cheeky Bite publication · printed on sugar paper</p>
+  </section>
+
+  <!-- CONTENTS -->
+  <nav class="contents rv" aria-label="Contents">
+    <h2>In this issue</h2>
+    <ol class="toc">
+      <li><a href="#feat1"><span class="no">01</span><span class="t">Portrait of a Bear, in Almond</span><span class="dots"></span><span class="pg">p. 04</span></a></li>
+      <li><a href="#pull1"><span class="no">02</span><span class="t">Quote of the Season</span><span class="dots"></span><span class="pg">p. 09</span></a></li>
+      <li><a href="#feat2"><span class="no">03</span><span class="t">The Garden You're Allowed to Eat</span><span class="dots"></span><span class="pg">p. 10</span></a></li>
+      <li><a href="#interview"><span class="no">04</span><span class="t">One Woman, Ten Thousand Petals</span><span class="dots"></span><span class="pg">p. 18</span></a></li>
+      <li><a href="#essay"><span class="no">05</span><span class="t">Photo Essay: Small Masterpieces</span><span class="dots"></span><span class="pg">p. 24</span></a></li>
+      <li><a href="#order"><span class="no">06</span><span class="t">Classifieds (yes, really)</span><span class="dots"></span><span class="pg">p. 34</span></a></li>
+    </ol>
+  </nav>
+
+  <!-- FEATURE 1 -->
+  <article class="feature rv" id="feat1">
+    <p class="kick">Feature · 01</p>
+    <h2>Portrait of a bear,<br><em>in almond</em></h2>
+    <div class="spread">
+      <div class="txt">
+        <p>They arrive in small boxes and cause immediate meetings. Someone must decide who
+          gets the bear. The character macarons of Cheeky Bite — bears, lemons, and a rotating
+          cast of seasonal guests — have the rare quality of being too charming to eat and
+          too delicious not to.</p>
+        <p>Each face is piped by hand, one steady breath at a time. The eyebrows, our
+          correspondent can confirm, are sometimes redone four times. It shows. No two are in
+          the same mood, and neither are their new owners.</p>
+        <p class="cont">Continued on p. 34, next to the classifieds →</p>
+      </div>
+      <figure class="pho">
+        <img src="images/1780894899980.jpg" alt="Character macarons on a plate in window light" loading="lazy">
+        <figcaption>The subjects, moments before disappearing.<span class="credit">Photograph · the kitchen windowsill</span></figcaption>
+      </figure>
+    </div>
+  </article>
+
+  <!-- PULL QUOTE -->
+  <section class="pull rv" id="pull1">
+    <blockquote>Happiness, it turns out, keeps very well in buttercream.</blockquote>
+    <cite>— this magazine, moments after the tasting</cite>
+    <div class="bar"></div>
+  </section>
+
+  <!-- FEATURE 2 -->
+  <article class="feature rv" id="feat2">
+    <p class="kick">Feature · 03</p>
+    <h2>The garden you're<br><em>allowed to eat</em></h2>
+    <div class="spread rev">
+      <div class="txt">
+        <p>Peonies that never wilt, dahlias with no vase requirements, roses piped petal by
+          petal until botany gives up and applauds. The buttercream flower cakes are the
+          house's grand act — florist's-window beauty with a crumb underneath.</p>
+        <p>Our advice, after extensive field research: order the full bouquet box, put it in
+          the middle of the table, and watch a room full of adults refuse to cut it first.</p>
+        <p class="cont">See also: the photo essay, p. 24 ↓</p>
+      </div>
+      <figure class="pho">
+        <img src="images/229626.jpg" alt="Pastel bouquet cake with lilies" loading="lazy">
+        <figcaption>Spring, arranged on genoise.<span class="credit">Photograph · natural light, naturally</span></figcaption>
+      </figure>
+    </div>
+  </article>
+
+  <!-- INTERVIEW -->
+  <article class="feature rv" id="interview">
+    <p class="kick">The Interview · 04</p>
+    <h2>One woman,<br><em>ten thousand petals</em></h2>
+    <div class="spread">
+      <figure class="pho">
+        <img src="images/1783770350417.jpg" alt="Hands piping faces onto macarons" loading="lazy">
+        <figcaption>The whole workforce, pictured.<span class="credit">Photograph · mid-eyebrow</span></figcaption>
+      </figure>
+      <div class="qa">
+        <p class="q">Every face, every petal — really just you?</p>
+        <p class="a">Just me. My piping bag and I have an understanding.</p>
+        <p class="q">The look choup fruit sweets fool everyone. Is that the point?</p>
+        <p class="a">It's an old Thai craft — sweets shaped as fruit so generosity looks as
+          good as it tastes. The gasp when someone realises? That's the point.</p>
+        <p class="q">Describe your ideal customer.</p>
+        <p class="a">Someone celebrating something. Or someone who has decided to. Tuesday
+          counts.</p>
+        <p class="q">And your artistic philosophy, in a sentence?</p>
+        <p class="a">Sweet as art — but art you get to eat, so better.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- PHOTO ESSAY -->
+  <section class="essay rv" id="essay">
+    <p class="kick">Photo essay · 05</p>
+    <h2 class="pf" style="font-weight:800;font-size:clamp(1.9rem,6vw,3rem);margin-top:.5rem">Small masterpieces</h2>
+    <div class="row">
+      <figure><img src="images/229617.jpg" alt="Pink and cream peonies" loading="lazy"><figcaption>Peonies, June, forever.</figcaption></figure>
+      <figure><img src="images/1782399389414.jpg" alt="Look choup fruit sweets" loading="lazy"><figcaption>Fruit, allegedly.</figcaption></figure>
+      <figure><img src="images/229618.jpg" alt="Lilac buttercream roses" loading="lazy"><figcaption>The lilac period.</figcaption></figure>
+      <figure><img src="images/1782399389465.jpg" alt="Rose pia cakes" loading="lazy"><figcaption>Rose pia, folded by hand.</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- CLASSIFIEDS / ORDER -->
+  <section class="classifieds rv" id="order">
+    <h2>Classifieds</h2>
+    <div class="ads">
+      <div class="ad"><h3>Lost &amp; Found</h3><p>LOST: self-control, vicinity of a bouquet cake.
+        If found, do not return until Monday.</p></div>
+      <div class="ad form-ad">
+        <h3>Commissions — call me back</h3>
+        <p>ONE-WOMAN BAKERY seeks occasions to make beautiful. Macarons w/ faces, edible
+          bouquets, tiny fraudulent fruit. Serious smiles only. Leave your details; the baker
+          calls you back.</p>
+        <form id="adForm" novalidate>
+          <div class="f"><label for="a-name">Name</label><input id="a-name" type="text" autocomplete="name"></div>
+          <div class="f"><label for="a-email">Email <span class="req">*</span></label><input id="a-email" type="email" required autocomplete="email"></div>
+          <div class="f"><label for="a-phone">Phone <span class="req">*</span></label><input id="a-phone" type="tel" required autocomplete="tel"></div>
+          <div class="f"><label for="a-msg">Occasion (optional)</label><textarea id="a-msg" rows="2"></textarea></div>
+          <button class="place" type="submit">Place your ad</button>
+          <p class="placed" id="placed">Ad received. The baker will ring you before the next issue.</p>
+        </form>
+      </div>
+      <div class="ad"><h3>Public notice</h3><p>The bear macaron seen on p. 4 has been eaten.
+        A memorial batch is available by commission.</p></div>
+      <div class="ad"><h3>Personals</h3><p>ROULADE, soft-spoken, seeks fork for short but
+        meaningful relationship. Blueberry enthusiasts to the front.</p></div>
+    </div>
+    <p class="backfoot"><span class="pf">SWEET — a Cheeky Bite publication</span>
+      № 1 · the happiness issue · subscriptions: just keep visiting</p>
+  </section>
+
+</div>
+<script>
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduced){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    }),{threshold:.12});
+    document.querySelectorAll('.rv').forEach(el=>el.classList.contains('in')||io.observe(el));
+  }else{
+    document.querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
+  }
+  document.getElementById('adForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const em=document.getElementById('a-email'),ph=document.getElementById('a-phone');
+    if(!em.value.trim()||!ph.value.trim()){(em.value?ph:em).focus();return;}
+    e.target.querySelector('.place').style.display='none';
+    document.getElementById('placed').classList.add('show');
+  });
+</script>
+</body>
+</html>
