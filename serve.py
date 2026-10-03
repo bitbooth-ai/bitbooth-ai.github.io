@@ -2,7 +2,7 @@
 # requires-python = ">=3.10"
 # dependencies = ["fastapi", "uvicorn"]
 # ///
-"""Preview server for The Witch's Bakery site. Run: uv run serve.py"""
+"""Preview server for the BitBooth site. Run: uv run serve.py"""
 from pathlib import Path
 
 import uvicorn

@@ -3,290 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cheeky Bite — Design Directions</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300;0,62..125,500;0,62..125,800&display=swap" rel="stylesheet">
+<title>BitBooth</title>
+<meta name="description" content="BitBooth builds AI-powered products for investment teams.">
 <style>
-  :root{
-    --bg: oklch(0.22 0.02 300);
-    --ink: oklch(0.96 0.005 300);
-    --soft: oklch(0.78 0.02 300);
-    --line: oklch(0.38 0.02 300);
+  :root {
+    --bg: #fafaf9;
+    --ink: #1c1917;
+    --soft: #57534e;
   }
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{
-    background:var(--bg);color:var(--ink);
-    font-family:'Archivo',sans-serif;font-weight:300;line-height:1.6;
-    min-height:100vh;padding:clamp(2rem,6vw,5rem) clamp(1.2rem,5vw,4rem);
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #161514; --ink: #f5f5f4; --soft: #a8a29e; }
   }
-  header{max-width:70rem;margin:0 auto 3.5rem}
-  h1{font-stretch:125%;font-weight:800;text-transform:uppercase;font-size:clamp(2rem,6vw,4.2rem);line-height:1;text-wrap:balance}
-  header p{color:var(--soft);margin-top:1.2rem;max-width:60ch}
-  header p b{color:var(--ink);font-weight:500}
-
-  main{max-width:70rem;margin:0 auto}
-  .design{
-    display:grid;grid-template-columns:7rem 1fr auto;gap:1.5rem;align-items:center;
-    padding:1.8rem 0;border-top:1px solid var(--line);
-    text-decoration:none;color:inherit;transition:background .2s;
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 2rem 1rem;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    text-align: center;
   }
-  .design:last-of-type{border-bottom:1px solid var(--line)}
-  .design:hover{background:oklch(0.26 0.025 300)}
-  .design .swatch{
-    height:4.4rem;border-radius:6px;
-    display:grid;place-items:center;
-    font-weight:800;font-stretch:125%;font-size:1.3rem;
-  }
-  .design h2{font-weight:500;font-size:clamp(1.15rem,2.4vw,1.6rem)}
-  .design p{color:var(--soft);font-size:.95rem;max-width:58ch;margin-top:.2rem}
-  .design .go{font-weight:800;font-stretch:125%;font-size:1.4rem}
-  .s2{background:oklch(0.62 0.24 5);color:oklch(0.90 0.17 95)}
-  .s5{background:oklch(0.87 0.05 305);color:oklch(0.30 0.07 320)}
-  .s11{background:oklch(0.90 0.15 95);color:oklch(0.30 0.06 60)}
-  .s12{background:oklch(0.55 0.20 25);color:oklch(0.99 0.005 25)}
-  .s13{background:oklch(0.78 0.14 65);color:oklch(0.28 0.05 30)}
-  .s14{background:oklch(0.93 0.045 350);color:oklch(0.50 0.10 250)}
-  .s15{background:oklch(0.98 0.004 90);color:oklch(0.53 0.19 25)}
-  .s16{background:oklch(0.88 0.09 160);color:oklch(0.35 0.06 340)}
-  .s17{background:oklch(0.91 0.05 230);color:oklch(0.55 0.20 355)}
-  .s18{background:oklch(0.99 0.005 90);color:oklch(0.60 0.16 5)}
-  .s19{background:oklch(0.95 0.03 90);color:oklch(0.38 0.05 140)}
-  .s20{background:oklch(0.90 0.08 340);color:oklch(0.35 0.05 300)}
-  .s22{background:oklch(0.96 0.02 90);color:oklch(0.62 0.13 20)}
-  .s24{background:oklch(0.93 0.04 20);color:oklch(0.60 0.09 75)}
-  .s25{background:oklch(0.98 0.01 90);color:oklch(0.66 0.17 35)}
-  .s26{background:oklch(0.96 0.02 85);color:oklch(0.52 0.15 30)}
-  .s27{background:oklch(0.98 0.01 90);color:oklch(0.72 0.13 0)}
-  .s28{background:oklch(0.99 0.015 100);color:oklch(0.70 0.13 90)}
-  .s29{background:oklch(0.94 0.01 100);color:oklch(0.68 0.10 80)}
-  .s30{background:oklch(0.96 0.02 95);color:oklch(0.65 0.11 85)}
-  .s31{background:oklch(0.97 0.02 60);color:oklch(0.66 0.15 5)}
-  .s32{background:oklch(0.96 0.02 20);color:oklch(0.70 0.11 355)}
-  .s33{background:oklch(0.97 0.025 40);color:oklch(0.68 0.15 0)}
-  @media(max-width:640px){
-    .design{grid-template-columns:4.5rem 1fr}
-    .design .go{display:none}
-    .design .swatch{height:3.2rem;font-size:1rem}
-  }
-  footer{max-width:70rem;margin:2.5rem auto 0;color:var(--soft);font-size:.85rem}
+  h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  p { margin-top: 1rem; font-size: clamp(1.05rem, 2.5vw, 1.3rem); color: var(--soft); text-wrap: balance; }
 </style>
 </head>
 <body>
-<header>
-  <h1>Cheeky Bite —<br>twenty-three design directions</h1>
-  <p>One bakery, twenty-three candidate websites. Same photography, same products — <b>character macarons, Thai sweets, buttercream flower cakes</b>. Eight earlier directions were culled (dark themes, text-over-photo readability, joyless palettes — see PRODUCT.md for reasons). The third batch (16–20) throws away the shared skeleton: a board game, an operating system, a swatch book, a field guide, a chat thread. The fourth batch (22–30) aims for <b>high-end class kept warm</b> — luxury-world structures (a tasting menu, a wedding suite, an auction catalogue, a glossy magazine, a grand hotel) that still sell happiness. Everything below is light, joyful, dark-on-light readable, and built for phones. Click through and pick a lane.</p>
-</header>
-
 <main>
-  <a class="design" href="design-02.html">
-    <span class="swatch s2">02</span>
-    <span>
-      <h2>Sugar Rush</h2>
-      <p>Candy-pop maximalism. Hot pink, stickers, marquee ticker, chunky type, desserts with attitude. Loud on purpose.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-05.html">
-    <span class="swatch s5">05</span>
-    <span>
-      <h2>Pressed Flowers</h2>
-      <p>Lilac scrapbook romance. Taped polaroids, handwritten notes, a keepsake album from the baker's kitchen table.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-11.html">
-    <span class="swatch s11">11</span>
-    <span>
-      <h2>Butter &amp; Sun</h2>
-      <p>Lemonade-stand yellow drench. Rotating sun rays, scalloped frosting dividers, alternating rows, "call me back" order card.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-12.html">
-    <span class="swatch s12">12</span>
-    <span>
-      <h2>The Bake Sale</h2>
-      <p>County-fair gingham and blue-ribbon rosettes. Tilted plates, prize-tag recipe cards, ring-the-bell order form.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-13.html">
-    <span class="swatch s13">13</span>
-    <span>
-      <h2>The Sweet Market</h2>
-      <p>A Bangkok morning-market stall, mango-bright. Striped awnings, hand-lettered price tags, Thai script woven through.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-14.html">
-    <span class="swatch s14">14</span>
-    <span>
-      <h2>The Ribbon Box</h2>
-      <p>Mendl's-style powder-pink pastry box tied with a blue ribbon. Centered symmetry, script flourishes, gift-note order dialog.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-15.html">
-    <span class="swatch s15">15</span>
-    <span>
-      <h2>The Funny Pages</h2>
-      <p>Sunday-comics edition where the macarons talk. Halftone panels, speech bubbles, a clip-out order coupon.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-16.html">
-    <span class="swatch s16">16</span>
-    <span>
-      <h2>Sugar Trail</h2>
-      <p>A board game you play by scrolling. A macaron token travels a winding path past numbered product stops; the order form is the FINISH prize, with confetti.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-17.html">
-    <span class="swatch s17">17</span>
-    <span>
-      <h2>CheekyOS</h2>
-      <p>The bakery as a pastel retro operating system. Boot splash, draggable windows, folders of photos, a dock, and Order.app as a system dialog.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-18.html">
-    <span class="swatch s18">18</span>
-    <span>
-      <h2>The Buttercream Color System</h2>
-      <p>Products catalogued as an edible Pantone swatch book. Fanned chip deck, spec codes you can copy, "mix your palette" order form.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-19.html">
-    <span class="swatch s19">19</span>
-    <span>
-      <h2>Field Guide to Buttercream Flora</h2>
-      <p>A Victorian naturalist's taxonomy — <i>Paeonia cremora</i>, <i>Ursus macaron</i> — with numbered plates, hand annotations, and a stamped Specimen Request Form.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-20.html">
-    <span class="swatch s20">20</span>
-    <span>
-      <h2>Sweet Talk</h2>
-      <p>The whole site is a chat thread with the baker. Photo messages with tappable reactions, a voice note, quick replies, and an in-chat call-me-back card.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-22.html">
-    <span class="swatch s22">22</span>
-    <span>
-      <h2>The Tasting Menu</h2>
-      <p>Seven courses on cream card stock. Centered fine-dining typography, plates that bloom into view, pairing notes like "pairs well with Sunday mornings". Course VII is the order form, served by telephone.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-24.html">
-    <span class="swatch s24">24</span>
-    <span>
-      <h2>The Invitation Suite</h2>
-      <p>A luxury wedding-stationery flat-lay: opening envelope with wax seal, deckle-edged cards, ribbon-banded menu, taped photo prints — and the order form is an RSVP card filled in "by pen".</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-25.html">
-    <span class="swatch s25">25</span>
-    <span>
-      <h2>Looks Like / Tastes Like</h2>
-      <p>Two senses per product: the sight face (photo + color story) flips to the taste face (a flavor poem, notes staggering in). "Looks like art. Tastes like a good day."</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-26.html">
-    <span class="swatch s26">26</span>
-    <span>
-      <h2>Lot &amp; Provenance</h2>
-      <p>A deadpan auction catalogue — Sale 001: Sweetness &amp; Light. Lots with medium, provenance ("piped this morning") and estimates ("priceless — enquire"). Register a paddle to order.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-27.html">
-    <span class="swatch s27">27</span>
-    <span>
-      <h2>The Sweet Issue</h2>
-      <p>A glossy magazine: SWEET masthead cover with cover lines, contents page, drop-cap features, a pull quote, the baker interviewed, and the order form hidden in the back-page classifieds.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-28.html">
-    <span class="swatch s28">28</span>
-    <span>
-      <h2>The House of Small Treasures</h2>
-      <p>Heritage luxury, English voice: gold rules that bloom from center, lotus-scalloped treasure frames, gold-leaf shimmer on hover, and an order form styled as "requesting an audience".</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-29.html">
-    <span class="swatch s29">29</span>
-    <span>
-      <h2>The Porcelain Room</h2>
-      <p>A warm little museum: products inside gilt-rimmed porcelain plates hung salon-style, brass caption plaques ("Attribution disputed: not actually fruit"), and an Acquisitions Desk to order.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-30.html">
-    <span class="swatch s30">30</span>
-    <span>
-      <h2>Le Grand Hôtel Cheeky</h2>
-      <p>A belle-époque grand hotel with a staff of one. Three-tier tea-stand hero that assembles on load, floors instead of sections, a ringable concierge bell, and a door-hanger order card.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-31.html">
-    <span class="swatch s31">31</span>
-    <span>
-      <h2>The Cake Stand (3D)</h2>
-      <p>Almost zero text. A three.js cake stand: three rotating tiers of photos on gilt-rimmed plates; scroll flies the camera down, drag spins a tier, tap a photo to pull it close. Ends at one "call me back" button.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-32.html">
-    <span class="swatch s32">32</span>
-    <span>
-      <h2>The Flying Gallery (3D)</h2>
-      <p>Almost zero text. A slow three.js flight through pastel fog past floating framed photos and drifting candy orbs, with cursor parallax. One line and one button at the end.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
-
-  <a class="design" href="design-33.html">
-    <span class="swatch s33">33</span>
-    <span>
-      <h2>Sugar Drift (Motion)</h2>
-      <p>Almost zero text. Spring-physics photo cards that bob and drift; scrolling brings each one to center with a bounce, and you can grab and toss any of them. Motion One powered.</p>
-    </span>
-    <span class="go">&rarr;</span>
-  </a>
+  <h1>BitBooth</h1>
+  <p>Building AI-powered products for investment teams.</p>
 </main>
-
-<footer>All twenty-three are single-file, responsive, and use the real photography in <code>images/</code>.</footer>
 </body>
 </html>
