@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Quill – Ink asterisk</title>
+  <rect width="64" height="64" rx="14" fill="#7B68DF"/>
+  <g fill="#F9F7F8" transform="translate(32 30)">
+    <circle r="5.5"/>
+    <path d="M-5 0Q-3 -9 0 -18Q3 -9 5 0Z"/>
+    <path d="M-5 0Q-3 -9 0 -18Q3 -9 5 0Z" transform="rotate(60)"/>
+    <path d="M-5 0Q-3 -9 0 -18Q3 -9 5 0Z" transform="rotate(120)"/>
+    <path d="M-5 0Q-3 -9 0 -18Q3 -9 5 0Z" transform="rotate(180)"/>
+    <path d="M-5 0Q-3 -9 0 -18Q3 -9 5 0Z" transform="rotate(300)"/>
+    <path d="M-5 0Q-3 -13 0 -26Q3 -13 5 0Z" transform="rotate(240)"/>
+  </g>
+</svg>

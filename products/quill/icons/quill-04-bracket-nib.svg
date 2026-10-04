@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Quill – Bracket nib</title>
+  <rect width="64" height="64" rx="14" fill="#15253E"/>
+  <g fill="none" stroke="#F9F7F8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="17,14 17,28 29,49"/>
+    <polyline points="47,14 47,28 35,49"/>
+  </g>
+  <circle cx="32" cy="26" r="5" fill="#7B68DF"/>
+</svg>

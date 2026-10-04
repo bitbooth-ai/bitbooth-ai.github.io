@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Quill – Clean lines</title>
+  <rect width="64" height="64" rx="14" fill="#15253E"/>
+  <rect x="11" y="14" width="14" height="14" rx="3" fill="#7B68DF"/>
+  <g fill="#F9F7F8">
+    <rect x="30" y="17.5" width="23" height="7" rx="2"/>
+    <rect x="11" y="33" width="42" height="5" rx="2"/>
+    <rect x="11" y="44" width="25" height="5" rx="2"/>
+  </g>
+</svg>

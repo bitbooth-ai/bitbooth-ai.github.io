@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Quill – Geometric feather</title>
+  <rect width="64" height="64" rx="14" fill="#7B68DF"/>
+  <g fill="#F9F7F8">
+    <rect x="20" y="39" width="32" height="6" rx="3"/>
+    <rect x="27" y="29" width="23" height="6" rx="3"/>
+    <rect x="34" y="19" width="14" height="6" rx="3"/>
+  </g>
+  <path d="M14 52 L44 12" stroke="#F9F7F8" stroke-width="6" stroke-linecap="round" fill="none"/>
+</svg>
